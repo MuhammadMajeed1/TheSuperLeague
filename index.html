@@ -1,1543 +1,3180 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
->
+<title>الأهلي × الهلال | بالتسعين</title>
 
-<meta
-  name="referrer"
-  content="no-referrer"
->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<title>بالتسعين</title>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-<link
-  href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap"
-  rel="stylesheet"
->
-
-<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.13/shaka-player.compiled.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
 <style>
+:root{
+    --bg:#030405;
+    --surface:#090c0f;
+    --surface2:#0d1115;
+    --surface3:#12171c;
+    --line:rgba(255,255,255,.075);
+    --white:#fff;
+    --muted:#89929b;
+    --muted2:#5e6770;
 
-* {
-  box-sizing: border-box;
+    --green:#20df7b;
+    --green2:#0ca95a;
+
+    --blue:#368cff;
+    --red:#ff3d58;
+    --gold:#e7bd59;
+
+    --radius:20px;
+    --shadow:0 30px 100px rgba(0,0,0,.55);
 }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-  background: #050505;
-  color: #fff;
-  font-family: "Tajawal", sans-serif;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-body {
-  overflow-x: hidden;
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    color:var(--white);
+    background:
+        radial-gradient(
+            circle at 50% -15%,
+            rgba(32,223,123,.11),
+            transparent 34%
+        ),
+        radial-gradient(
+            circle at 90% 30%,
+            rgba(54,140,255,.06),
+            transparent 28%
+        ),
+        var(--bg);
+    font-family:"Tajawal",sans-serif;
+    overflow-x:hidden;
+}
+
+button{
+    font-family:inherit;
 }
 
 button,
-input {
-  font-family: inherit;
+.tab,
+.server{
+    -webkit-tap-highlight-color:transparent;
 }
 
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-
-  height: 72px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 0 25px;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(12,12,12,.98),
-      rgba(5,5,5,.95)
-    );
-
-  border-bottom:
-    1px solid rgba(255,255,255,.07);
-
-  backdrop-filter: blur(15px);
+::-webkit-scrollbar{
+    width:6px;
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  font-size: 23px;
-  font-weight: 800;
+::-webkit-scrollbar-track{
+    background:#050607;
 }
 
-.brand img {
-  width: 44px;
-  height: 44px;
-
-  object-fit: cover;
-
-  border-radius: 10px;
+::-webkit-scrollbar-thumb{
+    background:#242a30;
+    border-radius:10px;
 }
 
-.search {
-  width: min(420px,45vw);
 
-  padding: 11px 16px;
+/* =========================================================
+   HEADER
+========================================================= */
 
-  border-radius: 12px;
+.header{
+    height:72px;
 
-  border:
-    1px solid rgba(255,255,255,.1);
+    position:sticky;
+    top:0;
+    z-index:999;
 
-  background:
-    rgba(255,255,255,.06);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
-  color: white;
+    padding:0 clamp(15px,5vw,80px);
 
-  outline: none;
+    background:rgba(3,4,5,.76);
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
 
-  text-align: right;
+    border-bottom:1px solid var(--line);
 }
 
-.search:focus {
-  border-color:
-    rgba(255,193,7,.7);
+.brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+
+    font-size:20px;
+    font-weight:900;
 }
 
-.container {
-  width: min(1400px,94%);
+.brand-logo{
+    width:41px;
+    height:41px;
 
-  margin: auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-  padding:
-    25px 0 50px;
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #24e57f,
+            #087f47
+        );
+
+    box-shadow:
+        0 8px 30px rgba(32,223,123,.22);
 }
 
-.hero {
-  min-height: 230px;
-
-  border-radius: 22px;
-
-  overflow: hidden;
-
-  padding: 35px;
-
-  margin-bottom: 25px;
-
-  display: flex;
-
-  align-items: center;
-
-  background:
-
-    radial-gradient(
-      circle at 80% 20%,
-      rgba(255,193,7,.18),
-      transparent 35%
-    ),
-
-    linear-gradient(
-      135deg,
-      #171717,
-      #070707
-    );
-
-  border:
-    1px solid rgba(255,255,255,.08);
+.brand-logo i{
+    font-size:18px;
 }
 
-.hero h1 {
-  margin: 0 0 10px;
-
-  font-size:
-    clamp(30px,5vw,55px);
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:8px;
 }
 
-.hero p {
-  margin: 0;
+.header-button{
+    width:41px;
+    height:41px;
 
-  color: #aaa;
+    border:1px solid var(--line);
+    border-radius:12px;
 
-  font-size: 16px;
+    color:#fff;
+    background:rgba(255,255,255,.035);
+
+    cursor:pointer;
+
+    transition:.25s;
 }
 
-.section-title {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  margin: 30px 0 15px;
-
-  font-size: 21px;
-
-  font-weight: 800;
+.header-button:hover{
+    background:rgba(255,255,255,.09);
+    transform:translateY(-2px);
 }
 
-.channels {
-  display: grid;
 
-  grid-template-columns:
-    repeat(
-      auto-fill,
-      minmax(180px,1fr)
-    );
+/* =========================================================
+   MAIN
+========================================================= */
 
-  gap: 14px;
-}
+.container{
+    width:min(1480px,100%);
+    margin:auto;
 
-.channel {
-  position: relative;
-
-  min-height: 120px;
-
-  padding: 18px;
-
-  border-radius: 17px;
-
-  cursor: pointer;
-
-  background:
-    linear-gradient(
-      145deg,
-      #171717,
-      #0b0b0b
-    );
-
-  border:
-    1px solid rgba(255,255,255,.07);
-
-  transition:
-    transform .2s,
-    border-color .2s,
-    background .2s;
-}
-
-.channel:hover {
-  transform:
-    translateY(-3px);
-
-  border-color:
-    rgba(255,193,7,.5);
-
-  background:
-    linear-gradient(
-      145deg,
-      #202020,
-      #0c0c0c
-    );
-}
-
-.channel-number {
-  position: absolute;
-
-  top: 10px;
-  left: 10px;
-
-  font-size: 11px;
-
-  color: #777;
-}
-
-.channel-logo {
-  width: 55px;
-  height: 55px;
-
-  object-fit: contain;
-
-  margin-bottom: 10px;
-
-  display: block;
-}
-
-.channel-name {
-  font-size: 15px;
-
-  font-weight: 700;
-
-  white-space: nowrap;
-
-  overflow: hidden;
-
-  text-overflow: ellipsis;
-}
-
-.status {
-  margin-top: 6px;
-
-  font-size: 11px;
-
-  color: #777;
-}
-
-.status.live {
-  color: #4caf50;
-}
-
-.empty {
-  padding: 50px;
-
-  text-align: center;
-
-  color: #777;
-}
-
-#player {
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 9999;
-
-  display: none;
-
-  background: #000;
-}
-
-#player.active {
-  display: block;
-}
-
-#video {
-  width: 100%;
-  height: 100%;
-
-  object-fit: contain;
-
-  background: #000;
-}
-
-.player-top {
-  position: absolute;
-
-  top: 0;
-
-  right: 0;
-  left: 0;
-
-  z-index: 20;
-
-  padding: 18px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  background:
-    linear-gradient(
-      #000c,
-      transparent
-    );
-}
-
-.player-title {
-  font-size: 18px;
-
-  font-weight: 700;
-}
-
-.player-close {
-  width: 42px;
-  height: 42px;
-
-  border: 0;
-
-  border-radius: 50%;
-
-  background:
-    #ffffff15;
-
-  color: white;
-
-  cursor: pointer;
-
-  font-size: 18px;
-}
-
-.spinner {
-  position: absolute;
-
-  top: 50%;
-  left: 50%;
-
-  width: 48px;
-  height: 48px;
-
-  margin:
-    -24px 0 0 -24px;
-
-  border:
-    4px solid #ffffff20;
-
-  border-top-color:
-    #ffc107;
-
-  border-radius: 50%;
-
-  animation:
-    spin .8s linear infinite;
-
-  display: none;
-
-  z-index: 15;
-}
-
-.spinner.show {
-  display: block;
-}
-
-@keyframes spin {
-  to {
-    transform:
-      rotate(360deg);
-  }
-}
-
-.player-error {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 30;
-
-  display: none;
-
-  align-items: center;
-
-  justify-content: center;
-
-  flex-direction: column;
-
-  text-align: center;
-
-  padding: 25px;
-
-  background:
-    #000e;
-}
-
-.player-error.show {
-  display: flex;
-}
-
-.player-error h2 {
-  margin-bottom: 10px;
-}
-
-.player-error p {
-  color: #aaa;
-
-  max-width: 550px;
-
-  line-height: 1.8;
-}
-
-.retry {
-  border: 0;
-
-  padding:
-    11px 25px;
-
-  border-radius: 10px;
-
-  background:
-    #ffc107;
-
-  color:
-    #000;
-
-  font-weight:
-    800;
-
-  cursor:
-    pointer;
-}
-
-@media(max-width:700px) {
-
-  .header {
     padding:
-      0 12px;
-  }
+        clamp(30px,5vw,65px)
+        clamp(14px,4vw,45px)
+        90px;
+}
 
-  .brand {
-    font-size:
-      18px;
-  }
 
-  .brand img {
-    width:
-      38px;
+/* =========================================================
+   MATCH HERO
+========================================================= */
 
-    height:
-      38px;
-  }
+.competition{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
 
-  .search {
-    width:
-      48vw;
-  }
+    color:#aab2b9;
 
-  .hero {
-    padding:
-      25px;
-  }
+    font-size:13px;
+    font-weight:700;
 
-  .channels {
+    margin-bottom:15px;
+}
+
+.competition i{
+    color:var(--gold);
+}
+
+.live-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+
+    padding:5px 10px;
+
+    color:#ff6478;
+
+    border:1px solid rgba(255,61,88,.22);
+    border-radius:50px;
+
+    background:rgba(255,61,88,.08);
+
+    font-size:10px;
+    font-weight:800;
+}
+
+.live-dot{
+    width:6px;
+    height:6px;
+
+    background:var(--red);
+    border-radius:50%;
+
+    box-shadow:0 0 12px var(--red);
+
+    animation:livePulse 1.2s infinite;
+}
+
+@keyframes livePulse{
+    50%{
+        opacity:.3;
+        transform:scale(.65);
+    }
+}
+
+.match-heading{
+    text-align:center;
+}
+
+.match-heading h1{
+    font-size:clamp(28px,4vw,52px);
+    line-height:1.15;
+    font-weight:900;
+    letter-spacing:-1.5px;
+}
+
+.match-heading p{
+    color:var(--muted);
+
+    font-size:13px;
+
+    margin-top:9px;
+}
+
+
+/* =========================================================
+   TEAMS
+========================================================= */
+
+.teams{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    gap:clamp(35px,10vw,150px);
+
+    margin:45px 0 38px;
+}
+
+.team{
+    width:180px;
+
+    text-align:center;
+}
+
+.team-logo{
+    width:125px;
+    height:125px;
+
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 25%,
+            #fff,
+            #e8e8e8 52%,
+            #b9b9b9
+        );
+
+    border:1px solid rgba(255,255,255,.65);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.52),
+        inset 0 0 0 5px rgba(255,255,255,.15);
+}
+
+.team-logo img{
+    width:86%;
+    height:86%;
+    object-fit:contain;
+}
+
+.team-name{
+    margin-top:15px;
+
+    font-size:18px;
+    font-weight:900;
+}
+
+.team-location{
+    color:var(--muted2);
+
+    margin-top:4px;
+
+    font-size:11px;
+}
+
+.score-area{
+    min-width:150px;
+
+    text-align:center;
+}
+
+.score{
+    font-size:64px;
+    line-height:1;
+
+    font-weight:900;
+    letter-spacing:-4px;
+}
+
+.score-status{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:6px;
+
+    margin-top:12px;
+
+    color:var(--green);
+
+    font-size:12px;
+    font-weight:800;
+}
+
+.score-status i{
+    font-size:6px;
+}
+
+
+/* =========================================================
+   PLAYER
+========================================================= */
+
+.player-wrapper{
+    margin-top:10px;
+}
+
+.player{
+    position:relative;
+
+    width:100%;
+    aspect-ratio:16 / 9;
+
+    min-height:280px;
+
+    overflow:hidden;
+
+    background:#000;
+
+    border-radius:var(--radius);
+
+    border:1px solid rgba(255,255,255,.09);
+
+    box-shadow:
+        0 40px 120px rgba(0,0,0,.68),
+        0 0 0 1px rgba(255,255,255,.015);
+}
+
+#video{
+    width:100%;
+    height:100%;
+
+    display:block;
+
+    background:#000;
+
+    object-fit:contain;
+}
+
+.player.fullscreen{
+    border-radius:0;
+}
+
+
+/* =========================================================
+   PLAYER BACKDROP
+========================================================= */
+
+.player-vignette{
+    position:absolute;
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.58),
+            transparent 25%
+        ),
+        linear-gradient(
+            to top,
+            rgba(0,0,0,.92),
+            transparent 35%
+        );
+}
+
+
+/* =========================================================
+   PLAYER TOP
+========================================================= */
+
+.player-top{
+    position:absolute;
+
+    top:18px;
+    left:18px;
+    right:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    z-index:5;
+}
+
+.broadcast{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    padding:9px 13px;
+
+    border-radius:11px;
+
+    background:rgba(0,0,0,.48);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    backdrop-filter:blur(14px);
+
+    font-size:11px;
+    font-weight:800;
+}
+
+.broadcast i{
+    color:var(--green);
+}
+
+.player-top-actions{
+    display:flex;
+    gap:7px;
+}
+
+.player-action{
+    width:40px;
+    height:40px;
+
+    border-radius:11px;
+
+    color:#fff;
+
+    border:1px solid rgba(255,255,255,.12);
+
+    background:rgba(0,0,0,.48);
+
+    backdrop-filter:blur(14px);
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.player-action:hover{
+    background:rgba(255,255,255,.13);
+    transform:translateY(-1px);
+}
+
+
+/* =========================================================
+   CENTER PLAY
+========================================================= */
+
+.center-control{
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    z-index:4;
+
+    pointer-events:none;
+}
+
+.main-play{
+    width:82px;
+    height:82px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    color:#fff;
+
+    border:1px solid rgba(255,255,255,.28);
+
+    background:rgba(8,12,15,.64);
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.6);
+
+    cursor:pointer;
+
+    pointer-events:auto;
+
+    font-size:25px;
+
+    padding-right:0;
+
+    transition:
+        transform .25s,
+        background .25s,
+        box-shadow .25s;
+}
+
+.main-play:hover{
+    transform:scale(1.08);
+
+    background:var(--green);
+
+    box-shadow:
+        0 15px 60px rgba(32,223,123,.3);
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading{
+    position:absolute;
+
+    inset:0;
+
+    z-index:20;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#000;
+}
+
+.loading-content{
+    text-align:center;
+}
+
+.spinner{
+    width:48px;
+    height:48px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    border:3px solid rgba(255,255,255,.11);
+    border-top-color:var(--green);
+
+    animation:spin .75s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.loading-text{
+    margin-top:16px;
+
+    color:#8b949c;
+
+    font-size:12px;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.player-error{
+    position:absolute;
+
+    inset:0;
+
+    z-index:30;
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    background:#000;
+}
+
+.error-content{
+    text-align:center;
+
+    padding:25px;
+}
+
+.error-icon{
+    width:55px;
+    height:55px;
+
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:16px;
+
+    background:rgba(255,61,88,.1);
+
+    color:var(--red);
+
+    font-size:20px;
+}
+
+.error-title{
+    margin-top:14px;
+
+    font-size:15px;
+    font-weight:900;
+}
+
+.error-text{
+    color:var(--muted);
+
+    margin-top:7px;
+
+    font-size:11px;
+}
+
+
+/* =========================================================
+   PLAYER CONTROLS
+========================================================= */
+
+.controls{
+    position:absolute;
+
+    bottom:0;
+    left:0;
+    right:0;
+
+    z-index:6;
+
+    padding:14px 18px 17px;
+}
+
+.progress{
+    height:4px;
+
+    width:100%;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.18);
+
+    cursor:pointer;
+
+    overflow:hidden;
+}
+
+.progress-value{
+    height:100%;
+
+    width:0%;
+
+    background:var(--green);
+
+    box-shadow:
+        0 0 15px rgba(32,223,123,.7);
+}
+
+.control-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-top:9px;
+}
+
+.control-group{
+    display:flex;
+    align-items:center;
+    gap:3px;
+}
+
+.control{
+    width:38px;
+    height:36px;
+
+    border:0;
+
+    border-radius:8px;
+
+    background:transparent;
+
+    color:#fff;
+
+    cursor:pointer;
+}
+
+.control:hover{
+    background:rgba(255,255,255,.1);
+}
+
+.live-indicator{
+    margin-right:7px;
+
+    padding:5px 9px;
+
+    border-radius:6px;
+
+    color:#fff;
+
+    background:rgba(255,61,88,.85);
+
+    font-size:9px;
+    font-weight:900;
+}
+
+
+/* =========================================================
+   SERVERS
+========================================================= */
+
+.server-panel{
+    margin-top:14px;
+
+    padding:16px;
+
+    border:1px solid var(--line);
+
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.035),
+            rgba(255,255,255,.015)
+        );
+}
+
+.server-title{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    margin-bottom:12px;
+
+    font-size:12px;
+    font-weight:900;
+}
+
+.server-title i{
+    color:var(--green);
+}
+
+.server-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.server{
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    padding:10px 14px;
+
+    border:1px solid var(--line);
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,.025);
+
+    color:#aeb6bd;
+
+    cursor:pointer;
+
+    font-size:11px;
+    font-weight:800;
+
+    transition:.2s;
+}
+
+.server i{
+    font-size:9px;
+}
+
+.server:hover{
+    border-color:rgba(32,223,123,.3);
+
+    color:#fff;
+
+    background:rgba(32,223,123,.07);
+}
+
+.server.active{
+    color:var(--green);
+
+    border-color:rgba(32,223,123,.35);
+
+    background:rgba(32,223,123,.1);
+}
+
+
+/* =========================================================
+   MATCH INFO
+========================================================= */
+
+.info-grid{
+    display:grid;
+
     grid-template-columns:
-      repeat(2,1fr);
-  }
+        repeat(4,1fr);
+
+    gap:11px;
+
+    margin-top:25px;
+}
+
+.info-card{
+    min-height:78px;
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    padding:16px;
+
+    border:1px solid var(--line);
+
+    border-radius:15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--surface2),
+            #080b0e
+        );
+}
+
+.info-icon{
+    width:42px;
+    height:42px;
+
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    color:var(--green);
+
+    background:rgba(32,223,123,.08);
+}
+
+.info-label{
+    color:var(--muted2);
+
+    font-size:10px;
+}
+
+.info-value{
+    margin-top:4px;
+
+    font-size:12px;
+    font-weight:900;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.navigation{
+    display:flex;
+    justify-content:center;
+
+    margin-top:42px;
+
+    border-bottom:1px solid var(--line);
+}
+
+.tab{
+    position:relative;
+
+    padding:15px 27px;
+
+    border:0;
+
+    background:transparent;
+
+    color:#68717a;
+
+    cursor:pointer;
+
+    font-size:12px;
+    font-weight:900;
+}
+
+.tab i{
+    margin-left:6px;
+}
+
+.tab.active{
+    color:#fff;
+}
+
+.tab.active::after{
+    content:"";
+
+    position:absolute;
+
+    right:18%;
+    left:18%;
+    bottom:-1px;
+
+    height:2px;
+
+    background:var(--green);
+
+    box-shadow:
+        0 0 14px rgba(32,223,123,.7);
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content{
+    max-width:1100px;
+
+    margin:30px auto 0;
+}
+
+.tab-content{
+    display:none;
+
+    animation:contentIn .3s ease;
+}
+
+.tab-content.active{
+    display:block;
+}
+
+@keyframes contentIn{
+    from{
+        opacity:0;
+        transform:translateY(7px);
+    }
+
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.section-title{
+    margin-bottom:18px;
+
+    font-size:18px;
+    font-weight:900;
+}
+
+.section-title i{
+    color:var(--green);
+
+    margin-left:6px;
+}
+
+
+/* =========================================================
+   EVENTS TIMELINE
+========================================================= */
+
+.timeline{
+    position:relative;
+
+    padding-right:28px;
+}
+
+.timeline::before{
+    content:"";
+
+    position:absolute;
+
+    top:5px;
+    bottom:5px;
+
+    right:8px;
+
+    width:1px;
+
+    background:rgba(255,255,255,.09);
+}
+
+.event{
+    position:relative;
+
+    display:flex;
+    align-items:center;
+
+    min-height:65px;
+
+    margin-bottom:10px;
+
+    padding:13px 16px;
+
+    border:1px solid var(--line);
+
+    border-radius:14px;
+
+    background:var(--surface);
+}
+
+.event::before{
+    content:"";
+
+    position:absolute;
+
+    right:-24px;
+
+    width:9px;
+    height:9px;
+
+    border-radius:50%;
+
+    background:var(--green);
+
+    box-shadow:
+        0 0 15px rgba(32,223,123,.65);
+}
+
+.event-time{
+    width:55px;
+
+    color:var(--muted2);
+
+    font-size:11px;
+    font-weight:800;
+}
+
+.event-icon{
+    width:38px;
+    height:38px;
+
+    margin-left:13px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,.05);
+
+    color:var(--green);
+}
+
+.event-info{
+    font-size:12px;
+    font-weight:800;
+}
+
+.event-sub{
+    margin-top:3px;
+
+    color:var(--muted2);
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   LINEUPS
+========================================================= */
+
+.lineup-grid{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:14px;
+}
+
+.lineup-card{
+    padding:20px;
+
+    border:1px solid var(--line);
+
+    border-radius:17px;
+
+    background:var(--surface);
+}
+
+.lineup-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding-bottom:15px;
+
+    margin-bottom:5px;
+
+    border-bottom:1px solid var(--line);
+
+    font-size:14px;
+    font-weight:900;
+}
+
+.lineup-header i{
+    color:var(--green);
+}
+
+.player-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:11px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.045);
+
+    color:#b6bec5;
+
+    font-size:12px;
+}
+
+.player-row:last-child{
+    border-bottom:0;
+}
+
+.player-number{
+    width:27px;
+    height:27px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:7px;
+
+    background:rgba(255,255,255,.045);
+
+    color:#858e96;
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats-card{
+    padding:23px;
+
+    border:1px solid var(--line);
+
+    border-radius:17px;
+
+    background:var(--surface);
+}
+
+.stat{
+    margin-bottom:23px;
+}
+
+.stat:last-child{
+    margin-bottom:0;
+}
+
+.stat-top{
+    display:flex;
+    justify-content:space-between;
+
+    margin-bottom:8px;
+
+    font-size:12px;
+    font-weight:800;
+}
+
+.stat-top span:first-child{
+    color:#aeb6bd;
+}
+
+.stat-bar{
+    height:7px;
+
+    overflow:hidden;
+
+    border-radius:20px;
+
+    background:#181d22;
+}
+
+.stat-value{
+    height:100%;
+
+    width:50%;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--green2),
+            var(--green)
+        );
+}
+
+
+/* =========================================================
+   NEWS
+========================================================= */
+
+.news-item{
+    display:flex;
+    align-items:center;
+
+    gap:13px;
+
+    padding:16px;
+
+    margin-bottom:9px;
+
+    border:1px solid var(--line);
+
+    border-radius:15px;
+
+    background:var(--surface);
+}
+
+.news-icon{
+    width:43px;
+    height:43px;
+
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    color:var(--green);
+
+    background:rgba(32,223,123,.07);
+}
+
+.news-title{
+    font-size:12px;
+    font-weight:900;
+}
+
+.news-meta{
+    margin-top:4px;
+
+    color:var(--muted2);
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+    padding:28px;
+
+    text-align:center;
+
+    border-top:1px solid var(--line);
+
+    color:#4e575f;
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:900px){
+
+    .info-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .lineup-grid{
+        grid-template-columns:1fr;
+    }
+
+    .team{
+        width:125px;
+    }
+
+    .team-logo{
+        width:95px;
+        height:95px;
+    }
+
+    .score{
+        font-size:47px;
+    }
+
+    .teams{
+        gap:25px;
+    }
+}
+
+
+@media(max-width:600px){
+
+    .header{
+        height:62px;
+    }
+
+    .brand{
+        font-size:17px;
+    }
+
+    .brand-logo{
+        width:37px;
+        height:37px;
+    }
+
+    .container{
+        padding-top:30px;
+        padding-left:10px;
+        padding-right:10px;
+    }
+
+    .match-heading h1{
+        font-size:27px;
+    }
+
+    .teams{
+        gap:7px;
+
+        margin-top:35px;
+        margin-bottom:30px;
+    }
+
+    .team{
+        width:105px;
+    }
+
+    .team-logo{
+        width:76px;
+        height:76px;
+    }
+
+    .team-name{
+        font-size:13px;
+    }
+
+    .team-location{
+        font-size:9px;
+    }
+
+    .score-area{
+        min-width:65px;
+    }
+
+    .score{
+        font-size:36px;
+        letter-spacing:-2px;
+    }
+
+    .score-status{
+        font-size:9px;
+    }
+
+    .player{
+        aspect-ratio:16/10;
+        min-height:210px;
+
+        border-radius:13px;
+    }
+
+    .player-top{
+        top:9px;
+        left:9px;
+        right:9px;
+    }
+
+    .player-action{
+        width:34px;
+        height:34px;
+    }
+
+    .broadcast{
+        padding:7px 9px;
+        font-size:9px;
+    }
+
+    .main-play{
+        width:62px;
+        height:62px;
+
+        font-size:19px;
+    }
+
+    .controls{
+        padding:10px 10px 12px;
+    }
+
+    .control{
+        width:34px;
+    }
+
+    .server-panel{
+        padding:12px;
+    }
+
+    .server{
+        padding:8px 11px;
+    }
+
+    .info-card{
+        min-height:68px;
+        padding:11px;
+    }
+
+    .info-icon{
+        width:35px;
+        height:35px;
+    }
+
+    .info-value{
+        font-size:10px;
+    }
+
+    .navigation{
+        justify-content:flex-start;
+        overflow-x:auto;
+    }
+
+    .tab{
+        flex-shrink:0;
+
+        padding:14px 17px;
+
+        font-size:10px;
+    }
+
+    .content{
+        margin-top:22px;
+    }
+
+    .timeline{
+        padding-right:23px;
+    }
 
 }
 
-</style>
 
+/* =========================================================
+   TV / LARGE SCREEN
+========================================================= */
+
+@media(min-width:1600px){
+
+    .container{
+        max-width:1600px;
+    }
+
+    .player{
+        max-height:820px;
+    }
+
+    .team-logo{
+        width:145px;
+        height:145px;
+    }
+
+    .team{
+        width:210px;
+    }
+}
+
+
+/* =========================================================
+   TRUE FULLSCREEN
+========================================================= */
+
+.player:fullscreen{
+    width:100vw;
+    height:100vh;
+
+    aspect-ratio:auto;
+
+    border-radius:0;
+}
+
+.player:-webkit-full-screen{
+    width:100vw;
+    height:100vh;
+
+    border-radius:0;
+}
+</style>
 </head>
 
 <body>
 
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
 <header class="header">
 
-  <div class="brand">
+    <div class="brand">
 
-    <img
-      src="https://h.top4top.io/p_3889g97e91.jpg"
-      alt="بالتسعين"
-    >
+        <div class="brand-logo">
+            <i class="fa-solid fa-futbol"></i>
+        </div>
 
-    <span>
-      بالتسعين
-    </span>
+        <span>بالتسعين</span>
 
-  </div>
+    </div>
 
-  <input
-    id="search"
-    class="search"
-    type="search"
-    placeholder="ابحث عن قناة..."
-    autocomplete="off"
-  >
+
+    <div class="header-right">
+
+        <button
+            class="header-button"
+            onclick="shareMatch()"
+            aria-label="مشاركة">
+
+            <i class="fa-solid fa-share-nodes"></i>
+
+        </button>
+
+
+        <button
+            class="header-button"
+            onclick="favoriteMatch(this)"
+            aria-label="المفضلة">
+
+            <i class="fa-regular fa-heart"></i>
+
+        </button>
+
+    </div>
 
 </header>
 
 
+
 <main class="container">
 
-  <section class="hero">
 
-    <div>
+<!-- =====================================================
+     MATCH HERO
+===================================================== -->
 
-      <h1>
-        بالتسعين
-      </h1>
+<section>
 
-      <p>
-        أجواء الكرة العراقية وذكريات التسعينات
-        بهوية رياضية عراقية مختلفة.
-      </p>
+    <div class="competition">
+
+        <i class="fa-solid fa-trophy"></i>
+
+        دوري روشن السعودي
+
+        <span class="live-badge">
+
+            <span class="live-dot"></span>
+
+            مباشر
+
+        </span>
 
     </div>
 
-  </section>
 
+    <div class="match-heading">
 
-  <div class="section-title">
+        <h1>
+            الأهلي السعودي × الهلال السعودي
+        </h1>
 
-    <span>
-      القنوات
-    </span>
+        <p>
+            تغطية مباشرة • مباراة القمة السعودية
+        </p>
 
-    <span
-      id="channelCount"
-      style="
-        color:#777;
-        font-size:13px
-      "
-    >
-      0 قناة
-    </span>
-
-  </div>
-
-
-  <section
-    id="channels"
-    class="channels"
-  ></section>
-
-</main>
-
-
-<div id="player">
-
-  <video
-    id="video"
-    playsinline
-    autoplay
-    muted
-    preload="auto"
-  ></video>
-
-
-  <div class="player-top">
-
-    <div
-      id="playerTitle"
-      class="player-title"
-    >
-      بالتسعين
     </div>
 
-    <button
-      id="closePlayer"
-      class="player-close"
-      aria-label="إغلاق"
-    >
-      ✕
-    </button>
 
-  </div>
+<!-- =====================================================
+     TEAMS
+===================================================== -->
+
+<div class="teams">
 
 
-  <div
-    id="spinner"
-    class="spinner"
-  ></div>
+    <div class="team">
+
+        <div class="team-logo">
+
+            <img
+                src="https://upload.wikimedia.org/wikipedia/en/3/3c/Al-Ahli_Saudi_FC_logo.svg"
+                alt="الأهلي السعودي">
+
+        </div>
+
+        <div class="team-name">
+            الأهلي السعودي
+        </div>
+
+        <div class="team-location">
+            جدة • السعودية
+        </div>
+
+    </div>
 
 
-  <div
-    id="playerError"
-    class="player-error"
-  >
+    <div class="score-area">
 
-    <h2>
-      تعذر تشغيل القناة
-    </h2>
+        <div class="score">
+            0 - 0
+        </div>
 
-    <p id="errorText">
-      حدث خطأ أثناء تحميل البث.
-    </p>
+        <div class="score-status">
 
-    <button
-      id="retry"
-      class="retry"
-    >
-      إعادة المحاولة
-    </button>
+            <i class="fa-solid fa-circle"></i>
 
-  </div>
+            المباراة مباشرة
+
+        </div>
+
+    </div>
+
+
+    <div class="team">
+
+        <div class="team-logo">
+
+            <img
+                src="https://upload.wikimedia.org/wikipedia/en/2/27/Al_Hilal_SFC_logo.svg"
+                alt="الهلال السعودي">
+
+        </div>
+
+        <div class="team-name">
+            الهلال السعودي
+        </div>
+
+        <div class="team-location">
+            الرياض • السعودية
+        </div>
+
+    </div>
+
 
 </div>
 
 
+
+<!-- =====================================================
+     PLAYER
+===================================================== -->
+
+<div class="player-wrapper">
+
+<div class="player" id="player">
+
+
+    <video
+        id="video"
+        playsinline
+        webkit-playsinline
+        preload="auto">
+    </video>
+
+
+    <div
+        class="loading"
+        id="loading">
+
+        <div class="loading-content">
+
+            <div class="spinner"></div>
+
+            <div class="loading-text">
+                جاري الاتصال بالبث المباشر...
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="player-error"
+        id="playerError">
+
+        <div class="error-content">
+
+            <div class="error-icon">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+
+            <div class="error-title">
+                تعذر تشغيل البث
+            </div>
+
+            <div class="error-text">
+                جرّب تغيير سيرفر البث أو إعادة المحاولة
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="player-vignette"></div>
+
+
+<!-- PLAYER TOP -->
+
+<div class="player-top">
+
+    <div class="broadcast">
+
+        <i class="fa-solid fa-satellite-dish"></i>
+
+        البث المباشر
+
+    </div>
+
+
+    <div class="player-top-actions">
+
+        <button
+            class="player-action"
+            onclick="togglePiP()"
+            title="صورة داخل صورة">
+
+            <i class="fa-solid fa-clone"></i>
+
+        </button>
+
+
+        <button
+            class="player-action"
+            onclick="toggleFullscreen()"
+            title="ملء الشاشة">
+
+            <i
+                id="fullscreenIcon"
+                class="fa-solid fa-expand">
+            </i>
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- CENTER PLAY -->
+
+<div class="center-control">
+
+    <button
+        class="main-play"
+        id="mainPlay"
+        onclick="togglePlay()">
+
+        <i class="fa-solid fa-play"></i>
+
+    </button>
+
+</div>
+
+
+<!-- CONTROLS -->
+
+<div class="controls">
+
+    <div
+        class="progress"
+        id="progressArea">
+
+        <div
+            class="progress-value"
+            id="progressValue">
+        </div>
+
+    </div>
+
+
+    <div class="control-row">
+
+
+        <div class="control-group">
+
+            <button
+                class="control"
+                id="playControl"
+                onclick="togglePlay()">
+
+                <i class="fa-solid fa-play"></i>
+
+            </button>
+
+
+            <button
+                class="control"
+                id="muteControl"
+                onclick="toggleMute()">
+
+                <i class="fa-solid fa-volume-high"></i>
+
+            </button>
+
+
+            <span class="live-indicator">
+                LIVE
+            </span>
+
+        </div>
+
+
+        <div class="control-group">
+
+            <button
+                class="control"
+                onclick="togglePiP()">
+
+                <i class="fa-solid fa-clone"></i>
+
+            </button>
+
+
+            <button
+                class="control"
+                onclick="toggleFullscreen()">
+
+                <i class="fa-solid fa-expand"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================================
+     SERVERS
+===================================================== -->
+
+<div class="server-panel">
+
+    <div class="server-title">
+
+        <i class="fa-solid fa-server"></i>
+
+        سيرفرات المشاهدة
+
+    </div>
+
+
+    <div class="server-list">
+
+
+        <button
+            class="server active"
+            onclick="selectServer(this,STREAM_URL)">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            السيرفر 1
+
+        </button>
+
+
+        <button
+            class="server"
+            onclick="serverUnavailable(this)">
+
+            <i class="fa-solid fa-server"></i>
+
+            السيرفر 2
+
+        </button>
+
+
+        <button
+            class="server"
+            onclick="serverUnavailable(this)">
+
+            <i class="fa-solid fa-server"></i>
+
+            السيرفر 3
+
+        </button>
+
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================================
+     MATCH INFO
+===================================================== -->
+
+<div class="info-grid">
+
+
+    <div class="info-card">
+
+        <div class="info-icon">
+
+            <i class="fa-solid fa-calendar-days"></i>
+
+        </div>
+
+        <div>
+
+            <div class="info-label">
+                التاريخ
+            </div>
+
+            <div class="info-value">
+                اليوم
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="info-card">
+
+        <div class="info-icon">
+
+            <i class="fa-solid fa-clock"></i>
+
+        </div>
+
+        <div>
+
+            <div class="info-label">
+                التوقيت
+            </div>
+
+            <div class="info-value">
+                21:00
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="info-card">
+
+        <div class="info-icon">
+
+            <i class="fa-solid fa-location-dot"></i>
+
+        </div>
+
+        <div>
+
+            <div class="info-label">
+                الملعب
+            </div>
+
+            <div class="info-value">
+                مدينة الملك عبدالله
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="info-card">
+
+        <div class="info-icon">
+
+            <i class="fa-solid fa-microphone"></i>
+
+        </div>
+
+        <div>
+
+            <div class="info-label">
+                التعليق
+            </div>
+
+            <div class="info-value">
+                عربي
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav class="navigation">
+
+    <button
+        class="tab active"
+        onclick="openTab(event,'events')">
+
+        <i class="fa-solid fa-bolt"></i>
+
+        أحداث المباراة
+
+    </button>
+
+
+    <button
+        class="tab"
+        onclick="openTab(event,'lineups')">
+
+        <i class="fa-solid fa-users"></i>
+
+        التشكيلة
+
+    </button>
+
+
+    <button
+        class="tab"
+        onclick="openTab(event,'stats')">
+
+        <i class="fa-solid fa-chart-simple"></i>
+
+        الإحصائيات
+
+    </button>
+
+
+    <button
+        class="tab"
+        onclick="openTab(event,'news')">
+
+        <i class="fa-solid fa-newspaper"></i>
+
+        الأخبار
+
+    </button>
+
+</nav>
+
+
+
+<section class="content">
+
+
+<!-- =====================================================
+     EVENTS
+===================================================== -->
+
+<div
+    class="tab-content active"
+    id="events">
+
+    <h2 class="section-title">
+
+        <i class="fa-solid fa-bolt"></i>
+
+        أحداث المباراة
+
+    </h2>
+
+
+    <div class="timeline">
+
+
+        <div class="event">
+
+            <div class="event-time">
+                الآن
+            </div>
+
+            <div class="event-icon">
+
+                <i class="fa-solid fa-play"></i>
+
+            </div>
+
+            <div>
+
+                <div class="event-info">
+                    انطلاق البث المباشر
+                </div>
+
+                <div class="event-sub">
+                    يمكنك مشاهدة المباراة من المشغل أعلاه
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="event">
+
+            <div class="event-time">
+                —'
+            </div>
+
+            <div class="event-icon">
+
+                <i class="fa-solid fa-futbol"></i>
+
+            </div>
+
+            <div>
+
+                <div class="event-info">
+                    لا توجد أهداف حتى الآن
+                </div>
+
+                <div class="event-sub">
+                    سيتم تحديث الأحداث هنا
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     LINEUPS
+===================================================== -->
+
+<div
+    class="tab-content"
+    id="lineups">
+
+    <div class="lineup-grid">
+
+
+        <div class="lineup-card">
+
+            <div class="lineup-header">
+
+                الأهلي السعودي
+
+                <i class="fa-solid fa-shield"></i>
+
+            </div>
+
+
+            <div class="player-row">
+
+                <span>حارس المرمى</span>
+
+                <span class="player-number">
+                    1
+                </span>
+
+            </div>
+
+
+            <div class="player-row">
+
+                <span>قلب الدفاع</span>
+
+                <span class="player-number">
+                    3
+                </span>
+
+            </div>
+
+
+            <div class="player-row">
+
+                <span>خط الوسط</span>
+
+                <span class="player-number">
+                    8
+                </span>
+
+            </div>
+
+
+            <div class="player-row">
+
+                <span>الهجوم</span>
+
+                <span class="player-number">
+                    9
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="lineup-card">
+
+            <div class="lineup-header">
+
+                الهلال السعودي
+
+                <i class="fa-solid fa-shield"></i>
+
+            </div>
+
+
+            <div class="player-row">
+
+                <span>حارس المرمى</span>
+
+                <span class="player-number">
+                    1
+                </span>
+
+            </div>
+
+
+            <div class="player-row">
+
+                <span>قلب الدفاع</span>
+
+                <span class="player-number">
+                    3
+                </span>
+
+            </div>
+
+
+            <div class="player-row">
+
+                <span>خط الوسط</span>
+
+                <span class="player-number">
+                    8
+                </span>
+
+            </div>
+
+
+            <div class="player-row">
+
+                <span>الهجوم</span>
+
+                <span class="player-number">
+                    9
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     STATS
+===================================================== -->
+
+<div
+    class="tab-content"
+    id="stats">
+
+    <h2 class="section-title">
+
+        <i class="fa-solid fa-chart-simple"></i>
+
+        إحصائيات المباراة
+
+    </h2>
+
+
+    <div class="stats-card">
+
+
+        <div class="stat">
+
+            <div class="stat-top">
+
+                <span>
+                    الاستحواذ
+                </span>
+
+                <span>
+                    50% — 50%
+                </span>
+
+            </div>
+
+            <div class="stat-bar">
+
+                <div
+                    class="stat-value"
+                    style="width:50%">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-top">
+
+                <span>
+                    التسديدات
+                </span>
+
+                <span>
+                    0 — 0
+                </span>
+
+            </div>
+
+            <div class="stat-bar">
+
+                <div
+                    class="stat-value"
+                    style="width:50%">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-top">
+
+                <span>
+                    الركنيات
+                </span>
+
+                <span>
+                    0 — 0
+                </span>
+
+            </div>
+
+            <div class="stat-bar">
+
+                <div
+                    class="stat-value"
+                    style="width:50%">
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     NEWS
+===================================================== -->
+
+<div
+    class="tab-content"
+    id="news">
+
+    <h2 class="section-title">
+
+        <i class="fa-solid fa-newspaper"></i>
+
+        أخبار المباراة
+
+    </h2>
+
+
+    <div class="news-item">
+
+        <div class="news-icon">
+
+            <i class="fa-solid fa-bolt"></i>
+
+        </div>
+
+        <div>
+
+            <div class="news-title">
+                الأهلي السعودي × الهلال السعودي
+            </div>
+
+            <div class="news-meta">
+                تغطية مباشرة للمباراة
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="news-item">
+
+        <div class="news-icon">
+
+            <i class="fa-solid fa-tv"></i>
+
+        </div>
+
+        <div>
+
+            <div class="news-title">
+                البث المباشر متوفر الآن
+            </div>
+
+            <div class="news-meta">
+                بالتسعين
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</section>
+
+</main>
+
+
+
+<footer class="footer">
+
+    © 2026 بالتسعين — جميع الحقوق محفوظة
+
+</footer>
+
+
+
 <script>
 
-"use strict";
+/* =========================================================
+   STREAM URL
+   ========================================================= */
+
+const STREAM_URL =
+"https://akamai-live.servers8.com/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJTT0xha2JlaFpvZGIxWUc1UFJHWTZKeVpmaTgyIiwiY2hhbm5lbE5hbWUiOiJjaDExIiwiaXAiOiIxNTAuMjI4LjExLjE5MyIsImlwX3Y0IjoiMTUwLjIyOC4xMS4xOTMiLCJpcF92NiI6IiIsInVzZXJBZ2VudCI6Ik1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDEwLjA7IFdpbjY0OyB4NjQ7IHJ2OjE1NC4wKSBHZWNrby8yMDEwMDEwMSBGaXJlZm94LzE1NC4wIiwiaGFzU3Vic2NyaXB0aW9ucyI6ZmFsc2UsIm5iZiI6MTc4ODI4MDM0OCwiZXhwIjoxNzg4MzI3MjA4LCJnZW9CeXBhc3MiOmZhbHNlIiwiaWF0IjoxNzg4MjgwNDA4fQ.oB4ue-tq9MSHpXNXX4lNSk_OE3CHdxqkPDXffJXUzrY/live/ch11/index.m3u8?aws.manifestfilter=video_codec:h265;video_dynamic_range:sdr;video_framerate:50;video_height:1-2160";
 
 
-/* ==========================================
-   CONFIG
-========================================== */
-
-const CONFIG = {
-
-  M3U_URL:
-    "https://raw.githubusercontent.com/zezo81795-cell/IO/refs/heads/main/BEINSPORTS.M3U",
-
-  ALWAN_COUNT:
-    20,
-
-  ALWAN_BASE:
-    "https://script1.tvkaidn.workers.dev/alwan",
-
-  PROXY_URL:
-    "https://shabakaty.haldlym07.workers.dev"
-
-};
-
-
-/* ==========================================
-   العناصر
-========================================== */
-
-const channelsEl =
-  document.getElementById(
-    "channels"
-  );
-
-const searchEl =
-  document.getElementById(
-    "search"
-  );
-
-const channelCountEl =
-  document.getElementById(
-    "channelCount"
-  );
-
-const playerEl =
-  document.getElementById(
-    "player"
-  );
+/* =========================================================
+   ELEMENTS
+========================================================= */
 
 const video =
-  document.getElementById(
-    "video"
-  );
+    document.getElementById("video");
 
-const playerTitle =
-  document.getElementById(
-    "playerTitle"
-  );
+const player =
+    document.getElementById("player");
 
-const spinner =
-  document.getElementById(
-    "spinner"
-  );
+const loading =
+    document.getElementById("loading");
 
 const playerError =
-  document.getElementById(
-    "playerError"
-  );
+    document.getElementById("playerError");
 
-const errorText =
-  document.getElementById(
-    "errorText"
-  );
+const progressValue =
+    document.getElementById("progressValue");
 
+const playControl =
+    document.getElementById("playControl");
 
-let player = null;
+const mainPlay =
+    document.getElementById("mainPlay");
 
-let allChannels = [];
+const muteControl =
+    document.getElementById("muteControl");
 
-let currentChannel = null;
+const fullscreenIcon =
+    document.getElementById("fullscreenIcon");
 
-
-/* ==========================================
-   Shaka
-========================================== */
-
-shaka.polyfill.installAll();
+let hls = null;
 
 
-if (
-  !shaka.Player.isBrowserSupported()
-) {
+/* =========================================================
+   LOAD STREAM
+========================================================= */
 
-  alert(
-    "المتصفح لا يدعم تشغيل البث."
-  );
+function loadStream(url){
 
-}
+    playerError.style.display="none";
 
-
-player =
-  new shaka.Player(video);
+    loading.style.display="flex";
 
 
-/* ==========================================
-   إعداد المشغل
-========================================== */
+    if(hls){
 
-player.configure({
+        hls.destroy();
 
-  streaming: {
-
-    rebufferingGoal: 2,
-
-    bufferingGoal: 10,
-
-    bufferBehind: 30,
-
-    retryParameters: {
-
-      maxAttempts: 5,
-
-      baseDelay: 500,
-
-      backoffFactor: 1.5,
-
-      fuzzFactor: .5,
-
-      timeout: 10000
+        hls=null;
 
     }
 
-  },
 
-  abr: {
-
-    enabled: true,
-
-    defaultBandwidthEstimate:
-      3000000
-
-  },
-
-  manifest: {
-
-    dash: {
-
-      ignoreMinBufferTime:
-        true
-
-    },
-
-    hls: {
-
-      ignoreTextStreamFailures:
-        true
-
-    }
-
-  }
-
-});
-
-
-/* ==========================================
-   Proxy
-========================================== */
-
-function proxyUrl(url) {
-
-  if (!url) {
-    return "";
-  }
-
-  const worker =
-    CONFIG.PROXY_URL
-      .replace(/\/+$/, "");
-
-  /*
-   * كل HTTP يمر عبر Worker
-   */
-
-  if (
-    url
-      .toLowerCase()
-      .startsWith("http://")
-  ) {
-
-    return (
-      worker +
-      "/proxy?url=" +
-      encodeURIComponent(url)
-    );
-
-  }
-
-  /*
-   * M3U8 HTTPS المباشر
-   */
-
-  if (
-    url
-      .toLowerCase()
-      .startsWith("https://")
-  ) {
-
-    return url;
-
-  }
-
-  return url;
-
-}
-
-
-/* ==========================================
-   تحميل M3U
-========================================== */
-
-async function loadM3U() {
-
-  try {
-
-    const response =
-      await fetch(
-        CONFIG.M3U_URL,
-        {
-          cache:
-            "no-store"
-        }
-      );
-
-    if (!response.ok) {
-
-      throw new Error(
-        "M3U HTTP " +
-        response.status
-      );
-
-    }
-
-    const text =
-      await response.text();
-
-    const parsed =
-      parseM3U(text);
-
-    allChannels =
-      allChannels.concat(
-        parsed
-      );
-
-  } catch (error) {
-
-    console.error(
-      "M3U error:",
-      error
-    );
-
-  }
-
-}
-
-
-/* ==========================================
-   Parse M3U
-========================================== */
-
-function parseM3U(text) {
-
-  const lines =
-    text
-      .split(/\r?\n/)
-      .map(
-        x => x.trim()
-      )
-      .filter(Boolean);
-
-  const result = [];
-
-  let info = null;
-
-  for (
-    let i = 0;
-    i < lines.length;
-    i++
-  ) {
-
-    const line =
-      lines[i];
-
-    if (
-      line.startsWith(
-        "#EXTINF:"
-      )
-    ) {
-
-      info = line;
-
-      continue;
-
-    }
-
-    if (
-      !line.startsWith("#") &&
-      info
-    ) {
-
-      const url =
-        line;
-
-      const name =
-        getAttribute(
-          info,
-          "tvg-name"
-        ) ||
-        getName(info) ||
-        "قناة";
-
-      const logo =
-        getAttribute(
-          info,
-          "tvg-logo"
-        ) ||
-        "";
-
-      result.push({
-
-        name,
-
-        logo,
-
-        url,
-
-        type:
-          "m3u"
-
-      });
-
-      info = null;
-
-    }
-
-  }
-
-  return result;
-
-}
-
-
-/* ==========================================
-   اسم القناة
-========================================== */
-
-function getName(line) {
-
-  const comma =
-    line.indexOf(",");
-
-  if (
-    comma === -1
-  ) {
-
-    return "قناة";
-
-  }
-
-  return line
-    .substring(
-      comma + 1
-    )
-    .trim();
-
-}
-
-
-/* ==========================================
-   Attribute
-========================================== */
-
-function getAttribute(
-  line,
-  attribute
-) {
-
-  const regex =
-    new RegExp(
-      attribute +
-      '="([^"]*)"',
-      "i"
-    );
-
-  const match =
-    line.match(
-      regex
-    );
-
-  return match
-    ? match[1]
-    : "";
-
-}
-
-
-/* ==========================================
-   قنوات ألوان
-========================================== */
-
-function addAlwanChannels() {
-
-  for (
-    let i = 1;
-    i <= CONFIG.ALWAN_COUNT;
-    i++
-  ) {
-
-    allChannels.push({
-
-      name:
-        "ألوان " + i,
-
-      logo:
-        "",
-
-      url:
-        CONFIG.ALWAN_BASE +
-        i +
-        ".m3u8",
-
-      type:
-        "alwan"
-
-    });
-
-  }
-
-}
-
-
-/* ==========================================
-   رسم القنوات
-========================================== */
-
-function renderChannels(
-  channels
-) {
-
-  channelsEl.innerHTML =
-    "";
-
-  channelCountEl.textContent =
-    channels.length +
-    " قناة";
-
-  if (
-    !channels.length
-  ) {
-
-    channelsEl.innerHTML =
-      `
-      <div class="empty">
-        لا توجد قنوات.
-      </div>
-      `;
-
-    return;
-
-  }
-
-  channels.forEach(
-    (
-      channel,
-      index
-    ) => {
-
-      const card =
-        document.createElement(
-          "article"
+    /*
+       Native HLS
+       Safari / compatible browsers
+    */
+
+    if(
+        video.canPlayType(
+            "application/vnd.apple.mpegurl"
+        )
+    ){
+
+        video.src=url;
+
+        video.addEventListener(
+            "loadedmetadata",
+            onStreamReady,
+            {once:true}
         );
 
-      card.className =
-        "channel";
-
-      const logo =
-        channel.logo
-          ? `
-            <img
-              class="channel-logo"
-              src="${escapeHTML(channel.logo)}"
-              loading="lazy"
-              onerror="
-                this.style.display='none'
-              "
-            >
-          `
-          : `
-            <div
-              class="channel-logo"
-              style="
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                font-size:25px;
-                opacity:.5
-              "
-            >
-              TV
-            </div>
-          `;
-
-      card.innerHTML = `
-
-        <span class="channel-number">
-          ${index + 1}
-        </span>
-
-        ${logo}
-
-        <div class="channel-name">
-          ${escapeHTML(
-            channel.name
-          )}
-        </div>
-
-        <div class="status live">
-          ● متاحة للمشاهدة
-        </div>
-
-      `;
-
-      card.addEventListener(
-        "click",
-        () => {
-
-          openChannel(
-            channel
-          );
-
-        }
-      );
-
-      channelsEl.appendChild(
-        card
-      );
-
-    }
-  );
-
-}
-
-
-/* ==========================================
-   تشغيل القناة
-========================================== */
-
-async function openChannel(
-  channel
-) {
-
-  currentChannel =
-    channel;
-
-  playerEl.classList.add(
-    "active"
-  );
-
-  playerTitle.textContent =
-    channel.name;
-
-  playerError.classList.remove(
-    "show"
-  );
-
-  spinner.classList.add(
-    "show"
-  );
-
-  try {
-
-    await player.unload();
-
-    const stream =
-      proxyUrl(
-        channel.url
-      );
-
-    console.log(
-      "[PLAYER]",
-      channel.name
-    );
-
-    console.log(
-      "[URL]",
-      stream
-    );
-
-    await player.load(
-      stream
-    );
-
-    try {
-
-      await video.play();
-
-    } catch (
-      autoplayError
-    ) {
-
-      console.warn(
-        "Autoplay blocked",
-        autoplayError
-      );
+        return;
 
     }
 
-    spinner.classList.remove(
-      "show"
-    );
 
-  } catch (
-    error
-  ) {
+    /*
+       HLS.js
+    */
 
-    console.error(
-      "[PLAYBACK ERROR]",
-      error
-    );
+    if(
+        typeof Hls !== "undefined" &&
+        Hls.isSupported()
+    ){
 
-    spinner.classList.remove(
-      "show"
-    );
+        hls=new Hls({
 
-    showPlayerError(
-      error
-    );
+            enableWorker:true,
 
-  }
+            lowLatencyMode:true,
 
-}
+            backBufferLength:30,
 
+            maxBufferLength:20,
 
-/* ==========================================
-   عرض الخطأ
-========================================== */
+            maxMaxBufferLength:40,
 
-function showPlayerError(
-  error
-) {
+            startLevel:-1,
 
-  let message =
-    "تعذر تشغيل القناة.";
+            capLevelToPlayerSize:true
 
-  if (
-    error &&
-    error.code
-  ) {
-
-    message +=
-      " رمز الخطأ: " +
-      error.code;
-
-  }
-
-  if (
-    error &&
-    error.message
-  ) {
-
-    console.error(
-      error.message
-    );
-
-  }
-
-  errorText.textContent =
-    message;
-
-  playerError.classList.add(
-    "show"
-  );
-
-}
+        });
 
 
-/* ==========================================
-   Retry
-========================================== */
+        hls.loadSource(url);
 
-document
-  .getElementById(
-    "retry"
-  )
-  .addEventListener(
-    "click",
-    () => {
+        hls.attachMedia(video);
 
-      if (
-        currentChannel
-      ) {
 
-        openChannel(
-          currentChannel
+        hls.on(
+            Hls.Events.MANIFEST_PARSED,
+            onStreamReady
         );
 
-      }
+
+        hls.on(
+            Hls.Events.ERROR,
+            function(event,data){
+
+                console.log(
+                    "HLS error:",
+                    data
+                );
+
+
+                if(data.fatal){
+
+                    showPlayerError();
+
+                }
+
+            }
+        );
+
+        return;
 
     }
-  );
 
 
-/* ==========================================
-   إغلاق
-========================================== */
+    showPlayerError();
+
+}
+
+
+/* =========================================================
+   STREAM READY
+========================================================= */
+
+function onStreamReady(){
+
+    loading.style.display="none";
+
+    /*
+       لا يتم التشغيل التلقائي بالصوت
+       حتى لا تمنع المتصفحات التشغيل.
+    */
+
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+function showPlayerError(){
+
+    loading.style.display="none";
+
+    playerError.style.display="flex";
+
+}
+
+
+/* =========================================================
+   PLAY / PAUSE
+========================================================= */
+
+function togglePlay(){
+
+    if(video.paused){
+
+        video.play()
+        .catch(error=>{
+
+            console.log(
+                "Playback blocked:",
+                error
+            );
+
+        });
+
+    }else{
+
+        video.pause();
+
+    }
+
+}
+
+
+video.addEventListener(
+    "play",
+    function(){
+
+        playControl.innerHTML=
+            '<i class="fa-solid fa-pause"></i>';
+
+        mainPlay.innerHTML=
+            '<i class="fa-solid fa-pause"></i>';
+
+    }
+);
+
+
+video.addEventListener(
+    "pause",
+    function(){
+
+        playControl.innerHTML=
+            '<i class="fa-solid fa-play"></i>';
+
+        mainPlay.innerHTML=
+            '<i class="fa-solid fa-play"></i>';
+
+    }
+);
+
+
+/* =========================================================
+   MUTE
+========================================================= */
+
+function toggleMute(){
+
+    video.muted=!video.muted;
+
+    muteControl.innerHTML=
+        video.muted
+
+        ? '<i class="fa-solid fa-volume-xmark"></i>'
+
+        : '<i class="fa-solid fa-volume-high"></i>';
+
+}
+
+
+/* =========================================================
+   FULLSCREEN
+========================================================= */
+
+async function toggleFullscreen(){
+
+    try{
+
+        if(!document.fullscreenElement){
+
+            await player.requestFullscreen();
+
+        }else{
+
+            await document.exitFullscreen();
+
+        }
+
+    }catch(error){
+
+        console.log(
+            "Fullscreen error:",
+            error
+        );
+
+    }
+
+}
+
+
+document.addEventListener(
+    "fullscreenchange",
+    function(){
+
+        if(document.fullscreenElement){
+
+            fullscreenIcon.className=
+                "fa-solid fa-compress";
+
+            player.classList.add("fullscreen");
+
+        }else{
+
+            fullscreenIcon.className=
+                "fa-solid fa-expand";
+
+            player.classList.remove("fullscreen");
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   PICTURE IN PICTURE
+========================================================= */
+
+async function togglePiP(){
+
+    try{
+
+        if(
+            document.pictureInPictureElement
+        ){
+
+            await document.exitPictureInPicture();
+
+            return;
+
+        }
+
+
+        if(
+            document.pictureInPictureEnabled &&
+            !video.disablePictureInPicture
+        ){
+
+            await video.requestPictureInPicture();
+
+        }
+
+    }catch(error){
+
+        console.log(
+            "PiP unavailable:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+video.addEventListener(
+    "timeupdate",
+    function(){
+
+        /*
+           البث المباشر غالباً لا يملك مدة
+           قابلة للتعامل مثل الفيديو العادي.
+        */
+
+        if(
+            !video.duration ||
+            !isFinite(video.duration)
+        ){
+
+            progressValue.style.width="100%";
+
+            return;
+
+        }
+
+
+        const percent =
+            (
+                video.currentTime /
+                video.duration
+            ) * 100;
+
+
+        progressValue.style.width =
+            percent + "%";
+
+    }
+);
+
+
+/* =========================================================
+   PROGRESS CLICK
+========================================================= */
 
 document
-  .getElementById(
-    "closePlayer"
-  )
-  .addEventListener(
+.getElementById("progressArea")
+.addEventListener(
     "click",
-    async () => {
+    function(event){
 
-      try {
+        if(
+            !video.duration ||
+            !isFinite(video.duration)
+        ){
 
-        await player.unload();
+            return;
 
-      } catch {}
-
-      video.pause();
-
-      playerEl.classList.remove(
-        "active"
-      );
-
-    }
-  );
+        }
 
 
-/* ==========================================
-   البحث
-========================================== */
+        const rect =
+            this.getBoundingClientRect();
 
-searchEl.addEventListener(
-  "input",
-  () => {
 
-    const query =
-      searchEl.value
-        .trim()
-        .toLowerCase();
+        const position =
+            (event.clientX - rect.left) /
+            rect.width;
 
-    if (!query) {
 
-      renderChannels(
-        allChannels
-      );
-
-      return;
+        video.currentTime =
+            position * video.duration;
 
     }
-
-    const filtered =
-      allChannels.filter(
-        channel =>
-          channel.name
-            .toLowerCase()
-            .includes(
-              query
-            )
-      );
-
-    renderChannels(
-      filtered
-    );
-
-  }
 );
 
 
-/* ==========================================
-   حماية HTML
-========================================== */
+/* =========================================================
+   SERVER
+========================================================= */
 
-function escapeHTML(
-  value
-) {
+function selectServer(button,url){
 
-  return String(value)
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
+    document
+        .querySelectorAll(".server")
+        .forEach(
+            item =>
+                item.classList.remove("active")
+        );
+
+
+    button.classList.add("active");
+
+
+    loadStream(url);
+
+}
+
+
+function serverUnavailable(button){
+
+    document
+        .querySelectorAll(".server")
+        .forEach(
+            item =>
+                item.classList.remove("active")
+        );
+
+
+    button.classList.add("active");
+
+
+    setTimeout(
+        ()=>{
+            button.classList.remove("active");
+        },
+        700
     );
 
 }
 
 
-/* ==========================================
-   أخطاء Shaka
-========================================== */
+/* =========================================================
+   TABS
+========================================================= */
 
-player.addEventListener(
-  "error",
-  event => {
+function openTab(event,id){
 
-    console.error(
-      "SHAKA ERROR:",
-      event.detail
-    );
-
-  }
-);
+    document
+        .querySelectorAll(".tab")
+        .forEach(
+            tab =>
+                tab.classList.remove("active")
+        );
 
 
-/* ==========================================
-   Buffering
-========================================== */
-
-player.addEventListener(
-  "buffering",
-  event => {
-
-    if (
-      event.buffering
-    ) {
-
-      spinner.classList.add(
-        "show"
-      );
-
-    } else {
-
-      spinner.classList.remove(
-        "show"
-      );
-
-    }
-
-  }
-);
+    document
+        .querySelectorAll(".tab-content")
+        .forEach(
+            content =>
+                content.classList.remove("active")
+        );
 
 
-/* ==========================================
-   بدء الموقع
-========================================== */
+    event.currentTarget
+        .classList.add("active");
 
-async function init() {
 
-  try {
-
-    await loadM3U();
-
-  } catch (
-    error
-  ) {
-
-    console.error(
-      error
-    );
-
-  }
-
-  addAlwanChannels();
-
-  renderChannels(
-    allChannels
-  );
+    document
+        .getElementById(id)
+        .classList.add("active");
 
 }
 
 
-init();
+/* =========================================================
+   FAVORITE
+========================================================= */
+
+function favoriteMatch(button){
+
+    const icon =
+        button.querySelector("i");
+
+
+    icon.classList.toggle(
+        "fa-regular"
+    );
+
+    icon.classList.toggle(
+        "fa-solid"
+    );
+
+
+    if(
+        icon.classList.contains("fa-solid")
+    ){
+
+        icon.style.color="#ff3d58";
+
+    }else{
+
+        icon.style.color="";
+
+    }
+
+}
+
+
+/* =========================================================
+   SHARE
+========================================================= */
+
+async function shareMatch(){
+
+    const data={
+
+        title:
+            "الأهلي السعودي × الهلال السعودي",
+
+        text:
+            "شاهد مباراة الأهلي السعودي × الهلال السعودي",
+
+        url:
+            window.location.href
+
+    };
+
+
+    try{
+
+        if(navigator.share){
+
+            await navigator.share(data);
+
+        }else{
+
+            await navigator.clipboard.writeText(
+                window.location.href
+            );
+
+            alert(
+                "تم نسخ رابط المباراة"
+            );
+
+        }
+
+    }catch(error){
+
+        console.log(error);
+
+    }
+
+}
+
+
+/* =========================================================
+   KEYBOARD SHORTCUTS
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        /*
+           Space = Play / Pause
+        */
+
+        if(
+            event.code==="Space" &&
+            document.activeElement.tagName!=="BUTTON"
+        ){
+
+            event.preventDefault();
+
+            togglePlay();
+
+        }
+
+
+        /*
+           F = Fullscreen
+        */
+
+        if(
+            event.key.toLowerCase()==="f"
+        ){
+
+            toggleFullscreen();
+
+        }
+
+
+        /*
+           M = Mute
+        */
+
+        if(
+            event.key.toLowerCase()==="m"
+        ){
+
+            toggleMute();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+loadStream(https://akamai-live.servers8.com/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJTT0xha2JlaFpvZGIxWUc1UFJHWTZKeVpmaTgyIiwiY2hhbm5lbE5hbWUiOiJjaDExIiwiaXAiOiIxNTAuMjI4LjExLjE5MyIsImlwX3Y0IjoiMTUwLjIyOC4xMS4xOTMiLCJpcF92NiI6IiIsInVzZXJBZ2VudCI6Ik1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDEwLjA7IFdpbjY0OyB4NjQ7IHJ2OjE1NC4wKSBHZWNrby8yMDEwMDEwMSBGaXJlZm94LzE1NC4wIiwiaGFzU3Vic2NyaXB0aW9ucyI6ZmFsc2UsIm5iZiI6MTc4ODI4MDM0OCwiZXhwIjoxNzg4MzI3MjA4LCJnZW9CeXBhc3MiOmZhbHNlLCJpYXQiOjE3ODgyODA0MDh9.oB4ue-tq9MSHpXNXX4lNSk_OE3CHdxqkPDXffJXUzrY/live/ch11/index.m3u8?aws.manifestfilter=video_codec:h265;video_dynamic_range:sdr;video_framerate:50;video_height:1-2160);
 
 </script>
 
