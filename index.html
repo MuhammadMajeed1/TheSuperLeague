@@ -2,3181 +2,973 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-
-<title>الأهلي × الهلال | بالتسعين</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0a0a15">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>موقعنا</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <style>
+/* ═══════════════════════════════════════════════
+   موقعنا | Glassmorphism Design System
+   ═══════════════════════════════════════════════ */
 :root{
-    --bg:#030405;
-    --surface:#090c0f;
-    --surface2:#0d1115;
-    --surface3:#12171c;
-    --line:rgba(255,255,255,.075);
-    --white:#fff;
-    --muted:#89929b;
-    --muted2:#5e6770;
-
-    --green:#20df7b;
-    --green2:#0ca95a;
-
-    --blue:#368cff;
-    --red:#ff3d58;
-    --gold:#e7bd59;
-
-    --radius:20px;
-    --shadow:0 30px 100px rgba(0,0,0,.55);
+  --bg-deep:#080812;
+  --bg-mid:#0e0e1c;
+  --glass-bg:rgba(255,255,255,0.045);
+  --glass-bg-strong:rgba(255,255,255,0.075);
+  --glass-border:rgba(255,255,255,0.10);
+  --glass-border-strong:rgba(255,255,255,0.18);
+  --text-primary:#f4f5fb;
+  --text-secondary:#a2a8bd;
+  --text-muted:#6b7186;
+  --accent:#7c5cff;
+  --accent-2:#22d3ee;
+  --accent-grad:linear-gradient(135deg,#7c5cff 0%,#22d3ee 100%);
+  --success:#22c55e;
+  --success-glow:rgba(34,197,94,.45);
+  --gold:#fbbf24;
+  --danger:#ef4444;
+  --radius:20px;
+  --radius-sm:14px;
+  --shadow-glass:0 8px 32px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06);
+  --shadow-float:0 24px 60px rgba(0,0,0,.6);
+  --blur:blur(24px) saturate(160%);
 }
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overscroll-behavior:none}
 body{
-    min-height:100vh;
-    color:var(--white);
-    background:
-        radial-gradient(
-            circle at 50% -15%,
-            rgba(32,223,123,.11),
-            transparent 34%
-        ),
-        radial-gradient(
-            circle at 90% 30%,
-            rgba(54,140,255,.06),
-            transparent 28%
-        ),
-        var(--bg);
-    font-family:"Tajawal",sans-serif;
-    overflow-x:hidden;
+  font-family:'Tajawal',system-ui,-apple-system,sans-serif;
+  background:var(--bg-deep);
+  color:var(--text-primary);
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+  font-weight:500;
+  letter-spacing:-0.01em;
 }
+/* الخلفية المتوهجة */
+.bg-orbs{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55}
+.orb-1{width:520px;height:520px;background:radial-gradient(circle,#7c5cff,transparent 70%);top:-180px;right:-160px}
+.orb-2{width:460px;height:460px;background:radial-gradient(circle,#22d3ee,transparent 70%);bottom:-160px;left:-140px;opacity:.4}
+.orb-3{width:380px;height:380px;background:radial-gradient(circle,#ec4899,transparent 70%);top:40%;left:55%;opacity:.22}
+#app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
 
-button{
-    font-family:inherit;
-}
+/* ─── الحاوية ─── */
+.container{max-width:540px;width:100%;margin:0 auto;padding:28px 20px 40px;flex:1;display:flex;flex-direction:column;justify-content:center}
+.container-wide{max-width:720px}
 
-button,
-.tab,
-.server{
-    -webkit-tap-highlight-color:transparent;
-}
-
-::-webkit-scrollbar{
-    width:6px;
-}
-
-::-webkit-scrollbar-track{
-    background:#050607;
-}
-
-::-webkit-scrollbar-thumb{
-    background:#242a30;
-    border-radius:10px;
-}
-
-
-/* =========================================================
-   HEADER
-========================================================= */
-
-.header{
-    height:72px;
-
-    position:sticky;
-    top:0;
-    z-index:999;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    padding:0 clamp(15px,5vw,80px);
-
-    background:rgba(3,4,5,.76);
-    backdrop-filter:blur(25px);
-    -webkit-backdrop-filter:blur(25px);
-
-    border-bottom:1px solid var(--line);
-}
-
+/* ─── الشعار العلوي ─── */
 .brand{
-    display:flex;
-    align-items:center;
-    gap:11px;
-
-    font-size:20px;
-    font-weight:900;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  margin-bottom:6px;
+}
+.brand-mark{
+  width:38px;height:38px;border-radius:12px;
+  background:var(--accent-grad);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:900;color:#fff;
+  box-shadow:0 8px 24px rgba(124,92,255,.4),inset 0 1px 0 rgba(255,255,255,.3);
+}
+.brand-text{
+  font-size:1.9rem;font-weight:900;letter-spacing:-0.03em;
+  background:linear-gradient(135deg,#fff 30%,#b7a8ff 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.subtitle{
+  text-align:center;color:var(--text-secondary);
+  font-size:.95rem;margin-bottom:32px;font-weight:500;
 }
 
-.brand-logo{
-    width:41px;
-    height:41px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:12px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #24e57f,
-            #087f47
-        );
-
-    box-shadow:
-        0 8px 30px rgba(32,223,123,.22);
+/* ─── بطاقة زجاجية ─── */
+.glass{
+  background:var(--glass-bg);
+  backdrop-filter:var(--blur);
+  -webkit-backdrop-filter:var(--blur);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-glass);
+  padding:22px;
+  margin-bottom:14px;
+  position:relative;
+  overflow:hidden;
+  transition:border-color .25s,transform .2s;
+}
+.glass::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.06),transparent 40%);
+}
+.glass:hover{border-color:var(--glass-border-strong)}
+.glass h2,.glass h3{
+  font-size:1.05rem;font-weight:700;margin-bottom:14px;
+  color:var(--text-primary);display:flex;align-items:center;gap:8px;
+}
+.glass h3 .tag{
+  font-size:.7rem;font-weight:600;color:var(--text-muted);
+  background:rgba(255,255,255,.05);
+  padding:3px 8px;border-radius:20px;
+  border:1px solid var(--glass-border);
+  margin-right:auto;
 }
 
-.brand-logo i{
-    font-size:18px;
+/* ─── المدخلات ─── */
+.input{
+  width:100%;padding:14px 16px;
+  background:rgba(0,0,0,.25);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-sm);
+  color:var(--text-primary);
+  font-size:1rem;font-weight:500;
+  font-family:inherit;
+  margin-bottom:12px;
+  transition:.2s;
+  backdrop-filter:blur(8px);
+}
+.input:focus{
+  outline:none;
+  border-color:rgba(124,92,255,.6);
+  background:rgba(124,92,255,.08);
+  box-shadow:0 0 0 3px rgba(124,92,255,.15);
+}
+.input::placeholder{color:var(--text-muted)}
+.input-code{
+  text-align:center;
+  font-size:1.6rem;
+  font-weight:800;
+  letter-spacing:8px;
+  font-family:ui-monospace,'SF Mono',monospace;
+  padding:16px;
+  text-transform:uppercase;
 }
 
-.header-right{
-    display:flex;
-    align-items:center;
-    gap:8px;
+/* ─── الأزرار ─── */
+.btn{
+  width:100%;padding:15px 20px;
+  border:none;border-radius:var(--radius-sm);
+  font-family:inherit;
+  font-size:1rem;font-weight:700;
+  cursor:pointer;
+  transition:transform .12s,box-shadow .25s,filter .2s;
+  color:#fff;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  position:relative;
+  overflow:hidden;
+}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-primary{
+  background:var(--accent-grad);
+  box-shadow:0 10px 30px rgba(124,92,255,.35),inset 0 1px 0 rgba(255,255,255,.25);
+}
+.btn-primary:hover:not(:disabled){filter:brightness(1.08)}
+.btn-ghost{
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--glass-border);
+  color:var(--text-primary);
+  backdrop-filter:blur(10px);
+}
+.btn-ghost:hover:not(:disabled){background:rgba(255,255,255,.09)}
+.btn-success{
+  background:linear-gradient(135deg,#22c55e 0%,#16a34a 100%);
+  box-shadow:0 10px 30px rgba(34,197,94,.4),inset 0 1px 0 rgba(255,255,255,.25);
+}
+.btn-danger{
+  background:rgba(239,68,68,.15);
+  color:#fca5a5;
+  border:1px solid rgba(239,68,68,.3);
 }
 
-.header-button{
-    width:41px;
-    height:41px;
-
-    border:1px solid var(--line);
-    border-radius:12px;
-
-    color:#fff;
-    background:rgba(255,255,255,.035);
-
-    cursor:pointer;
-
-    transition:.25s;
+/* ─── نصيحة الخطأ ─── */
+.alert{
+  padding:12px 16px;border-radius:12px;
+  background:rgba(239,68,68,.12);
+  border:1px solid rgba(239,68,68,.3);
+  color:#fca5a5;font-size:.9rem;font-weight:500;
+  text-align:center;margin-top:8px;
+}
+.alert-success{
+  background:rgba(34,197,94,.12);
+  border-color:rgba(34,197,94,.3);
+  color:#86efac;
 }
 
-.header-button:hover{
-    background:rgba(255,255,255,.09);
-    transform:translateY(-2px);
+/* ─── كود الغرفة (للمضيف) ─── */
+.room-hero{
+  text-align:center;margin-bottom:22px;
+}
+.room-hero small{
+  color:var(--text-secondary);font-size:.85rem;
+  font-weight:600;display:block;margin-bottom:8px;letter-spacing:.05em;
+}
+.room-hero b{
+  font-size:2.6rem;font-weight:900;
+  font-family:ui-monospace,'SF Mono',monospace;
+  letter-spacing:10px;
+  background:var(--accent-grad);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  padding-right:10px;display:inline-block;
+}
+.copy-hint{
+  color:var(--text-muted);font-size:.78rem;margin-top:6px;
+  cursor:pointer;user-select:none;
+}
+.copy-hint:hover{color:var(--text-secondary)}
+
+/* ─── المؤقت ─── */
+.timer-display{
+  text-align:center;
+  font-size:5rem;font-weight:800;
+  font-family:ui-monospace,'SF Mono',monospace;
+  font-variant-numeric:tabular-nums;
+  margin:14px 0 22px;
+  letter-spacing:-0.04em;
+  line-height:1;
+  transition:color .3s;
+}
+.timer-display.idle{color:#3a3f55;text-shadow:none}
+.timer-display.active{
+  color:#22d3ee;
+  text-shadow:0 0 60px rgba(34,211,238,.6),0 0 100px rgba(34,211,238,.3);
+}
+.timer-display.finished{
+  color:var(--success);
+  text-shadow:0 0 60px var(--success-glow);
 }
 
-
-/* =========================================================
-   MAIN
-========================================================= */
-
-.container{
-    width:min(1480px,100%);
-    margin:auto;
-
-    padding:
-        clamp(30px,5vw,65px)
-        clamp(14px,4vw,45px)
-        90px;
+/* ─── بطاقات اللاعبين ─── */
+.player-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.player-card{
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-sm);
+  padding:14px;
+  transition:.25s;
+  backdrop-filter:blur(10px);
+}
+.player-card.pressed{
+  border-color:rgba(34,197,94,.5);
+  background:rgba(34,197,94,.08);
+  box-shadow:0 0 30px rgba(34,197,94,.15),inset 0 1px 0 rgba(255,255,255,.1);
+}
+.player-card .pname{
+  font-size:.95rem;font-weight:700;margin-bottom:8px;
+  color:var(--text-primary);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.player-card .pstatus{
+  font-size:1.4rem;font-weight:800;
+  font-family:ui-monospace,monospace;
+  font-variant-numeric:tabular-nums;
+  color:var(--text-muted);
+}
+.player-card.pressed .pstatus{color:var(--success)}
+.player-card .plabel{
+  font-size:.7rem;color:var(--text-muted);
+  font-weight:600;letter-spacing:.05em;
+  margin-top:4px;
 }
 
-
-/* =========================================================
-   MATCH HERO
-========================================================= */
-
-.competition{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:9px;
-
-    color:#aab2b9;
-
-    font-size:13px;
-    font-weight:700;
-
-    margin-bottom:15px;
+/* ─── النتائج ─── */
+.result-hero{
+  text-align:center;padding:8px 0 18px;
+  border-bottom:1px solid var(--glass-border);
+  margin-bottom:18px;
+}
+.result-hero .label{
+  color:var(--text-secondary);font-size:.85rem;
+  font-weight:600;margin-bottom:6px;
+}
+.result-hero .target{
+  font-size:2.6rem;font-weight:900;
+  font-family:ui-monospace,monospace;
+  color:var(--accent-2);
+}
+.result-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.result-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px;border-radius:12px;
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--glass-border);
+  transition:.2s;
+}
+.result-item.winner{
+  background:rgba(251,191,36,.09);
+  border-color:rgba(251,191,36,.4);
+  box-shadow:0 0 30px rgba(251,191,36,.12);
+}
+.result-item .rname{font-weight:700;font-size:.95rem}
+.result-item .rtime{
+  font-family:ui-monospace,monospace;
+  font-variant-numeric:tabular-nums;
+  font-size:1.05rem;font-weight:700;
+}
+.result-item .rdiff{
+  font-family:ui-monospace,monospace;
+  font-size:.8rem;color:var(--text-muted);
+  font-weight:600;margin-top:2px;
+}
+.result-item.winner .rdiff{color:var(--gold)}
+.winner-badge{
+  text-align:center;font-size:1.2rem;font-weight:900;
+  color:var(--gold);margin:8px 0 16px;
+  text-shadow:0 0 30px rgba(251,191,36,.4);
 }
 
-.competition i{
-    color:var(--gold);
+/* ─── سجل الجولات ─── */
+.history-list{display:flex;flex-direction:column;gap:8px}
+.history-item{
+  display:grid;grid-template-columns:auto 1fr 1fr auto;
+  align-items:center;gap:10px;
+  padding:10px 12px;
+  border-radius:12px;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--glass-border);
+  font-size:.85rem;
 }
-
-.live-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:7px;
-
-    padding:5px 10px;
-
-    color:#ff6478;
-
-    border:1px solid rgba(255,61,88,.22);
-    border-radius:50px;
-
-    background:rgba(255,61,88,.08);
-
-    font-size:10px;
-    font-weight:800;
+.history-item .hnum{
+  width:26px;height:26px;border-radius:50%;
+  background:rgba(124,92,255,.2);
+  color:#b7a8ff;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;
 }
-
-.live-dot{
-    width:6px;
-    height:6px;
-
-    background:var(--red);
-    border-radius:50%;
-
-    box-shadow:0 0 12px var(--red);
-
-    animation:livePulse 1.2s infinite;
+.history-item .htarget{
+  font-family:ui-monospace,monospace;
+  color:var(--text-secondary);
+  font-size:.8rem;
 }
-
-@keyframes livePulse{
-    50%{
-        opacity:.3;
-        transform:scale(.65);
-    }
+.history-item .hwin{
+  color:var(--gold);font-weight:700;
+  text-align:left;
 }
+.history-item .hwin::before{content:"🏆 ";margin-left:4px}
 
-.match-heading{
-    text-align:center;
+/* ─── واجهة اللاعب ─── */
+.player-view{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:24px;
+  user-select:none;touch-action:manipulation;
+  z-index:10;
 }
-
-.match-heading h1{
-    font-size:clamp(28px,4vw,52px);
-    line-height:1.15;
-    font-weight:900;
-    letter-spacing:-1.5px;
+.press-btn{
+  width:min(72vw,340px);height:min(72vw,340px);
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#4ade80 0%,#16a34a 65%,#15803d 100%);
+  border:none;color:#fff;
+  font-family:inherit;
+  font-size:clamp(2rem,9vw,3.5rem);
+  font-weight:900;letter-spacing:2px;
+  cursor:pointer;
+  box-shadow:
+    0 0 80px rgba(34,197,94,.5),
+    0 0 140px rgba(34,197,94,.25),
+    0 20px 40px rgba(0,0,0,.4),
+    inset 0 -12px 30px rgba(0,0,0,.3),
+    inset 0 4px 12px rgba(255,255,255,.35);
+  transition:transform .08s ease;
+  position:relative;
 }
-
-.match-heading p{
-    color:var(--muted);
-
-    font-size:13px;
-
-    margin-top:9px;
+.press-btn::after{
+  content:"";position:absolute;inset:8px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.15);
+  pointer-events:none;
 }
-
-
-/* =========================================================
-   TEAMS
-========================================================= */
-
-.teams{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    gap:clamp(35px,10vw,150px);
-
-    margin:45px 0 38px;
+.press-btn:active{transform:scale(.94)}
+.player-state{
+  font-size:1.9rem;font-weight:700;
+  color:var(--text-secondary);
+  text-align:center;padding:20px;
+  line-height:1.5;
 }
-
-.team{
-    width:180px;
-
-    text-align:center;
+.player-state.pressed{color:var(--success);font-size:2.4rem}
+.player-state.win{color:var(--gold)}
+.player-state .sub{
+  display:block;font-size:.95rem;color:var(--text-muted);
+  margin-top:12px;font-weight:500;
 }
+.pulse{animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
 
-.team-logo{
-    width:125px;
-    height:125px;
-
-    margin:auto;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle at 35% 25%,
-            #fff,
-            #e8e8e8 52%,
-            #b9b9b9
-        );
-
-    border:1px solid rgba(255,255,255,.65);
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.52),
-        inset 0 0 0 5px rgba(255,255,255,.15);
-}
-
-.team-logo img{
-    width:86%;
-    height:86%;
-    object-fit:contain;
-}
-
-.team-name{
-    margin-top:15px;
-
-    font-size:18px;
-    font-weight:900;
-}
-
-.team-location{
-    color:var(--muted2);
-
-    margin-top:4px;
-
-    font-size:11px;
-}
-
-.score-area{
-    min-width:150px;
-
-    text-align:center;
-}
-
-.score{
-    font-size:64px;
-    line-height:1;
-
-    font-weight:900;
-    letter-spacing:-4px;
-}
-
-.score-status{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:6px;
-
-    margin-top:12px;
-
-    color:var(--green);
-
-    font-size:12px;
-    font-weight:800;
-}
-
-.score-status i{
-    font-size:6px;
-}
-
-
-/* =========================================================
-   PLAYER
-========================================================= */
-
-.player-wrapper{
-    margin-top:10px;
-}
-
-.player{
-    position:relative;
-
-    width:100%;
-    aspect-ratio:16 / 9;
-
-    min-height:280px;
-
-    overflow:hidden;
-
-    background:#000;
-
-    border-radius:var(--radius);
-
-    border:1px solid rgba(255,255,255,.09);
-
-    box-shadow:
-        0 40px 120px rgba(0,0,0,.68),
-        0 0 0 1px rgba(255,255,255,.015);
-}
-
-#video{
-    width:100%;
-    height:100%;
-
-    display:block;
-
-    background:#000;
-
-    object-fit:contain;
-}
-
-.player.fullscreen{
-    border-radius:0;
-}
-
-
-/* =========================================================
-   PLAYER BACKDROP
-========================================================= */
-
-.player-vignette{
-    position:absolute;
-    inset:0;
-
-    pointer-events:none;
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(0,0,0,.58),
-            transparent 25%
-        ),
-        linear-gradient(
-            to top,
-            rgba(0,0,0,.92),
-            transparent 35%
-        );
-}
-
-
-/* =========================================================
-   PLAYER TOP
-========================================================= */
-
-.player-top{
-    position:absolute;
-
-    top:18px;
-    left:18px;
-    right:18px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    z-index:5;
-}
-
-.broadcast{
-    display:flex;
-    align-items:center;
-    gap:8px;
-
-    padding:9px 13px;
-
-    border-radius:11px;
-
-    background:rgba(0,0,0,.48);
-
-    border:1px solid rgba(255,255,255,.12);
-
-    backdrop-filter:blur(14px);
-
-    font-size:11px;
-    font-weight:800;
-}
-
-.broadcast i{
-    color:var(--green);
-}
-
-.player-top-actions{
-    display:flex;
-    gap:7px;
-}
-
-.player-action{
-    width:40px;
-    height:40px;
-
-    border-radius:11px;
-
-    color:#fff;
-
-    border:1px solid rgba(255,255,255,.12);
-
-    background:rgba(0,0,0,.48);
-
-    backdrop-filter:blur(14px);
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-.player-action:hover{
-    background:rgba(255,255,255,.13);
-    transform:translateY(-1px);
-}
-
-
-/* =========================================================
-   CENTER PLAY
-========================================================= */
-
-.center-control{
-    position:absolute;
-
-    inset:0;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    z-index:4;
-
-    pointer-events:none;
-}
-
-.main-play{
-    width:82px;
-    height:82px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:50%;
-
-    color:#fff;
-
-    border:1px solid rgba(255,255,255,.28);
-
-    background:rgba(8,12,15,.64);
-
-    backdrop-filter:blur(20px);
-
-    box-shadow:
-        0 20px 70px rgba(0,0,0,.6);
-
-    cursor:pointer;
-
-    pointer-events:auto;
-
-    font-size:25px;
-
-    padding-right:0;
-
-    transition:
-        transform .25s,
-        background .25s,
-        box-shadow .25s;
-}
-
-.main-play:hover{
-    transform:scale(1.08);
-
-    background:var(--green);
-
-    box-shadow:
-        0 15px 60px rgba(32,223,123,.3);
-}
-
-
-/* =========================================================
-   LOADING
-========================================================= */
-
-.loading{
-    position:absolute;
-
-    inset:0;
-
-    z-index:20;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:#000;
-}
-
-.loading-content{
-    text-align:center;
-}
-
+/* ─── شاشة الدوران ─── */
 .spinner{
-    width:48px;
-    height:48px;
-
-    margin:auto;
-
-    border-radius:50%;
-
-    border:3px solid rgba(255,255,255,.11);
-    border-top-color:var(--green);
-
-    animation:spin .75s linear infinite;
-}
-
-@keyframes spin{
-    to{
-        transform:rotate(360deg);
-    }
-}
-
-.loading-text{
-    margin-top:16px;
-
-    color:#8b949c;
-
-    font-size:12px;
-}
-
-
-/* =========================================================
-   ERROR
-========================================================= */
-
-.player-error{
-    position:absolute;
-
-    inset:0;
-
-    z-index:30;
-
-    display:none;
-
-    align-items:center;
-    justify-content:center;
-
-    background:#000;
-}
-
-.error-content{
-    text-align:center;
-
-    padding:25px;
-}
-
-.error-icon{
-    width:55px;
-    height:55px;
-
-    margin:auto;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:16px;
-
-    background:rgba(255,61,88,.1);
-
-    color:var(--red);
-
-    font-size:20px;
-}
-
-.error-title{
-    margin-top:14px;
-
-    font-size:15px;
-    font-weight:900;
-}
-
-.error-text{
-    color:var(--muted);
-
-    margin-top:7px;
-
-    font-size:11px;
-}
-
-
-/* =========================================================
-   PLAYER CONTROLS
-========================================================= */
-
-.controls{
-    position:absolute;
-
-    bottom:0;
-    left:0;
-    right:0;
-
-    z-index:6;
-
-    padding:14px 18px 17px;
-}
-
-.progress{
-    height:4px;
-
-    width:100%;
-
-    border-radius:20px;
-
-    background:rgba(255,255,255,.18);
-
-    cursor:pointer;
-
-    overflow:hidden;
-}
-
-.progress-value{
-    height:100%;
-
-    width:0%;
-
-    background:var(--green);
-
-    box-shadow:
-        0 0 15px rgba(32,223,123,.7);
-}
-
-.control-row{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    margin-top:9px;
-}
-
-.control-group{
-    display:flex;
-    align-items:center;
-    gap:3px;
-}
-
-.control{
-    width:38px;
-    height:36px;
-
-    border:0;
-
-    border-radius:8px;
-
-    background:transparent;
-
-    color:#fff;
-
-    cursor:pointer;
-}
-
-.control:hover{
-    background:rgba(255,255,255,.1);
-}
-
-.live-indicator{
-    margin-right:7px;
-
-    padding:5px 9px;
-
-    border-radius:6px;
-
-    color:#fff;
-
-    background:rgba(255,61,88,.85);
-
-    font-size:9px;
-    font-weight:900;
-}
-
-
-/* =========================================================
-   SERVERS
-========================================================= */
-
-.server-panel{
-    margin-top:14px;
-
-    padding:16px;
-
-    border:1px solid var(--line);
-
-    border-radius:16px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.035),
-            rgba(255,255,255,.015)
-        );
-}
-
-.server-title{
-    display:flex;
-    align-items:center;
-    gap:8px;
-
-    margin-bottom:12px;
-
-    font-size:12px;
-    font-weight:900;
-}
-
-.server-title i{
-    color:var(--green);
-}
-
-.server-list{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-}
-
-.server{
-    display:flex;
-    align-items:center;
-    gap:7px;
-
-    padding:10px 14px;
-
-    border:1px solid var(--line);
-
-    border-radius:10px;
-
-    background:rgba(255,255,255,.025);
-
-    color:#aeb6bd;
-
-    cursor:pointer;
-
-    font-size:11px;
-    font-weight:800;
-
-    transition:.2s;
-}
-
-.server i{
-    font-size:9px;
-}
-
-.server:hover{
-    border-color:rgba(32,223,123,.3);
-
-    color:#fff;
-
-    background:rgba(32,223,123,.07);
-}
-
-.server.active{
-    color:var(--green);
-
-    border-color:rgba(32,223,123,.35);
-
-    background:rgba(32,223,123,.1);
-}
-
-
-/* =========================================================
-   MATCH INFO
-========================================================= */
-
-.info-grid{
-    display:grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    gap:11px;
-
-    margin-top:25px;
-}
-
-.info-card{
-    min-height:78px;
-
-    display:flex;
-    align-items:center;
-
-    gap:12px;
-
-    padding:16px;
-
-    border:1px solid var(--line);
-
-    border-radius:15px;
-
-    background:
-        linear-gradient(
-            145deg,
-            var(--surface2),
-            #080b0e
-        );
-}
-
-.info-icon{
-    width:42px;
-    height:42px;
-
-    flex-shrink:0;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:11px;
-
-    color:var(--green);
-
-    background:rgba(32,223,123,.08);
-}
-
-.info-label{
-    color:var(--muted2);
-
-    font-size:10px;
-}
-
-.info-value{
-    margin-top:4px;
-
-    font-size:12px;
-    font-weight:900;
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-.navigation{
-    display:flex;
-    justify-content:center;
-
-    margin-top:42px;
-
-    border-bottom:1px solid var(--line);
-}
-
-.tab{
-    position:relative;
-
-    padding:15px 27px;
-
-    border:0;
-
-    background:transparent;
-
-    color:#68717a;
-
-    cursor:pointer;
-
-    font-size:12px;
-    font-weight:900;
-}
-
-.tab i{
-    margin-left:6px;
-}
-
-.tab.active{
-    color:#fff;
-}
-
-.tab.active::after{
-    content:"";
-
-    position:absolute;
-
-    right:18%;
-    left:18%;
-    bottom:-1px;
-
-    height:2px;
-
-    background:var(--green);
-
-    box-shadow:
-        0 0 14px rgba(32,223,123,.7);
-}
-
-
-/* =========================================================
-   CONTENT
-========================================================= */
-
-.content{
-    max-width:1100px;
-
-    margin:30px auto 0;
-}
-
-.tab-content{
-    display:none;
-
-    animation:contentIn .3s ease;
-}
-
-.tab-content.active{
-    display:block;
-}
-
-@keyframes contentIn{
-    from{
-        opacity:0;
-        transform:translateY(7px);
-    }
-
-    to{
-        opacity:1;
-        transform:none;
-    }
-}
-
-.section-title{
-    margin-bottom:18px;
-
-    font-size:18px;
-    font-weight:900;
-}
-
-.section-title i{
-    color:var(--green);
-
-    margin-left:6px;
-}
-
-
-/* =========================================================
-   EVENTS TIMELINE
-========================================================= */
-
-.timeline{
-    position:relative;
-
-    padding-right:28px;
-}
-
-.timeline::before{
-    content:"";
-
-    position:absolute;
-
-    top:5px;
-    bottom:5px;
-
-    right:8px;
-
-    width:1px;
-
-    background:rgba(255,255,255,.09);
-}
-
-.event{
-    position:relative;
-
-    display:flex;
-    align-items:center;
-
-    min-height:65px;
-
-    margin-bottom:10px;
-
-    padding:13px 16px;
-
-    border:1px solid var(--line);
-
-    border-radius:14px;
-
-    background:var(--surface);
-}
-
-.event::before{
-    content:"";
-
-    position:absolute;
-
-    right:-24px;
-
-    width:9px;
-    height:9px;
-
-    border-radius:50%;
-
-    background:var(--green);
-
-    box-shadow:
-        0 0 15px rgba(32,223,123,.65);
-}
-
-.event-time{
-    width:55px;
-
-    color:var(--muted2);
-
-    font-size:11px;
-    font-weight:800;
-}
-
-.event-icon{
-    width:38px;
-    height:38px;
-
-    margin-left:13px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:10px;
-
-    background:rgba(255,255,255,.05);
-
-    color:var(--green);
-}
-
-.event-info{
-    font-size:12px;
-    font-weight:800;
-}
-
-.event-sub{
-    margin-top:3px;
-
-    color:var(--muted2);
-
-    font-size:10px;
-}
-
-
-/* =========================================================
-   LINEUPS
-========================================================= */
-
-.lineup-grid{
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:14px;
-}
-
-.lineup-card{
-    padding:20px;
-
-    border:1px solid var(--line);
-
-    border-radius:17px;
-
-    background:var(--surface);
-}
-
-.lineup-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    padding-bottom:15px;
-
-    margin-bottom:5px;
-
-    border-bottom:1px solid var(--line);
-
-    font-size:14px;
-    font-weight:900;
-}
-
-.lineup-header i{
-    color:var(--green);
-}
-
-.player-row{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    padding:11px 0;
-
-    border-bottom:1px solid rgba(255,255,255,.045);
-
-    color:#b6bec5;
-
-    font-size:12px;
-}
-
-.player-row:last-child{
-    border-bottom:0;
-}
-
-.player-number{
-    width:27px;
-    height:27px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:7px;
-
-    background:rgba(255,255,255,.045);
-
-    color:#858e96;
-
-    font-size:10px;
-}
-
-
-/* =========================================================
-   STATS
-========================================================= */
-
-.stats-card{
-    padding:23px;
-
-    border:1px solid var(--line);
-
-    border-radius:17px;
-
-    background:var(--surface);
-}
-
-.stat{
-    margin-bottom:23px;
-}
-
-.stat:last-child{
-    margin-bottom:0;
-}
-
-.stat-top{
-    display:flex;
-    justify-content:space-between;
-
-    margin-bottom:8px;
-
-    font-size:12px;
-    font-weight:800;
-}
-
-.stat-top span:first-child{
-    color:#aeb6bd;
-}
-
-.stat-bar{
-    height:7px;
-
-    overflow:hidden;
-
-    border-radius:20px;
-
-    background:#181d22;
-}
-
-.stat-value{
-    height:100%;
-
-    width:50%;
-
-    border-radius:20px;
-
-    background:
-        linear-gradient(
-            90deg,
-            var(--green2),
-            var(--green)
-        );
-}
-
-
-/* =========================================================
-   NEWS
-========================================================= */
-
-.news-item{
-    display:flex;
-    align-items:center;
-
-    gap:13px;
-
-    padding:16px;
-
-    margin-bottom:9px;
-
-    border:1px solid var(--line);
-
-    border-radius:15px;
-
-    background:var(--surface);
-}
-
-.news-icon{
-    width:43px;
-    height:43px;
-
-    flex-shrink:0;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:11px;
-
-    color:var(--green);
-
-    background:rgba(32,223,123,.07);
-}
-
-.news-title{
-    font-size:12px;
-    font-weight:900;
-}
-
-.news-meta{
-    margin-top:4px;
-
-    color:var(--muted2);
-
-    font-size:10px;
-}
-
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-.footer{
-    padding:28px;
-
-    text-align:center;
-
-    border-top:1px solid var(--line);
-
-    color:#4e575f;
-
-    font-size:10px;
-}
-
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media(max-width:900px){
-
-    .info-grid{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .lineup-grid{
-        grid-template-columns:1fr;
-    }
-
-    .team{
-        width:125px;
-    }
-
-    .team-logo{
-        width:95px;
-        height:95px;
-    }
-
-    .score{
-        font-size:47px;
-    }
-
-    .teams{
-        gap:25px;
-    }
-}
-
-
-@media(max-width:600px){
-
-    .header{
-        height:62px;
-    }
-
-    .brand{
-        font-size:17px;
-    }
-
-    .brand-logo{
-        width:37px;
-        height:37px;
-    }
-
-    .container{
-        padding-top:30px;
-        padding-left:10px;
-        padding-right:10px;
-    }
-
-    .match-heading h1{
-        font-size:27px;
-    }
-
-    .teams{
-        gap:7px;
-
-        margin-top:35px;
-        margin-bottom:30px;
-    }
-
-    .team{
-        width:105px;
-    }
-
-    .team-logo{
-        width:76px;
-        height:76px;
-    }
-
-    .team-name{
-        font-size:13px;
-    }
-
-    .team-location{
-        font-size:9px;
-    }
-
-    .score-area{
-        min-width:65px;
-    }
-
-    .score{
-        font-size:36px;
-        letter-spacing:-2px;
-    }
-
-    .score-status{
-        font-size:9px;
-    }
-
-    .player{
-        aspect-ratio:16/10;
-        min-height:210px;
-
-        border-radius:13px;
-    }
-
-    .player-top{
-        top:9px;
-        left:9px;
-        right:9px;
-    }
-
-    .player-action{
-        width:34px;
-        height:34px;
-    }
-
-    .broadcast{
-        padding:7px 9px;
-        font-size:9px;
-    }
-
-    .main-play{
-        width:62px;
-        height:62px;
-
-        font-size:19px;
-    }
-
-    .controls{
-        padding:10px 10px 12px;
-    }
-
-    .control{
-        width:34px;
-    }
-
-    .server-panel{
-        padding:12px;
-    }
-
-    .server{
-        padding:8px 11px;
-    }
-
-    .info-card{
-        min-height:68px;
-        padding:11px;
-    }
-
-    .info-icon{
-        width:35px;
-        height:35px;
-    }
-
-    .info-value{
-        font-size:10px;
-    }
-
-    .navigation{
-        justify-content:flex-start;
-        overflow-x:auto;
-    }
-
-    .tab{
-        flex-shrink:0;
-
-        padding:14px 17px;
-
-        font-size:10px;
-    }
-
-    .content{
-        margin-top:22px;
-    }
-
-    .timeline{
-        padding-right:23px;
-    }
-
-}
-
-
-/* =========================================================
-   TV / LARGE SCREEN
-========================================================= */
-
-@media(min-width:1600px){
-
-    .container{
-        max-width:1600px;
-    }
-
-    .player{
-        max-height:820px;
-    }
-
-    .team-logo{
-        width:145px;
-        height:145px;
-    }
-
-    .team{
-        width:210px;
-    }
-}
-
-
-/* =========================================================
-   TRUE FULLSCREEN
-========================================================= */
-
-.player:fullscreen{
-    width:100vw;
-    height:100vh;
-
-    aspect-ratio:auto;
-
-    border-radius:0;
-}
-
-.player:-webkit-full-screen{
-    width:100vw;
-    height:100vh;
-
-    border-radius:0;
-}
+  width:44px;height:44px;
+  border:3px solid rgba(255,255,255,.08);
+  border-top-color:var(--accent);
+  border-radius:50%;
+  animation:spin .9s linear infinite;
+  margin:20px auto;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ─── الجوال ─── */
+@media (max-width:480px){
+  .brand-text{font-size:1.6rem}
+  .timer-display{font-size:4rem}
+  .room-hero b{font-size:2.1rem;letter-spacing:7px}
+  .container{padding:20px 16px 30px}
+  .glass{padding:18px;border-radius:16px}
+}
+
+/* ─── إخفاء شريط التمرير لكن إبقاء الوظيفة ─── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.2)}
 </style>
 </head>
-
 <body>
-
-
-<!-- =====================================================
-     HEADER
-===================================================== -->
-
-<header class="header">
-
-    <div class="brand">
-
-        <div class="brand-logo">
-            <i class="fa-solid fa-futbol"></i>
-        </div>
-
-        <span>بالتسعين</span>
-
-    </div>
-
-
-    <div class="header-right">
-
-        <button
-            class="header-button"
-            onclick="shareMatch()"
-            aria-label="مشاركة">
-
-            <i class="fa-solid fa-share-nodes"></i>
-
-        </button>
-
-
-        <button
-            class="header-button"
-            onclick="favoriteMatch(this)"
-            aria-label="المفضلة">
-
-            <i class="fa-regular fa-heart"></i>
-
-        </button>
-
-    </div>
-
-</header>
-
-
-
-<main class="container">
-
-
-<!-- =====================================================
-     MATCH HERO
-===================================================== -->
-
-<section>
-
-    <div class="competition">
-
-        <i class="fa-solid fa-trophy"></i>
-
-        دوري روشن السعودي
-
-        <span class="live-badge">
-
-            <span class="live-dot"></span>
-
-            مباشر
-
-        </span>
-
-    </div>
-
-
-    <div class="match-heading">
-
-        <h1>
-            الأهلي السعودي × الهلال السعودي
-        </h1>
-
-        <p>
-            تغطية مباشرة • مباراة القمة السعودية
-        </p>
-
-    </div>
-
-
-<!-- =====================================================
-     TEAMS
-===================================================== -->
-
-<div class="teams">
-
-
-    <div class="team">
-
-        <div class="team-logo">
-
-            <img
-                src="https://upload.wikimedia.org/wikipedia/en/3/3c/Al-Ahli_Saudi_FC_logo.svg"
-                alt="الأهلي السعودي">
-
-        </div>
-
-        <div class="team-name">
-            الأهلي السعودي
-        </div>
-
-        <div class="team-location">
-            جدة • السعودية
-        </div>
-
-    </div>
-
-
-    <div class="score-area">
-
-        <div class="score">
-            0 - 0
-        </div>
-
-        <div class="score-status">
-
-            <i class="fa-solid fa-circle"></i>
-
-            المباراة مباشرة
-
-        </div>
-
-    </div>
-
-
-    <div class="team">
-
-        <div class="team-logo">
-
-            <img
-                src="https://upload.wikimedia.org/wikipedia/en/2/27/Al_Hilal_SFC_logo.svg"
-                alt="الهلال السعودي">
-
-        </div>
-
-        <div class="team-name">
-            الهلال السعودي
-        </div>
-
-        <div class="team-location">
-            الرياض • السعودية
-        </div>
-
-    </div>
-
-
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
 </div>
-
-
-
-<!-- =====================================================
-     PLAYER
-===================================================== -->
-
-<div class="player-wrapper">
-
-<div class="player" id="player">
-
-
-    <video
-        id="video"
-        playsinline
-        webkit-playsinline
-        preload="auto">
-    </video>
-
-
-    <div
-        class="loading"
-        id="loading">
-
-        <div class="loading-content">
-
-            <div class="spinner"></div>
-
-            <div class="loading-text">
-                جاري الاتصال بالبث المباشر...
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div
-        class="player-error"
-        id="playerError">
-
-        <div class="error-content">
-
-            <div class="error-icon">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-
-            <div class="error-title">
-                تعذر تشغيل البث
-            </div>
-
-            <div class="error-text">
-                جرّب تغيير سيرفر البث أو إعادة المحاولة
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="player-vignette"></div>
-
-
-<!-- PLAYER TOP -->
-
-<div class="player-top">
-
-    <div class="broadcast">
-
-        <i class="fa-solid fa-satellite-dish"></i>
-
-        البث المباشر
-
-    </div>
-
-
-    <div class="player-top-actions">
-
-        <button
-            class="player-action"
-            onclick="togglePiP()"
-            title="صورة داخل صورة">
-
-            <i class="fa-solid fa-clone"></i>
-
-        </button>
-
-
-        <button
-            class="player-action"
-            onclick="toggleFullscreen()"
-            title="ملء الشاشة">
-
-            <i
-                id="fullscreenIcon"
-                class="fa-solid fa-expand">
-            </i>
-
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- CENTER PLAY -->
-
-<div class="center-control">
-
-    <button
-        class="main-play"
-        id="mainPlay"
-        onclick="togglePlay()">
-
-        <i class="fa-solid fa-play"></i>
-
-    </button>
-
-</div>
-
-
-<!-- CONTROLS -->
-
-<div class="controls">
-
-    <div
-        class="progress"
-        id="progressArea">
-
-        <div
-            class="progress-value"
-            id="progressValue">
-        </div>
-
-    </div>
-
-
-    <div class="control-row">
-
-
-        <div class="control-group">
-
-            <button
-                class="control"
-                id="playControl"
-                onclick="togglePlay()">
-
-                <i class="fa-solid fa-play"></i>
-
-            </button>
-
-
-            <button
-                class="control"
-                id="muteControl"
-                onclick="toggleMute()">
-
-                <i class="fa-solid fa-volume-high"></i>
-
-            </button>
-
-
-            <span class="live-indicator">
-                LIVE
-            </span>
-
-        </div>
-
-
-        <div class="control-group">
-
-            <button
-                class="control"
-                onclick="togglePiP()">
-
-                <i class="fa-solid fa-clone"></i>
-
-            </button>
-
-
-            <button
-                class="control"
-                onclick="toggleFullscreen()">
-
-                <i class="fa-solid fa-expand"></i>
-
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-</div>
-
-
-<!-- =====================================================
-     SERVERS
-===================================================== -->
-
-<div class="server-panel">
-
-    <div class="server-title">
-
-        <i class="fa-solid fa-server"></i>
-
-        سيرفرات المشاهدة
-
-    </div>
-
-
-    <div class="server-list">
-
-
-        <button
-            class="server active"
-            onclick="selectServer(this,STREAM_URL)">
-
-            <i class="fa-solid fa-circle-check"></i>
-
-            السيرفر 1
-
-        </button>
-
-
-        <button
-            class="server"
-            onclick="serverUnavailable(this)">
-
-            <i class="fa-solid fa-server"></i>
-
-            السيرفر 2
-
-        </button>
-
-
-        <button
-            class="server"
-            onclick="serverUnavailable(this)">
-
-            <i class="fa-solid fa-server"></i>
-
-            السيرفر 3
-
-        </button>
-
-
-    </div>
-
-</div>
-
-
-</div>
-
-
-<!-- =====================================================
-     MATCH INFO
-===================================================== -->
-
-<div class="info-grid">
-
-
-    <div class="info-card">
-
-        <div class="info-icon">
-
-            <i class="fa-solid fa-calendar-days"></i>
-
-        </div>
-
-        <div>
-
-            <div class="info-label">
-                التاريخ
-            </div>
-
-            <div class="info-value">
-                اليوم
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="info-card">
-
-        <div class="info-icon">
-
-            <i class="fa-solid fa-clock"></i>
-
-        </div>
-
-        <div>
-
-            <div class="info-label">
-                التوقيت
-            </div>
-
-            <div class="info-value">
-                21:00
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="info-card">
-
-        <div class="info-icon">
-
-            <i class="fa-solid fa-location-dot"></i>
-
-        </div>
-
-        <div>
-
-            <div class="info-label">
-                الملعب
-            </div>
-
-            <div class="info-value">
-                مدينة الملك عبدالله
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="info-card">
-
-        <div class="info-icon">
-
-            <i class="fa-solid fa-microphone"></i>
-
-        </div>
-
-        <div>
-
-            <div class="info-label">
-                التعليق
-            </div>
-
-            <div class="info-value">
-                عربي
-            </div>
-
-        </div>
-
-    </div>
-
-
-</div>
-
-</section>
-
-
-
-<!-- =====================================================
-     NAVIGATION
-===================================================== -->
-
-<nav class="navigation">
-
-    <button
-        class="tab active"
-        onclick="openTab(event,'events')">
-
-        <i class="fa-solid fa-bolt"></i>
-
-        أحداث المباراة
-
-    </button>
-
-
-    <button
-        class="tab"
-        onclick="openTab(event,'lineups')">
-
-        <i class="fa-solid fa-users"></i>
-
-        التشكيلة
-
-    </button>
-
-
-    <button
-        class="tab"
-        onclick="openTab(event,'stats')">
-
-        <i class="fa-solid fa-chart-simple"></i>
-
-        الإحصائيات
-
-    </button>
-
-
-    <button
-        class="tab"
-        onclick="openTab(event,'news')">
-
-        <i class="fa-solid fa-newspaper"></i>
-
-        الأخبار
-
-    </button>
-
-</nav>
-
-
-
-<section class="content">
-
-
-<!-- =====================================================
-     EVENTS
-===================================================== -->
-
-<div
-    class="tab-content active"
-    id="events">
-
-    <h2 class="section-title">
-
-        <i class="fa-solid fa-bolt"></i>
-
-        أحداث المباراة
-
-    </h2>
-
-
-    <div class="timeline">
-
-
-        <div class="event">
-
-            <div class="event-time">
-                الآن
-            </div>
-
-            <div class="event-icon">
-
-                <i class="fa-solid fa-play"></i>
-
-            </div>
-
-            <div>
-
-                <div class="event-info">
-                    انطلاق البث المباشر
-                </div>
-
-                <div class="event-sub">
-                    يمكنك مشاهدة المباراة من المشغل أعلاه
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="event">
-
-            <div class="event-time">
-                —'
-            </div>
-
-            <div class="event-icon">
-
-                <i class="fa-solid fa-futbol"></i>
-
-            </div>
-
-            <div>
-
-                <div class="event-info">
-                    لا توجد أهداف حتى الآن
-                </div>
-
-                <div class="event-sub">
-                    سيتم تحديث الأحداث هنا
-                </div>
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-</div>
-
-
-
-<!-- =====================================================
-     LINEUPS
-===================================================== -->
-
-<div
-    class="tab-content"
-    id="lineups">
-
-    <div class="lineup-grid">
-
-
-        <div class="lineup-card">
-
-            <div class="lineup-header">
-
-                الأهلي السعودي
-
-                <i class="fa-solid fa-shield"></i>
-
-            </div>
-
-
-            <div class="player-row">
-
-                <span>حارس المرمى</span>
-
-                <span class="player-number">
-                    1
-                </span>
-
-            </div>
-
-
-            <div class="player-row">
-
-                <span>قلب الدفاع</span>
-
-                <span class="player-number">
-                    3
-                </span>
-
-            </div>
-
-
-            <div class="player-row">
-
-                <span>خط الوسط</span>
-
-                <span class="player-number">
-                    8
-                </span>
-
-            </div>
-
-
-            <div class="player-row">
-
-                <span>الهجوم</span>
-
-                <span class="player-number">
-                    9
-                </span>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="lineup-card">
-
-            <div class="lineup-header">
-
-                الهلال السعودي
-
-                <i class="fa-solid fa-shield"></i>
-
-            </div>
-
-
-            <div class="player-row">
-
-                <span>حارس المرمى</span>
-
-                <span class="player-number">
-                    1
-                </span>
-
-            </div>
-
-
-            <div class="player-row">
-
-                <span>قلب الدفاع</span>
-
-                <span class="player-number">
-                    3
-                </span>
-
-            </div>
-
-
-            <div class="player-row">
-
-                <span>خط الوسط</span>
-
-                <span class="player-number">
-                    8
-                </span>
-
-            </div>
-
-
-            <div class="player-row">
-
-                <span>الهجوم</span>
-
-                <span class="player-number">
-                    9
-                </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
-<!-- =====================================================
-     STATS
-===================================================== -->
-
-<div
-    class="tab-content"
-    id="stats">
-
-    <h2 class="section-title">
-
-        <i class="fa-solid fa-chart-simple"></i>
-
-        إحصائيات المباراة
-
-    </h2>
-
-
-    <div class="stats-card">
-
-
-        <div class="stat">
-
-            <div class="stat-top">
-
-                <span>
-                    الاستحواذ
-                </span>
-
-                <span>
-                    50% — 50%
-                </span>
-
-            </div>
-
-            <div class="stat-bar">
-
-                <div
-                    class="stat-value"
-                    style="width:50%">
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-top">
-
-                <span>
-                    التسديدات
-                </span>
-
-                <span>
-                    0 — 0
-                </span>
-
-            </div>
-
-            <div class="stat-bar">
-
-                <div
-                    class="stat-value"
-                    style="width:50%">
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-top">
-
-                <span>
-                    الركنيات
-                </span>
-
-                <span>
-                    0 — 0
-                </span>
-
-            </div>
-
-            <div class="stat-bar">
-
-                <div
-                    class="stat-value"
-                    style="width:50%">
-                </div>
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-</div>
-
-
-
-<!-- =====================================================
-     NEWS
-===================================================== -->
-
-<div
-    class="tab-content"
-    id="news">
-
-    <h2 class="section-title">
-
-        <i class="fa-solid fa-newspaper"></i>
-
-        أخبار المباراة
-
-    </h2>
-
-
-    <div class="news-item">
-
-        <div class="news-icon">
-
-            <i class="fa-solid fa-bolt"></i>
-
-        </div>
-
-        <div>
-
-            <div class="news-title">
-                الأهلي السعودي × الهلال السعودي
-            </div>
-
-            <div class="news-meta">
-                تغطية مباشرة للمباراة
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="news-item">
-
-        <div class="news-icon">
-
-            <i class="fa-solid fa-tv"></i>
-
-        </div>
-
-        <div>
-
-            <div class="news-title">
-                البث المباشر متوفر الآن
-            </div>
-
-            <div class="news-meta">
-                بالتسعين
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-</section>
-
-</main>
-
-
-
-<footer class="footer">
-
-    © 2026 بالتسعين — جميع الحقوق محفوظة
-
-</footer>
-
-
+<div id="app"></div>
 
 <script>
+// ═══════════════════════════════════════════════════════════
+//  موقعنا | Multi-Game Platform
+// ═══════════════════════════════════════════════════════════
+const SUPABASE_URL = 'https://dncatiycgyjztzellcbt.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_-kiNISn0BX891Gk8PF-Y-w_xMhSIagc';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-/* =========================================================
-   STREAM URL
-   ========================================================= */
+// ─── سجل الألعاب (توسعة مستقبلية سهلة) ───
+const GAMES = {
+  'timing-challenge': {
+    id: 'timing-challenge',
+    name: 'تحدي التوقيت',
+    icon: '⏱️',
+    tagline: 'اضغط في اللحظة الصحيحة',
+    minPlayers: 2,
+    maxPlayers: 2,
+    enabled: true,
+  },
+  // أضف ألعابًا جديدة هنا لاحقًا بنفس الهيكل
+  // 'reaction-duel': { ... }
+};
 
-const STREAM_URL =
-"https://akamai-live.servers8.com/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJTT0xha2JlaFpvZGIxWUc1UFJHWTZKeVpmaTgyIiwiY2hhbm5lbE5hbWUiOiJjaDExIiwiaXAiOiIxNTAuMjI4LjExLjE5MyIsImlwX3Y0IjoiMTUwLjIyOC4xMS4xOTMiLCJpcF92NiI6IiIsInVzZXJBZ2VudCI6Ik1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDEwLjA7IFdpbjY0OyB4NjQ7IHJ2OjE1NC4wKSBHZWNrby8yMDEwMDEwMSBGaXJlZm94LzE1NC4wIiwiaGFzU3Vic2NyaXB0aW9ucyI6ZmFsc2UsIm5iZiI6MTc4ODI4MDM0OCwiZXhwIjoxNzg4MzI3MjA4LCJnZW9CeXBhc3MiOmZhbHNlIiwiaWF0IjoxNzg4MjgwNDA4fQ.oB4ue-tq9MSHpXNXX4lNSk_OE3CHdxqkPDXffJXUzrY/live/ch11/index.m3u8?aws.manifestfilter=video_codec:h265;video_dynamic_range:sdr;video_framerate:50;video_height:1-2160";
+// ─── الحالة العامة ───
+const state = {
+  screen: 'home',       // home | host | player | loading
+  role: null,           // host | player
+  gameType: 'timing-challenge',
+  code: null,
+  roomId: null,
+  token: null,
+  name: '',
+  slot: null,
+  roundStatus: 'waiting',
+  roundNumber: 0,
+  players: [],
+  targetTime: '5',
+  displayTime: '0.00',
+  clockOffset: 0,
+  timerHandle: null,
+  channel: null,
+  results: null,
+  history: [],
+  error: '',
+  info: '',
+};
 
+// ─── أدوات ───
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = n => Number(n ?? 0).toFixed(2);
 
-/* =========================================================
-   ELEMENTS
-========================================================= */
+function saveSession(){
+  try{ localStorage.setItem('mn_session', JSON.stringify({
+    role:state.role, code:state.code, roomId:state.roomId,
+    token:state.token, name:state.name, slot:state.slot, gameType:state.gameType,
+  })); }catch(e){}
+}
+function loadSession(){
+  try{ return JSON.parse(localStorage.getItem('mn_session')||'null'); }catch(e){ return null; }
+}
+function clearSession(){ try{ localStorage.removeItem('mn_session'); }catch(e){} }
 
-const video =
-    document.getElementById("video");
-
-const player =
-    document.getElementById("player");
-
-const loading =
-    document.getElementById("loading");
-
-const playerError =
-    document.getElementById("playerError");
-
-const progressValue =
-    document.getElementById("progressValue");
-
-const playControl =
-    document.getElementById("playControl");
-
-const mainPlay =
-    document.getElementById("mainPlay");
-
-const muteControl =
-    document.getElementById("muteControl");
-
-const fullscreenIcon =
-    document.getElementById("fullscreenIcon");
-
-let hls = null;
-
-
-/* =========================================================
-   LOAD STREAM
-========================================================= */
-
-function loadStream(url){
-
-    playerError.style.display="none";
-
-    loading.style.display="flex";
-
-
-    if(hls){
-
-        hls.destroy();
-
-        hls=null;
-
-    }
-
-
-    /*
-       Native HLS
-       Safari / compatible browsers
-    */
-
-    if(
-        video.canPlayType(
-            "application/vnd.apple.mpegurl"
-        )
-    ){
-
-        video.src=url;
-
-        video.addEventListener(
-            "loadedmetadata",
-            onStreamReady,
-            {once:true}
-        );
-
-        return;
-
-    }
-
-
-    /*
-       HLS.js
-    */
-
-    if(
-        typeof Hls !== "undefined" &&
-        Hls.isSupported()
-    ){
-
-        hls=new Hls({
-
-            enableWorker:true,
-
-            lowLatencyMode:true,
-
-            backBufferLength:30,
-
-            maxBufferLength:20,
-
-            maxMaxBufferLength:40,
-
-            startLevel:-1,
-
-            capLevelToPlayerSize:true
-
-        });
-
-
-        hls.loadSource(url);
-
-        hls.attachMedia(video);
-
-
-        hls.on(
-            Hls.Events.MANIFEST_PARSED,
-            onStreamReady
-        );
-
-
-        hls.on(
-            Hls.Events.ERROR,
-            function(event,data){
-
-                console.log(
-                    "HLS error:",
-                    data
-                );
-
-
-                if(data.fatal){
-
-                    showPlayerError();
-
-                }
-
-            }
-        );
-
-        return;
-
-    }
-
-
-    showPlayerError();
-
+// ═══════════════════════════════════════════════════════════
+//  التصيير
+// ═══════════════════════════════════════════════════════════
+function render(){
+  const app = $('#app');
+  if(state.screen === 'loading'){
+    app.innerHTML = `<div class="container"><div class="spinner"></div></div>`;
+    return;
+  }
+  if(state.screen === 'home')   return renderHome(app);
+  if(state.screen === 'host')   return renderHost(app);
+  if(state.screen === 'player') return renderPlayer(app);
 }
 
+// ─── الشاشة الرئيسية ───
+function renderHome(app){
+  app.innerHTML = `
+    <div class="container">
+      <div class="brand">
+        <div class="brand-mark">م</div>
+        <div class="brand-text">موقعنا</div>
+      </div>
+      <p class="subtitle">${esc(GAMES[state.gameType].icon)} ${esc(GAMES[state.gameType].name)}</p>
 
-/* =========================================================
-   STREAM READY
-========================================================= */
+      <div class="glass">
+        <h3>اسمك <span class="tag">مطلوب</span></h3>
+        <input id="nameInput" class="input" placeholder="اكتب اسمك هنا" value="${esc(state.name)}" maxlength="20" autocomplete="off">
+      </div>
 
-function onStreamReady(){
+      <div class="glass">
+        <h3>إنشاء غرفة جديدة</h3>
+        <p style="color:var(--text-secondary);font-size:.88rem;margin-bottom:14px;line-height:1.6">
+          ستكون أنت المضيف. ستحصل على كود لمشاركته مع أصدقائك.
+        </p>
+        <button class="btn btn-primary" id="createBtn">
+          <span>ابدأ غرفة جديدة</span>
+        </button>
+      </div>
 
-    loading.style.display="none";
+      <div class="glass">
+        <h3>الانضمام إلى غرفة</h3>
+        <input id="codeInput" class="input input-code" placeholder="ABCDE" maxlength="5" autocomplete="off">
+        <button class="btn btn-ghost" id="joinBtn">انضمام كلاعب</button>
+      </div>
 
-    /*
-       لا يتم التشغيل التلقائي بالصوت
-       حتى لا تمنع المتصفحات التشغيل.
-    */
-
+      ${state.error ? `<div class="alert">${esc(state.error)}</div>` : ''}
+    </div>
+  `;
+  $('#createBtn').onclick = createRoom;
+  $('#joinBtn').onclick = joinRoom;
+  $('#nameInput').oninput = e => { state.name = e.target.value; };
+  $('#codeInput').oninput = e => { e.target.value = e.target.value.toUpperCase(); };
+  $('#codeInput').onkeydown = e => { if(e.key === 'Enter') joinRoom(); };
+  setTimeout(() => $('#nameInput')?.focus(), 100);
 }
 
+// ─── واجهة المضيف ───
+function renderHost(app){
+  const p1 = state.players.find(p => p.slot === 1) || { name:'—', pressed:false };
+  const p2 = state.players.find(p => p.slot === 2) || { name:'—', pressed:false };
+  const bothJoined = state.players.length === 2;
+  const playing = state.roundStatus === 'active';
+  const ended = state.roundStatus === 'ended';
 
-/* =========================================================
-   ERROR
-========================================================= */
+  const timerClass = playing ? 'active' : (ended ? 'finished' : 'idle');
+  const timerValue = playing ? state.displayTime : (ended ? state.displayTime : '0.00');
 
-function showPlayerError(){
+  let body = '';
 
-    loading.style.display="none";
+  // قسم بدء الجولة
+  if(!playing && !ended){
+    body = `
+      <div class="glass">
+        <h3>إعداد الجولة <span class="tag">${bothJoined ? 'جاهز' : 'بانتظار اللاعبين'}</span></h3>
+        <label style="color:var(--text-secondary);font-size:.85rem;font-weight:600;display:block;margin-bottom:8px">
+          الوقت المستهدف (بالثواني)
+        </label>
+        <input id="targetInput" class="input" type="number" step="0.1" min="0.5" max="60"
+               value="${esc(state.targetTime)}"
+               style="text-align:center;font-size:1.8rem;font-weight:800;font-family:ui-monospace,monospace;padding:16px">
+        <button class="btn btn-success" id="startBtn" ${!bothJoined ? 'disabled' : ''}>
+          ${bothJoined ? '▶ ابدأ الجولة' : `بانتظار ${2 - state.players.length} لاعب`}
+        </button>
+      </div>
+    `;
+  } else if(playing){
+    body = `
+      <div class="glass" style="text-align:center;padding:16px">
+        <div style="color:var(--accent-2);font-weight:700;font-size:.9rem" class="pulse">
+          ● الجولة جارية — بانتظار ضغط اللاعبين
+        </div>
+      </div>
+    `;
+  }
 
-    playerError.style.display="flex";
+  // حالة اللاعبين
+  const playersCard = `
+    <div class="glass">
+      <h3>حالة اللاعبين</h3>
+      <div class="player-grid">
+        <div class="player-card ${p1.pressed ? 'pressed' : ''}">
+          <div class="pname">${esc(p1.name)}</div>
+          <div class="pstatus">${p1.pressed && p1.elapsed != null ? fmt(p1.elapsed) : (p1.pressed ? '✓' : '—')}</div>
+          <div class="plabel">${p1.pressed && p1.elapsed != null ? 'ثانية' : (p1.pressed ? 'تم' : 'لم يضغط')}</div>
+        </div>
+        <div class="player-card ${p2.pressed ? 'pressed' : ''}">
+          <div class="pname">${esc(p2.name)}</div>
+          <div class="pstatus">${p2.pressed && p2.elapsed != null ? fmt(p2.elapsed) : (p2.pressed ? '✓' : '—')}</div>
+          <div class="plabel">${p2.pressed && p2.elapsed != null ? 'ثانية' : (p2.pressed ? 'تم' : 'لم يضغط')}</div>
+        </div>
+      </div>
+    </div>
+  `;
 
+  // نتائج الجولة
+  let resultsCard = '';
+  if(ended && state.results){
+    const r = state.results;
+    const sorted = [...r.players].sort((a,b) => (a.diff ?? 999) - (b.diff ?? 999));
+    const winner = sorted[0];
+    resultsCard = `
+      <div class="glass" style="border-color:rgba(34,197,94,.3)">
+        <h3>🏁 نتيجة الجولة ${r.round_number}</h3>
+        <div class="result-hero">
+          <div class="label">الوقت المطلوب</div>
+          <div class="target">${fmt(r.target_time)}<small style="font-size:1rem;color:var(--text-muted)"> ث</small></div>
+        </div>
+        <div class="result-grid">
+          ${r.players.map(p => `
+            <div class="result-item ${p.slot === winner.slot ? 'winner' : ''}">
+              <div>
+                <div class="rname">${esc(p.name)}</div>
+                <div class="rdiff">فرق ${p.diff != null ? fmt(p.diff) : '—'} ث</div>
+              </div>
+              <div class="rtime">${p.elapsed != null ? fmt(p.elapsed) : '—'} ث</div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="winner-badge">🏆 ${esc(winner.name)}</div>
+        <button class="btn btn-primary" id="newRoundBtn">جولة جديدة</button>
+      </div>
+    `;
+  }
+
+  // سجل الجولات
+  let historyCard = '';
+  if(state.history.length > 0){
+    historyCard = `
+      <div class="glass">
+        <h3>سجل الجولات <span class="tag">${state.history.length}</span></h3>
+        <div class="history-list">
+          ${state.history.map(h => `
+            <div class="history-item">
+              <div class="hnum">${h.round_number}</div>
+              <div class="htarget">${fmt(h.target)} ث</div>
+              <div></div>
+              <div class="hwin">${esc(h.winner)}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  app.innerHTML = `
+    <div class="container">
+      <div class="room-hero">
+        <small>كود الغرفة</small>
+        <b id="roomCodeText">${esc(state.code || '-----')}</b>
+        <div class="copy-hint" id="copyBtn">📋 انسخ الكود وشاركه</div>
+      </div>
+
+      <div class="timer-display ${timerClass}" id="timerEl">${timerValue}</div>
+
+      ${body}
+      ${playersCard}
+      ${resultsCard}
+      ${historyCard}
+
+      <button class="btn btn-danger" id="leaveBtn" style="margin-top:8px">مغادرة الغرفة</button>
+    </div>
+  `;
+
+  $('#startBtn') && ($('#startBtn').onclick = startRound);
+  $('#targetInput') && ($('#targetInput').oninput = e => { state.targetTime = e.target.value; });
+  $('#newRoundBtn') && ($('#newRoundBtn').onclick = () => {
+    state.results = null;
+    state.roundStatus = 'waiting';
+    state.displayTime = '0.00';
+    // إعادة تعيين اللاعبين بصريًا
+    state.players = state.players.map(p => ({...p, pressed:false, elapsed:null}));
+    render();
+  });
+  $('#copyBtn') && ($('#copyBtn').onclick = () => {
+    navigator.clipboard?.writeText(state.code);
+    $('#copyBtn').textContent = '✓ تم النسخ';
+    setTimeout(() => { const el = $('#copyBtn'); if(el) el.textContent = '📋 انسخ الكود وشاركه'; }, 1500);
+  });
+  $('#leaveBtn').onclick = leaveRoom;
 }
 
+// ─── واجهة اللاعب ───
+function renderPlayer(app){
+  const me = state.players.find(p => p.slot === state.slot);
+  const isActive = state.roundStatus === 'active';
+  const isEnded = state.roundStatus === 'ended';
 
-/* =========================================================
-   PLAY / PAUSE
-========================================================= */
+  // نهاية الجولة — عرض النتيجة
+  if(isEnded && state.results){
+    const r = state.results;
+    const sorted = [...r.players].sort((a,b) => (a.diff ?? 999) - (b.diff ?? 999));
+    const winner = sorted[0];
+    const iWon = me && winner.slot === me.slot;
+    app.innerHTML = `
+      <div class="player-view">
+        <div class="player-state ${iWon ? 'win' : ''}">
+          ${iWon ? '🏆 فزت!' : 'انتهت الجولة'}
+          ${me ? `
+            <span class="sub">وقتك: ${me.elapsed != null ? fmt(me.elapsed) : '—'} ث</span>
+            <span class="sub">الفرق: ${me.diff != null ? fmt(me.diff) : '—'} ث</span>
+          ` : ''}
+          <span class="sub">الهدف كان ${fmt(r.target_time)} ث</span>
+          <span class="sub" style="color:var(--gold);margin-top:16px">الفائز: ${esc(winner.name)}</span>
+          <span class="sub" style="margin-top:20px">بانتظار الجولة التالية...</span>
+        </div>
+      </div>
+    `;
+    return;
+  }
 
-function togglePlay(){
-
-    if(video.paused){
-
-        video.play()
-        .catch(error=>{
-
-            console.log(
-                "Playback blocked:",
-                error
-            );
-
-        });
-
-    }else{
-
-        video.pause();
-
+  // الجولة نشطة — زر أو تأكيد
+  if(isActive){
+    if(me?.pressed){
+      app.innerHTML = `
+        <div class="player-view">
+          <div class="player-state pressed">
+            ✓ تم الضغط
+            <span class="sub">بانتظار اللاعب الآخر...</span>
+          </div>
+        </div>
+      `;
+      return;
     }
+    app.innerHTML = `
+      <div class="player-view">
+        <button class="press-btn" id="pressBtn">اضغط</button>
+      </div>
+    `;
+    const btn = $('#pressBtn');
+    btn.addEventListener('pointerdown', e => { e.preventDefault(); pressNow(); }, { passive:false });
+    return;
+  }
 
+  // الانتظار
+  app.innerHTML = `
+    <div class="player-view">
+      <div class="player-state pulse">
+        بانتظار بدء الجولة
+        <span class="sub">ستُفعَّل التعليمات عند بدء المضيف</span>
+      </div>
+    </div>
+  `;
 }
 
+// ═══════════════════════════════════════════════════════════
+//  المنطق الرئيسي
+// ═══════════════════════════════════════════════════════════
+async function createRoom(){
+  state.error = '';
+  const name = state.name.trim() || 'المضيف';
+  state.screen = 'loading';
+  render();
 
-video.addEventListener(
-    "play",
-    function(){
+  const { data, error } = await sb.rpc('mn_create_room', {
+    p_host_name: name,
+    p_game: state.gameType,
+  });
 
-        playControl.innerHTML=
-            '<i class="fa-solid fa-pause"></i>';
+  if(error || data?.error){
+    state.screen = 'home';
+    state.error = error?.message || data?.error || 'فشل إنشاء الغرفة';
+    return render();
+  }
 
-        mainPlay.innerHTML=
-            '<i class="fa-solid fa-pause"></i>';
-
-    }
-);
-
-
-video.addEventListener(
-    "pause",
-    function(){
-
-        playControl.innerHTML=
-            '<i class="fa-solid fa-play"></i>';
-
-        mainPlay.innerHTML=
-            '<i class="fa-solid fa-play"></i>';
-
-    }
-);
-
-
-/* =========================================================
-   MUTE
-========================================================= */
-
-function toggleMute(){
-
-    video.muted=!video.muted;
-
-    muteControl.innerHTML=
-        video.muted
-
-        ? '<i class="fa-solid fa-volume-xmark"></i>'
-
-        : '<i class="fa-solid fa-volume-high"></i>';
-
+  Object.assign(state, {
+    role:'host', code:data.code, roomId:data.room_id, token:data.host_token,
+    name, screen:'host', roundStatus:'waiting', players:[], history:[],
+  });
+  saveSession();
+  subscribeRealtime();
+  render();
 }
 
+async function joinRoom(){
+  state.error = '';
+  const name = (state.name || '').trim() || 'لاعب';
+  const code = ($('#codeInput')?.value || '').trim().toUpperCase();
+  if(!code || code.length < 5){ state.error = 'أدخل كود الغرفة (5 أحرف)'; return render(); }
 
-/* =========================================================
-   FULLSCREEN
-========================================================= */
+  state.screen = 'loading';
+  render();
 
-async function toggleFullscreen(){
+  const { data, error } = await sb.rpc('mn_join_room', { p_code: code, p_name: name });
 
-    try{
+  if(error || data?.error){
+    state.screen = 'home';
+    state.error = error?.message || data?.error || 'فشل الانضمام';
+    return render();
+  }
 
-        if(!document.fullscreenElement){
-
-            await player.requestFullscreen();
-
-        }else{
-
-            await document.exitFullscreen();
-
-        }
-
-    }catch(error){
-
-        console.log(
-            "Fullscreen error:",
-            error
-        );
-
-    }
-
+  Object.assign(state, {
+    role:'player', code:data.code, roomId:data.room_id, token:data.player_token,
+    slot:data.slot, name, screen:'player', roundStatus:'waiting',
+    gameType: data.game_type || state.gameType, players:[],
+  });
+  saveSession();
+  subscribeRealtime();
+  render();
 }
 
+async function startRound(){
+  const t = parseFloat(state.targetTime);
+  if(isNaN(t) || t <= 0){ state.error = 'أدخل وقتًا صحيحًا'; return render(); }
 
-document.addEventListener(
-    "fullscreenchange",
-    function(){
-
-        if(document.fullscreenElement){
-
-            fullscreenIcon.className=
-                "fa-solid fa-compress";
-
-            player.classList.add("fullscreen");
-
-        }else{
-
-            fullscreenIcon.className=
-                "fa-solid fa-expand";
-
-            player.classList.remove("fullscreen");
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   PICTURE IN PICTURE
-========================================================= */
-
-async function togglePiP(){
-
-    try{
-
-        if(
-            document.pictureInPictureElement
-        ){
-
-            await document.exitPictureInPicture();
-
-            return;
-
-        }
-
-
-        if(
-            document.pictureInPictureEnabled &&
-            !video.disablePictureInPicture
-        ){
-
-            await video.requestPictureInPicture();
-
-        }
-
-    }catch(error){
-
-        console.log(
-            "PiP unavailable:",
-            error
-        );
-
-    }
-
+  const { data, error } = await sb.rpc('tc_start_round', {
+    p_code: state.code, p_host_token: state.token, p_target: t,
+  });
+  if(error || data?.error){
+    state.error = error?.message || data?.error;
+    render();
+  }
 }
 
-
-/* =========================================================
-   PROGRESS
-========================================================= */
-
-video.addEventListener(
-    "timeupdate",
-    function(){
-
-        /*
-           البث المباشر غالباً لا يملك مدة
-           قابلة للتعامل مثل الفيديو العادي.
-        */
-
-        if(
-            !video.duration ||
-            !isFinite(video.duration)
-        ){
-
-            progressValue.style.width="100%";
-
-            return;
-
-        }
-
-
-        const percent =
-            (
-                video.currentTime /
-                video.duration
-            ) * 100;
-
-
-        progressValue.style.width =
-            percent + "%";
-
-    }
-);
-
-
-/* =========================================================
-   PROGRESS CLICK
-========================================================= */
-
-document
-.getElementById("progressArea")
-.addEventListener(
-    "click",
-    function(event){
-
-        if(
-            !video.duration ||
-            !isFinite(video.duration)
-        ){
-
-            return;
-
-        }
-
-
-        const rect =
-            this.getBoundingClientRect();
-
-
-        const position =
-            (event.clientX - rect.left) /
-            rect.width;
-
-
-        video.currentTime =
-            position * video.duration;
-
-    }
-);
-
-
-/* =========================================================
-   SERVER
-========================================================= */
-
-function selectServer(button,url){
-
-    document
-        .querySelectorAll(".server")
-        .forEach(
-            item =>
-                item.classList.remove("active")
-        );
-
-
-    button.classList.add("active");
-
-
-    loadStream(url);
-
+async function pressNow(){
+  const me = state.players.find(p => p.slot === state.slot);
+  if(me?.pressed) return;
+  if(me) me.pressed = true;
+  render();
+  const { error } = await sb.rpc('tc_press', { p_code:state.code, p_player_token:state.token });
+  if(error) console.error('press:', error);
 }
 
-
-function serverUnavailable(button){
-
-    document
-        .querySelectorAll(".server")
-        .forEach(
-            item =>
-                item.classList.remove("active")
-        );
-
-
-    button.classList.add("active");
-
-
-    setTimeout(
-        ()=>{
-            button.classList.remove("active");
-        },
-        700
-    );
-
+async function refreshState(){
+  if(!state.code || !state.token) return;
+  const { data, error } = await sb.rpc('tc_get_results', {
+    p_code: state.code, p_token: state.token,
+  });
+  if(error){ console.error(error); return; }
+  applyServerState(data);
 }
 
+function applyServerState(d){
+  if(!d || d.error) return;
 
-/* =========================================================
-   TABS
-========================================================= */
+  state.roundStatus = d.round_status;
+  state.roundNumber = d.round_number;
 
-function openTab(event,id){
+  state.players = (d.players || []).map(p => ({
+    name:p.name, slot:p.slot, pressed:p.pressed,
+    elapsed:p.elapsed ?? null, diff:p.diff ?? null,
+  }));
 
-    document
-        .querySelectorAll(".tab")
-        .forEach(
-            tab =>
-                tab.classList.remove("active")
-        );
-
-
-    document
-        .querySelectorAll(".tab-content")
-        .forEach(
-            content =>
-                content.classList.remove("active")
-        );
-
-
-    event.currentTarget
-        .classList.add("active");
-
-
-    document
-        .getElementById(id)
-        .classList.add("active");
-
-}
-
-
-/* =========================================================
-   FAVORITE
-========================================================= */
-
-function favoriteMatch(button){
-
-    const icon =
-        button.querySelector("i");
-
-
-    icon.classList.toggle(
-        "fa-regular"
-    );
-
-    icon.classList.toggle(
-        "fa-solid"
-    );
-
-
-    if(
-        icon.classList.contains("fa-solid")
-    ){
-
-        icon.style.color="#ff3d58";
-
-    }else{
-
-        icon.style.color="";
-
-    }
-
-}
-
-
-/* =========================================================
-   SHARE
-========================================================= */
-
-async function shareMatch(){
-
-    const data={
-
-        title:
-            "الأهلي السعودي × الهلال السعودي",
-
-        text:
-            "شاهد مباراة الأهلي السعودي × الهلال السعودي",
-
-        url:
-            window.location.href
-
+  if(d.round_status === 'ended' && d.target_time != null){
+    state.results = {
+      round_number: d.round_number,
+      target_time: Number(d.target_time),
+      players: d.players,
     };
-
-
-    try{
-
-        if(navigator.share){
-
-            await navigator.share(data);
-
-        }else{
-
-            await navigator.clipboard.writeText(
-                window.location.href
-            );
-
-            alert(
-                "تم نسخ رابط المباراة"
-            );
-
-        }
-
-    }catch(error){
-
-        console.log(error);
-
+    if(state.role === 'host'){
+      const winner = [...d.players].sort((a,b)=>(a.diff??999)-(b.diff??999))[0];
+      const last = state.history[state.history.length-1];
+      if(!last || last.round_number !== d.round_number){
+        state.history.push({
+          round_number: d.round_number,
+          target: Number(d.target_time),
+          winner: winner.name,
+        });
+      }
     }
+  } else if(d.round_status === 'active' && d.started_at){
+    startHostTimer(d.started_at);
+    state.results = null;
+  } else if(d.round_status === 'waiting'){
+    stopHostTimer();
+    state.displayTime = '0.00';
+    state.results = null;
+  }
 
+  render();
 }
 
+// ═══════════════════════════════════════════════════════════
+//  المؤقت (للمضيف فقط)
+// ═══════════════════════════════════════════════════════════
+function startHostTimer(startedAtISO){
+  stopHostTimer();
+  if(state.role !== 'host') return;
+  const startedAt = new Date(startedAtISO).getTime();
+  state.timerHandle = setInterval(() => {
+    if(state.roundStatus !== 'active') return;
+    const elapsed = (Date.now() + state.clockOffset - startedAt) / 1000;
+    const el = $('#timerEl');
+    if(el) el.textContent = Math.max(0, elapsed).toFixed(2);
+  }, 33); // ~30fps كافٍ جدًا للعين
+}
+function stopHostTimer(){
+  if(state.timerHandle){ clearInterval(state.timerHandle); state.timerHandle = null; }
+}
 
-/* =========================================================
-   KEYBOARD SHORTCUTS
-========================================================= */
+// ═══════════════════════════════════════════════════════════
+//  Realtime
+// ═══════════════════════════════════════════════════════════
+function subscribeRealtime(){
+  if(state.channel){ try{ sb.removeChannel(state.channel); }catch(e){} state.channel = null; }
 
-document.addEventListener(
-    "keydown",
-    function(event){
+  const ch = sb.channel(`room-${state.roomId}`, { config:{ broadcast:{ self:false } } });
 
-        /*
-           Space = Play / Pause
-        */
-
-        if(
-            event.code==="Space" &&
-            document.activeElement.tagName!=="BUTTON"
-        ){
-
-            event.preventDefault();
-
-            togglePlay();
-
-        }
-
-
-        /*
-           F = Fullscreen
-        */
-
-        if(
-            event.key.toLowerCase()==="f"
-        ){
-
-            toggleFullscreen();
-
-        }
-
-
-        /*
-           M = Mute
-        */
-
-        if(
-            event.key.toLowerCase()==="m"
-        ){
-
-            toggleMute();
-
-        }
-
+  ch.on('postgres_changes', {
+    event:'INSERT', schema:'public', table:'mn_events',
+    filter:`room_id=eq.${state.roomId}`,
+  }, payload => {
+    const ev = payload.new;
+    if(ev?.created_at){
+      const serverNow = new Date(ev.created_at).getTime();
+      state.clockOffset = serverNow - Date.now();
     }
-);
+    if(['player_joined','player_pressed','round_started','round_ended'].includes(ev.event_type)){
+      refreshState();
+    }
+  });
 
+  ch.subscribe(status => {
+    if(status === 'SUBSCRIBED') refreshState();
+  });
 
-/* =========================================================
-   START
-========================================================= */
+  state.channel = ch;
+  // جلب أولي احتياطي
+  setTimeout(refreshState, 250);
+}
 
-loadStream(https://akamai-live.servers8.com/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJTT0xha2JlaFpvZGIxWUc1UFJHWTZKeVpmaTgyIiwiY2hhbm5lbE5hbWUiOiJjaDExIiwiaXAiOiIxNTAuMjI4LjExLjE5MyIsImlwX3Y0IjoiMTUwLjIyOC4xMS4xOTMiLCJpcF92NiI6IiIsInVzZXJBZ2VudCI6Ik1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDEwLjA7IFdpbjY0OyB4NjQ7IHJ2OjE1NC4wKSBHZWNrby8yMDEwMDEwMSBGaXJlZm94LzE1NC4wIiwiaGFzU3Vic2NyaXB0aW9ucyI6ZmFsc2UsIm5iZiI6MTc4ODI4MDM0OCwiZXhwIjoxNzg4MzI3MjA4LCJnZW9CeXBhc3MiOmZhbHNlLCJpYXQiOjE3ODgyODA0MDh9.oB4ue-tq9MSHpXNXX4lNSk_OE3CHdxqkPDXffJXUzrY/live/ch11/index.m3u8?aws.manifestfilter=video_codec:h265;video_dynamic_range:sdr;video_framerate:50;video_height:1-2160);
+// ═══════════════════════════════════════════════════════════
+//  مغادرة
+// ═══════════════════════════════════════════════════════════
+function leaveRoom(){
+  if(state.channel){ try{ sb.removeChannel(state.channel); }catch(e){} state.channel = null; }
+  stopHostTimer();
+  clearSession();
+  Object.assign(state, {
+    screen:'home', role:null, code:null, roomId:null, token:null, slot:null,
+    roundStatus:'waiting', roundNumber:0, players:[], displayTime:'0.00',
+    results:null, history:[], error:'',
+  });
+  render();
+}
 
+// ═══════════════════════════════════════════════════════════
+//  الإقلاع
+// ═══════════════════════════════════════════════════════════
+function boot(){
+  const s = loadSession();
+  if(s && s.code && s.token && s.role){
+    Object.assign(state, {
+      role:s.role, code:s.code, roomId:s.roomId, token:s.token,
+      name:s.name, slot:s.slot, gameType:s.gameType || 'timing-challenge',
+      screen: s.role === 'host' ? 'host' : 'player',
+    });
+    subscribeRealtime();
+  }
+  render();
+}
+
+document.addEventListener('visibilitychange', () => {
+  if(!document.hidden && state.code && state.token) refreshState();
+});
+
+boot();
 </script>
-
 </body>
 </html>
