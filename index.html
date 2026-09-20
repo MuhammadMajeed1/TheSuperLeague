@@ -11,45 +11,29 @@
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <style>
-/* ═══════════════════════════════════════════════
-   موقعنا | Glassmorphism Design System
-   ═══════════════════════════════════════════════ */
 :root{
-  --bg-deep:#080812;
-  --bg-mid:#0e0e1c;
+  --bg-deep:#080812; --bg-mid:#0e0e1c;
   --glass-bg:rgba(255,255,255,0.045);
   --glass-bg-strong:rgba(255,255,255,0.075);
   --glass-border:rgba(255,255,255,0.10);
   --glass-border-strong:rgba(255,255,255,0.18);
-  --text-primary:#f4f5fb;
-  --text-secondary:#a2a8bd;
-  --text-muted:#6b7186;
-  --accent:#7c5cff;
-  --accent-2:#22d3ee;
+  --text-primary:#f4f5fb; --text-secondary:#a2a8bd; --text-muted:#6b7186;
+  --accent:#7c5cff; --accent-2:#22d3ee;
   --accent-grad:linear-gradient(135deg,#7c5cff 0%,#22d3ee 100%);
-  --success:#22c55e;
-  --success-glow:rgba(34,197,94,.45);
-  --gold:#fbbf24;
-  --danger:#ef4444;
-  --radius:20px;
-  --radius-sm:14px;
+  --success:#22c55e; --success-glow:rgba(34,197,94,.45);
+  --gold:#fbbf24; --danger:#ef4444;
+  --radius:20px; --radius-sm:14px;
   --shadow-glass:0 8px 32px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06);
-  --shadow-float:0 24px 60px rgba(0,0,0,.6);
   --blur:blur(24px) saturate(160%);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overscroll-behavior:none}
 body{
   font-family:'Tajawal',system-ui,-apple-system,sans-serif;
-  background:var(--bg-deep);
-  color:var(--text-primary);
-  min-height:100vh;
-  overflow-x:hidden;
-  position:relative;
-  font-weight:500;
-  letter-spacing:-0.01em;
+  background:var(--bg-deep);color:var(--text-primary);
+  min-height:100vh;overflow-x:hidden;position:relative;
+  font-weight:500;letter-spacing:-0.01em;
 }
-/* الخلفية المتوهجة */
 .bg-orbs{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55}
 .orb-1{width:520px;height:520px;background:radial-gradient(circle,#7c5cff,transparent 70%);top:-180px;right:-160px}
@@ -57,369 +41,202 @@ body{
 .orb-3{width:380px;height:380px;background:radial-gradient(circle,#ec4899,transparent 70%);top:40%;left:55%;opacity:.22}
 #app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
 
-/* ─── الحاوية ─── */
-.container{max-width:540px;width:100%;margin:0 auto;padding:28px 20px 40px;flex:1;display:flex;flex-direction:column;justify-content:center}
+.container{max-width:560px;width:100%;margin:0 auto;padding:28px 20px 40px;flex:1;display:flex;flex-direction:column;justify-content:center}
 .container-wide{max-width:720px}
 
-/* ─── الشعار العلوي ─── */
-.brand{
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  margin-bottom:6px;
-}
-.brand-mark{
-  width:38px;height:38px;border-radius:12px;
-  background:var(--accent-grad);
-  display:flex;align-items:center;justify-content:center;
-  font-size:20px;font-weight:900;color:#fff;
-  box-shadow:0 8px 24px rgba(124,92,255,.4),inset 0 1px 0 rgba(255,255,255,.3);
-}
-.brand-text{
-  font-size:1.9rem;font-weight:900;letter-spacing:-0.03em;
+.brand{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:6px}
+.brand-mark{width:38px;height:38px;border-radius:12px;background:var(--accent-grad);
+  display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:#fff;
+  box-shadow:0 8px 24px rgba(124,92,255,.4),inset 0 1px 0 rgba(255,255,255,.3)}
+.brand-text{font-size:1.9rem;font-weight:900;letter-spacing:-0.03em;
   background:linear-gradient(135deg,#fff 30%,#b7a8ff 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.subtitle{
-  text-align:center;color:var(--text-secondary);
-  font-size:.95rem;margin-bottom:32px;font-weight:500;
-}
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.subtitle{text-align:center;color:var(--text-secondary);font-size:.95rem;margin-bottom:24px;font-weight:500}
 
-/* ─── بطاقة زجاجية ─── */
-.glass{
-  background:var(--glass-bg);
-  backdrop-filter:var(--blur);
-  -webkit-backdrop-filter:var(--blur);
-  border:1px solid var(--glass-border);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow-glass);
-  padding:22px;
-  margin-bottom:14px;
-  position:relative;
-  overflow:hidden;
-  transition:border-color .25s,transform .2s;
-}
-.glass::before{
-  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-  background:linear-gradient(180deg,rgba(255,255,255,.06),transparent 40%);
-}
+.glass{background:var(--glass-bg);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  border:1px solid var(--glass-border);border-radius:var(--radius);
+  box-shadow:var(--shadow-glass);padding:22px;margin-bottom:14px;position:relative;
+  overflow:hidden;transition:border-color .25s}
+.glass::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.06),transparent 40%)}
 .glass:hover{border-color:var(--glass-border-strong)}
-.glass h2,.glass h3{
-  font-size:1.05rem;font-weight:700;margin-bottom:14px;
-  color:var(--text-primary);display:flex;align-items:center;gap:8px;
-}
-.glass h3 .tag{
-  font-size:.7rem;font-weight:600;color:var(--text-muted);
-  background:rgba(255,255,255,.05);
-  padding:3px 8px;border-radius:20px;
-  border:1px solid var(--glass-border);
-  margin-right:auto;
-}
+.glass h2,.glass h3{font-size:1.05rem;font-weight:700;margin-bottom:14px;
+  color:var(--text-primary);display:flex;align-items:center;gap:8px}
+.glass h3 .tag{font-size:.7rem;font-weight:600;color:var(--text-muted);
+  background:rgba(255,255,255,.05);padding:3px 8px;border-radius:20px;
+  border:1px solid var(--glass-border);margin-right:auto}
 
-/* ─── المدخلات ─── */
-.input{
-  width:100%;padding:14px 16px;
-  background:rgba(0,0,0,.25);
-  border:1px solid var(--glass-border);
-  border-radius:var(--radius-sm);
-  color:var(--text-primary);
-  font-size:1rem;font-weight:500;
-  font-family:inherit;
-  margin-bottom:12px;
-  transition:.2s;
-  backdrop-filter:blur(8px);
-}
-.input:focus{
-  outline:none;
-  border-color:rgba(124,92,255,.6);
-  background:rgba(124,92,255,.08);
-  box-shadow:0 0 0 3px rgba(124,92,255,.15);
-}
+.input{width:100%;padding:14px 16px;background:rgba(0,0,0,.25);
+  border:1px solid var(--glass-border);border-radius:var(--radius-sm);
+  color:var(--text-primary);font-size:1rem;font-weight:500;font-family:inherit;
+  margin-bottom:12px;transition:.2s;backdrop-filter:blur(8px)}
+.input:focus{outline:none;border-color:rgba(124,92,255,.6);
+  background:rgba(124,92,255,.08);box-shadow:0 0 0 3px rgba(124,92,255,.15)}
 .input::placeholder{color:var(--text-muted)}
-.input-code{
-  text-align:center;
-  font-size:1.6rem;
-  font-weight:800;
-  letter-spacing:8px;
-  font-family:ui-monospace,'SF Mono',monospace;
-  padding:16px;
-  text-transform:uppercase;
-}
+.input-code{text-align:center;font-size:1.6rem;font-weight:800;letter-spacing:8px;
+  font-family:ui-monospace,'SF Mono',monospace;padding:16px;text-transform:uppercase}
 
-/* ─── الأزرار ─── */
-.btn{
-  width:100%;padding:15px 20px;
-  border:none;border-radius:var(--radius-sm);
-  font-family:inherit;
-  font-size:1rem;font-weight:700;
-  cursor:pointer;
-  transition:transform .12s,box-shadow .25s,filter .2s;
-  color:#fff;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  position:relative;
-  overflow:hidden;
-}
+.btn{width:100%;padding:15px 20px;border:none;border-radius:var(--radius-sm);
+  font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;
+  transition:transform .12s,filter .2s;color:#fff;
+  display:flex;align-items:center;justify-content:center;gap:8px;position:relative;overflow:hidden}
 .btn:active{transform:scale(.97)}
 .btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
-.btn-primary{
-  background:var(--accent-grad);
-  box-shadow:0 10px 30px rgba(124,92,255,.35),inset 0 1px 0 rgba(255,255,255,.25);
-}
+.btn-primary{background:var(--accent-grad);box-shadow:0 10px 30px rgba(124,92,255,.35),inset 0 1px 0 rgba(255,255,255,.25)}
 .btn-primary:hover:not(:disabled){filter:brightness(1.08)}
-.btn-ghost{
-  background:rgba(255,255,255,.05);
-  border:1px solid var(--glass-border);
-  color:var(--text-primary);
-  backdrop-filter:blur(10px);
-}
+.btn-ghost{background:rgba(255,255,255,.05);border:1px solid var(--glass-border);
+  color:var(--text-primary);backdrop-filter:blur(10px)}
 .btn-ghost:hover:not(:disabled){background:rgba(255,255,255,.09)}
-.btn-success{
-  background:linear-gradient(135deg,#22c55e 0%,#16a34a 100%);
-  box-shadow:0 10px 30px rgba(34,197,94,.4),inset 0 1px 0 rgba(255,255,255,.25);
-}
-.btn-danger{
-  background:rgba(239,68,68,.15);
-  color:#fca5a5;
-  border:1px solid rgba(239,68,68,.3);
-}
+.btn-success{background:linear-gradient(135deg,#22c55e 0%,#16a34a 100%);
+  box-shadow:0 10px 30px rgba(34,197,94,.4),inset 0 1px 0 rgba(255,255,255,.25)}
+.btn-danger{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.3)}
 
-/* ─── نصيحة الخطأ ─── */
-.alert{
-  padding:12px 16px;border-radius:12px;
-  background:rgba(239,68,68,.12);
-  border:1px solid rgba(239,68,68,.3);
-  color:#fca5a5;font-size:.9rem;font-weight:500;
-  text-align:center;margin-top:8px;
-}
-.alert-success{
-  background:rgba(34,197,94,.12);
-  border-color:rgba(34,197,94,.3);
-  color:#86efac;
-}
+.alert{padding:12px 16px;border-radius:12px;background:rgba(239,68,68,.12);
+  border:1px solid rgba(239,68,68,.3);color:#fca5a5;font-size:.9rem;font-weight:500;
+  text-align:center;margin-top:8px}
+.alert-info{background:rgba(34,211,238,.10);border-color:rgba(34,211,238,.3);color:#a5f3fc}
+.alert-success{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.3);color:#86efac}
 
-/* ─── كود الغرفة (للمضيف) ─── */
-.room-hero{
-  text-align:center;margin-bottom:22px;
-}
-.room-hero small{
-  color:var(--text-secondary);font-size:.85rem;
-  font-weight:600;display:block;margin-bottom:8px;letter-spacing:.05em;
-}
-.room-hero b{
-  font-size:2.6rem;font-weight:900;
-  font-family:ui-monospace,'SF Mono',monospace;
-  letter-spacing:10px;
-  background:var(--accent-grad);
+.room-hero{text-align:center;margin-bottom:22px}
+.room-hero small{color:var(--text-secondary);font-size:.85rem;font-weight:600;
+  display:block;margin-bottom:8px;letter-spacing:.05em}
+.room-hero b{font-size:2.6rem;font-weight:900;font-family:ui-monospace,'SF Mono',monospace;
+  letter-spacing:10px;background:var(--accent-grad);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  padding-right:10px;display:inline-block;
-}
-.copy-hint{
-  color:var(--text-muted);font-size:.78rem;margin-top:6px;
-  cursor:pointer;user-select:none;
-}
+  padding-right:10px;display:inline-block}
+.copy-hint{color:var(--text-muted);font-size:.78rem;margin-top:6px;cursor:pointer;user-select:none}
 .copy-hint:hover{color:var(--text-secondary)}
 
-/* ─── المؤقت ─── */
-.timer-display{
-  text-align:center;
-  font-size:5rem;font-weight:800;
-  font-family:ui-monospace,'SF Mono',monospace;
-  font-variant-numeric:tabular-nums;
-  margin:14px 0 22px;
-  letter-spacing:-0.04em;
-  line-height:1;
-  transition:color .3s;
-}
+.timer-display{text-align:center;font-size:5rem;font-weight:800;
+  font-family:ui-monospace,'SF Mono',monospace;font-variant-numeric:tabular-nums;
+  margin:14px 0 22px;letter-spacing:-0.04em;line-height:1;transition:color .3s}
 .timer-display.idle{color:#3a3f55;text-shadow:none}
-.timer-display.active{
-  color:#22d3ee;
-  text-shadow:0 0 60px rgba(34,211,238,.6),0 0 100px rgba(34,211,238,.3);
-}
-.timer-display.finished{
-  color:var(--success);
-  text-shadow:0 0 60px var(--success-glow);
-}
+.timer-display.active{color:#22d3ee;text-shadow:0 0 60px rgba(34,211,238,.6),0 0 100px rgba(34,211,238,.3)}
+.timer-display.finished{color:var(--success);text-shadow:0 0 60px var(--success-glow)}
 
-/* ─── بطاقات اللاعبين ─── */
 .player-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.player-card{
-  background:rgba(255,255,255,.035);
-  border:1px solid var(--glass-border);
-  border-radius:var(--radius-sm);
-  padding:14px;
-  transition:.25s;
-  backdrop-filter:blur(10px);
-}
-.player-card.pressed{
-  border-color:rgba(34,197,94,.5);
-  background:rgba(34,197,94,.08);
-  box-shadow:0 0 30px rgba(34,197,94,.15),inset 0 1px 0 rgba(255,255,255,.1);
-}
-.player-card .pname{
-  font-size:.95rem;font-weight:700;margin-bottom:8px;
-  color:var(--text-primary);
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-}
-.player-card .pstatus{
-  font-size:1.4rem;font-weight:800;
-  font-family:ui-monospace,monospace;
-  font-variant-numeric:tabular-nums;
-  color:var(--text-muted);
-}
+.player-card{background:rgba(255,255,255,.035);border:1px solid var(--glass-border);
+  border-radius:var(--radius-sm);padding:14px;transition:.25s;backdrop-filter:blur(10px)}
+.player-card.pressed{border-color:rgba(34,197,94,.5);background:rgba(34,197,94,.08);
+  box-shadow:0 0 30px rgba(34,197,94,.15),inset 0 1px 0 rgba(255,255,255,.1)}
+.player-card.active{border-color:rgba(251,191,36,.5);background:rgba(251,191,36,.08);
+  box-shadow:0 0 30px rgba(251,191,36,.15)}
+.player-card .pname{font-size:.95rem;font-weight:700;margin-bottom:8px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.player-card .pstatus{font-size:1.4rem;font-weight:800;font-family:ui-monospace,monospace;
+  font-variant-numeric:tabular-nums;color:var(--text-muted)}
 .player-card.pressed .pstatus{color:var(--success)}
-.player-card .plabel{
-  font-size:.7rem;color:var(--text-muted);
-  font-weight:600;letter-spacing:.05em;
-  margin-top:4px;
-}
+.player-card.active .pstatus{color:var(--gold)}
+.player-card .plabel{font-size:.7rem;color:var(--text-muted);font-weight:600;
+  letter-spacing:.05em;margin-top:4px}
 
-/* ─── النتائج ─── */
-.result-hero{
-  text-align:center;padding:8px 0 18px;
-  border-bottom:1px solid var(--glass-border);
-  margin-bottom:18px;
-}
-.result-hero .label{
-  color:var(--text-secondary);font-size:.85rem;
-  font-weight:600;margin-bottom:6px;
-}
-.result-hero .target{
-  font-size:2.6rem;font-weight:900;
-  font-family:ui-monospace,monospace;
-  color:var(--accent-2);
-}
+.result-hero{text-align:center;padding:8px 0 18px;border-bottom:1px solid var(--glass-border);margin-bottom:18px}
+.result-hero .label{color:var(--text-secondary);font-size:.85rem;font-weight:600;margin-bottom:6px}
+.result-hero .target{font-size:2.6rem;font-weight:900;font-family:ui-monospace,monospace;color:var(--accent-2)}
 .result-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
-.result-item{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 16px;border-radius:12px;
-  background:rgba(255,255,255,.035);
-  border:1px solid var(--glass-border);
-  transition:.2s;
-}
-.result-item.winner{
-  background:rgba(251,191,36,.09);
-  border-color:rgba(251,191,36,.4);
-  box-shadow:0 0 30px rgba(251,191,36,.12);
-}
+.result-item{display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px;border-radius:12px;background:rgba(255,255,255,.035);
+  border:1px solid var(--glass-border);transition:.2s}
+.result-item.winner{background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.4);
+  box-shadow:0 0 30px rgba(251,191,36,.12)}
 .result-item .rname{font-weight:700;font-size:.95rem}
-.result-item .rtime{
-  font-family:ui-monospace,monospace;
-  font-variant-numeric:tabular-nums;
-  font-size:1.05rem;font-weight:700;
-}
-.result-item .rdiff{
-  font-family:ui-monospace,monospace;
-  font-size:.8rem;color:var(--text-muted);
-  font-weight:600;margin-top:2px;
-}
+.result-item .rtime{font-family:ui-monospace,monospace;font-variant-numeric:tabular-nums;
+  font-size:1.05rem;font-weight:700}
+.result-item .rdiff{font-family:ui-monospace,monospace;font-size:.8rem;
+  color:var(--text-muted);font-weight:600;margin-top:2px}
 .result-item.winner .rdiff{color:var(--gold)}
-.winner-badge{
-  text-align:center;font-size:1.2rem;font-weight:900;
-  color:var(--gold);margin:8px 0 16px;
-  text-shadow:0 0 30px rgba(251,191,36,.4);
-}
+.winner-badge{text-align:center;font-size:1.2rem;font-weight:900;color:var(--gold);
+  margin:8px 0 16px;text-shadow:0 0 30px rgba(251,191,36,.4)}
 
-/* ─── سجل الجولات ─── */
-.history-list{display:flex;flex-direction:column;gap:8px}
-.history-item{
-  display:grid;grid-template-columns:auto 1fr 1fr auto;
-  align-items:center;gap:10px;
-  padding:10px 12px;
-  border-radius:12px;
-  background:rgba(255,255,255,.03);
-  border:1px solid var(--glass-border);
-  font-size:.85rem;
-}
-.history-item .hnum{
-  width:26px;height:26px;border-radius:50%;
-  background:rgba(124,92,255,.2);
-  color:#b7a8ff;font-weight:800;
-  display:flex;align-items:center;justify-content:center;
-  font-size:.75rem;
-}
-.history-item .htarget{
-  font-family:ui-monospace,monospace;
-  color:var(--text-secondary);
-  font-size:.8rem;
-}
-.history-item .hwin{
-  color:var(--gold);font-weight:700;
-  text-align:left;
-}
-.history-item .hwin::before{content:"🏆 ";margin-left:4px}
-
-/* ─── واجهة اللاعب ─── */
-.player-view{
-  position:fixed;inset:0;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding:24px;
-  user-select:none;touch-action:manipulation;
-  z-index:10;
-}
-.press-btn{
-  width:min(72vw,340px);height:min(72vw,340px);
-  border-radius:50%;
+.player-view{position:fixed;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:24px;
+  user-select:none;touch-action:manipulation;z-index:10}
+.press-btn{width:min(72vw,340px);height:min(72vw,340px);border-radius:50%;
   background:radial-gradient(circle at 35% 30%,#4ade80 0%,#16a34a 65%,#15803d 100%);
-  border:none;color:#fff;
-  font-family:inherit;
-  font-size:clamp(2rem,9vw,3.5rem);
-  font-weight:900;letter-spacing:2px;
-  cursor:pointer;
-  box-shadow:
-    0 0 80px rgba(34,197,94,.5),
-    0 0 140px rgba(34,197,94,.25),
-    0 20px 40px rgba(0,0,0,.4),
-    inset 0 -12px 30px rgba(0,0,0,.3),
-    inset 0 4px 12px rgba(255,255,255,.35);
-  transition:transform .08s ease;
-  position:relative;
-}
-.press-btn::after{
-  content:"";position:absolute;inset:8px;
-  border-radius:50%;
-  border:1px solid rgba(255,255,255,.15);
-  pointer-events:none;
-}
+  border:none;color:#fff;font-family:inherit;font-size:clamp(2rem,9vw,3.5rem);
+  font-weight:900;letter-spacing:2px;cursor:pointer;
+  box-shadow:0 0 80px rgba(34,197,94,.5),0 0 140px rgba(34,197,94,.25),
+    0 20px 40px rgba(0,0,0,.4),inset 0 -12px 30px rgba(0,0,0,.3),inset 0 4px 12px rgba(255,255,255,.35);
+  transition:transform .08s ease;position:relative}
+.press-btn::after{content:"";position:absolute;inset:8px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.15);pointer-events:none}
 .press-btn:active{transform:scale(.94)}
-.player-state{
-  font-size:1.9rem;font-weight:700;
-  color:var(--text-secondary);
-  text-align:center;padding:20px;
-  line-height:1.5;
-}
+.press-btn.stop{background:radial-gradient(circle at 35% 30%,#f87171 0%,#dc2626 65%,#991b1b 100%);
+  box-shadow:0 0 80px rgba(239,68,68,.6),0 0 140px rgba(239,68,68,.3),
+    0 20px 40px rgba(0,0,0,.4),inset 0 -12px 30px rgba(0,0,0,.3),inset 0 4px 12px rgba(255,255,255,.35)}
+.player-state{font-size:1.9rem;font-weight:700;color:var(--text-secondary);
+  text-align:center;padding:20px;line-height:1.5}
 .player-state.pressed{color:var(--success);font-size:2.4rem}
 .player-state.win{color:var(--gold)}
-.player-state .sub{
-  display:block;font-size:.95rem;color:var(--text-muted);
-  margin-top:12px;font-weight:500;
-}
+.player-state .sub{display:block;font-size:.95rem;color:var(--text-muted);
+  margin-top:12px;font-weight:500}
+.player-state .big{display:block;font-size:3.2rem;color:#fff;font-weight:900;
+  font-family:ui-monospace,monospace;margin:12px 0}
 .pulse{animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-
-/* ─── شاشة الدوران ─── */
-.spinner{
-  width:44px;height:44px;
-  border:3px solid rgba(255,255,255,.08);
-  border-top-color:var(--accent);
-  border-radius:50%;
-  animation:spin .9s linear infinite;
-  margin:20px auto;
-}
+.spinner{width:44px;height:44px;border:3px solid rgba(255,255,255,.08);
+  border-top-color:var(--accent);border-radius:50%;animation:spin .9s linear infinite;margin:20px auto}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ─── الجوال ─── */
+/* ─── اختيار اللعبة ─── */
+.game-picker{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.game-opt{padding:14px;border-radius:14px;border:1.5px solid var(--glass-border);
+  background:rgba(255,255,255,.03);cursor:pointer;transition:.2s;text-align:center}
+.game-opt:hover{border-color:var(--glass-border-strong);background:rgba(255,255,255,.06)}
+.game-opt.selected{border-color:rgba(124,92,255,.7);background:rgba(124,92,255,.12);
+  box-shadow:0 0 30px rgba(124,92,255,.2)}
+.game-opt .ico{font-size:1.8rem;margin-bottom:6px}
+.game-opt .nm{font-weight:700;font-size:.9rem;margin-bottom:2px}
+.game-opt .tg{font-size:.72rem;color:var(--text-muted)}
+
+/* ─── مرحلة التخمين ─── */
+.search-wrap{position:relative;margin-bottom:12px}
+.search-results{max-height:280px;overflow-y:auto;border-radius:12px;
+  border:1px solid var(--glass-border);background:rgba(0,0,0,.25)}
+.search-item{display:flex;align-items:center;gap:10px;padding:10px 12px;
+  cursor:pointer;transition:.15s;border-bottom:1px solid rgba(255,255,255,.05)}
+.search-item:last-child{border-bottom:none}
+.search-item:hover{background:rgba(124,92,255,.1)}
+.search-item img{width:38px;height:38px;border-radius:50%;object-fit:cover;
+  background:rgba(255,255,255,.05);flex-shrink:0}
+.search-item .info{flex:1;min-width:0}
+.search-item .nm{font-weight:700;font-size:.9rem;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.search-item .tm{font-size:.75rem;color:var(--text-muted);overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+
+.choice-card{display:flex;align-items:center;gap:14px;padding:14px;
+  border-radius:14px;background:rgba(34,197,94,.08);
+  border:1px solid rgba(34,197,94,.3);margin-bottom:12px}
+.choice-card img{width:56px;height:56px;border-radius:50%;object-fit:cover;
+  background:rgba(255,255,255,.05);flex-shrink:0}
+.choice-card .info{flex:1;min-width:0}
+.choice-card .nm{font-weight:800;font-size:1.05rem;margin-bottom:2px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.choice-card .tm{font-size:.8rem;color:var(--text-secondary)}
+
+.clues{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.clue{padding:10px 12px;border-radius:10px;background:rgba(124,92,255,.08);
+  border:1px solid rgba(124,92,255,.2)}
+.clue .lbl{font-size:.7rem;color:var(--text-muted);font-weight:600;margin-bottom:3px}
+.clue .val{font-size:.95rem;font-weight:700;color:var(--text-primary)}
+
+.phase-badge{display:inline-block;padding:4px 10px;border-radius:20px;
+  font-size:.75rem;font-weight:700;background:rgba(124,92,255,.15);
+  color:#b7a8ff;border:1px solid rgba(124,92,255,.3)}
+
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
+
 @media (max-width:480px){
   .brand-text{font-size:1.6rem}
   .timer-display{font-size:4rem}
   .room-hero b{font-size:2.1rem;letter-spacing:7px}
   .container{padding:20px 16px 30px}
   .glass{padding:18px;border-radius:16px}
+  .clues{grid-template-columns:1fr}
 }
-
-/* ─── إخفاء شريط التمرير لكن إبقاء الوظيفة ─── */
-::-webkit-scrollbar{width:6px;height:6px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.2)}
 </style>
 </head>
 <body>
@@ -438,46 +255,30 @@ const SUPABASE_URL = 'https://dncatiycgyjztzellcbt.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_-kiNISn0BX891Gk8PF-Y-w_xMhSIagc';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ─── سجل الألعاب (توسعة مستقبلية سهلة) ───
+// ─── سجل الألعاب ───
 const GAMES = {
   'timing-challenge': {
-    id: 'timing-challenge',
-    name: 'تحدي التوقيت',
-    icon: '⏱️',
-    tagline: 'اضغط في اللحظة الصحيحة',
-    minPlayers: 2,
-    maxPlayers: 2,
-    enabled: true,
+    id:'timing-challenge', name:'تحدي التوقيت', icon:'⏱️',
+    tagline:'اضغط في اللحظة التي تظنها صحيحة', maxPlayers:2,
   },
-  // أضف ألعابًا جديدة هنا لاحقًا بنفس الهيكل
-  // 'reaction-duel': { ... }
+  'football-guess': {
+    id:'football-guess', name:'تخمين اللاعبين', icon:'⚽',
+    tagline:'خمّن اللاعب الذي اختاره خصمك', maxPlayers:2,
+  },
 };
 
-// ─── الحالة العامة ───
+// ─── الحالة ───
 const state = {
-  screen: 'home',       // home | host | player | loading
-  role: null,           // host | player
-  gameType: 'timing-challenge',
-  code: null,
-  roomId: null,
-  token: null,
-  name: '',
-  slot: null,
-  roundStatus: 'waiting',
-  roundNumber: 0,
-  players: [],
-  targetTime: '5',
-  displayTime: '0.00',
-  clockOffset: 0,
-  timerHandle: null,
-  channel: null,
-  results: null,
-  history: [],
-  error: '',
-  info: '',
+  screen:'home', role:null, gameType:'timing-challenge',
+  code:null, roomId:null, token:null, name:'', slot:null,
+  roundStatus:'waiting', roundNumber:0, players:[], isHost:false,
+  targetTime:'5', hostTimerText:'0.00',
+  error:'', info:'',
+  channel:null, clockOffset:0, timerHandle:null,
+  searchQuery:'', searchResults:[], searching:false,
+  guessInput:'',
 };
 
-// ─── أدوات ───
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt = n => Number(n ?? 0).toFixed(2);
@@ -502,38 +303,52 @@ function render(){
     app.innerHTML = `<div class="container"><div class="spinner"></div></div>`;
     return;
   }
-  if(state.screen === 'home')   return renderHome(app);
-  if(state.screen === 'host')   return renderHost(app);
-  if(state.screen === 'player') return renderPlayer(app);
+  if(state.screen === 'home') return renderHome(app);
+  if(state.screen === 'host' || state.screen === 'player'){
+    if(state.gameType === 'timing-challenge'){
+      return state.screen === 'host' ? renderHostTiming(app) : renderPlayerTiming(app);
+    }
+    if(state.gameType === 'football-guess'){
+      return state.screen === 'host' ? renderHostFootball(app) : renderPlayerFootball(app);
+    }
+  }
 }
 
-// ─── الشاشة الرئيسية ───
+// ═══════════ الشاشة الرئيسية ═══════════
 function renderHome(app){
+  const games = Object.values(GAMES);
   app.innerHTML = `
     <div class="container">
       <div class="brand">
         <div class="brand-mark">م</div>
         <div class="brand-text">موقعنا</div>
       </div>
-      <p class="subtitle">${esc(GAMES[state.gameType].icon)} ${esc(GAMES[state.gameType].name)}</p>
+      <p class="subtitle">منصة ألعاب جماعية</p>
 
       <div class="glass">
-        <h3>اسمك <span class="tag">مطلوب</span></h3>
+        <h3>اسمك</h3>
         <input id="nameInput" class="input" placeholder="اكتب اسمك هنا" value="${esc(state.name)}" maxlength="20" autocomplete="off">
       </div>
 
       <div class="glass">
-        <h3>إنشاء غرفة جديدة</h3>
-        <p style="color:var(--text-secondary);font-size:.88rem;margin-bottom:14px;line-height:1.6">
-          ستكون أنت المضيف. ستحصل على كود لمشاركته مع أصدقائك.
-        </p>
-        <button class="btn btn-primary" id="createBtn">
-          <span>ابدأ غرفة جديدة</span>
+        <h3>إنشاء غرفة</h3>
+        <p style="color:var(--text-secondary);font-size:.85rem;margin-bottom:10px">اختر اللعبة:</p>
+        <div class="game-picker" id="gamePicker">
+          ${games.map(g => `
+            <div class="game-opt ${state.gameType === g.id ? 'selected' : ''}" data-game="${g.id}">
+              <div class="ico">${g.icon}</div>
+              <div class="nm">${esc(g.name)}</div>
+              <div class="tg">${esc(g.tagline)}</div>
+            </div>
+          `).join('')}
+        </div>
+        <button class="btn btn-primary" id="createBtn" style="margin-top:14px">
+          ابدأ غرفة جديدة
         </button>
       </div>
 
       <div class="glass">
-        <h3>الانضمام إلى غرفة</h3>
+        <h3>انضم إلى غرفة</h3>
         <input id="codeInput" class="input input-code" placeholder="ABCDE" maxlength="5" autocomplete="off">
         <button class="btn btn-ghost" id="joinBtn">انضمام كلاعب</button>
       </div>
@@ -546,82 +361,106 @@ function renderHome(app){
   $('#nameInput').oninput = e => { state.name = e.target.value; };
   $('#codeInput').oninput = e => { e.target.value = e.target.value.toUpperCase(); };
   $('#codeInput').onkeydown = e => { if(e.key === 'Enter') joinRoom(); };
-  setTimeout(() => $('#nameInput')?.focus(), 100);
+  document.querySelectorAll('.game-opt').forEach(el => {
+    el.onclick = () => {
+      state.gameType = el.dataset.game;
+      document.querySelectorAll('.game-opt').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+    };
+  });
 }
 
-// ─── واجهة المضيف ───
-function renderHost(app){
-  const p1 = state.players.find(p => p.slot === 1) || { name:'—', pressed:false };
-  const p2 = state.players.find(p => p.slot === 2) || { name:'—', pressed:false };
+// ═══════════════════════════════════════════════════════════
+//  اللعبة 1: تحدي التوقيت — واجهة المضيف
+// ═══════════════════════════════════════════════════════════
+function renderHostTiming(app){
+  const p1 = state.players.find(p => p.slot === 1);
+  const p2 = state.players.find(p => p.slot === 2);
   const bothJoined = state.players.length === 2;
-  const playing = state.roundStatus === 'active';
-  const ended = state.roundStatus === 'ended';
-
-  const timerClass = playing ? 'active' : (ended ? 'finished' : 'idle');
-  const timerValue = playing ? state.displayTime : (ended ? state.displayTime : '0.00');
+  const rs = state.roundStatus;
 
   let body = '';
 
-  // قسم بدء الجولة
-  if(!playing && !ended){
+  if(rs === 'waiting'){
     body = `
       <div class="glass">
-        <h3>إعداد الجولة <span class="tag">${bothJoined ? 'جاهز' : 'بانتظار اللاعبين'}</span></h3>
+        <h3>إعداد التحدي <span class="tag">${bothJoined ? 'جاهز' : 'بانتظار اللاعبين'}</span></h3>
         <label style="color:var(--text-secondary);font-size:.85rem;font-weight:600;display:block;margin-bottom:8px">
-          الوقت المستهدف (بالثواني)
+          الوقت المطلوب (بالثواني)
         </label>
         <input id="targetInput" class="input" type="number" step="0.1" min="0.5" max="60"
                value="${esc(state.targetTime)}"
                style="text-align:center;font-size:1.8rem;font-weight:800;font-family:ui-monospace,monospace;padding:16px">
         <button class="btn btn-success" id="startBtn" ${!bothJoined ? 'disabled' : ''}>
-          ${bothJoined ? '▶ ابدأ الجولة' : `بانتظار ${2 - state.players.length} لاعب`}
+          ${bothJoined ? '▶ ابدأ التحدي' : `بانتظار ${2 - state.players.length} لاعب`}
         </button>
       </div>
     `;
-  } else if(playing){
+  } else if(rs === 'playing'){
     body = `
-      <div class="glass" style="text-align:center;padding:16px">
-        <div style="color:var(--accent-2);font-weight:700;font-size:.9rem" class="pulse">
-          ● الجولة جارية — بانتظار ضغط اللاعبين
+      <div class="glass">
+        <h3>المطلوب <span class="tag">الجولة ${state.roundNumber}</span></h3>
+        <div class="result-hero" style="border-bottom:none;padding-bottom:0">
+          <div class="target">${fmt(state.targetTime)}<small style="font-size:1rem;color:var(--text-muted)"> ث</small></div>
         </div>
+        <div class="alert alert-info" style="margin-top:8px">
+          اللاعبون يضغطون "ابدأ" ثم "إيقاف" عندما يظنون أنهم وصلوا الوقت المطلوب
+        </div>
+      </div>
+    `;
+  } else if(rs === 'awaiting_reveal'){
+    body = `
+      <div class="glass" style="border-color:rgba(34,197,94,.3)">
+        <h3>🏁 انتهى الجميع</h3>
+        <p style="color:var(--text-secondary);font-size:.9rem;margin-bottom:14px">
+          كل اللاعبين أتمّوا محاولاتهم. اضغط لعرض النتائج.
+        </p>
+        <button class="btn btn-success" id="revealBtn">👁 إظهار النتائج</button>
       </div>
     `;
   }
 
   // حالة اللاعبين
+  const statusOf = (p) => {
+    if(!p) return { cls:'', val:'—', label:'لم ينضم' };
+    if(p.finished) return { cls:'pressed', val:'✓', label:'أكمل' };
+    if(p.started)  return { cls:'active',  val:'⏱', label:'قيد اللعب' };
+    return { cls:'', val:'—', label:'لم يبدأ' };
+  };
+  const s1 = statusOf(p1), s2 = statusOf(p2);
+
   const playersCard = `
     <div class="glass">
       <h3>حالة اللاعبين</h3>
       <div class="player-grid">
-        <div class="player-card ${p1.pressed ? 'pressed' : ''}">
-          <div class="pname">${esc(p1.name)}</div>
-          <div class="pstatus">${p1.pressed && p1.elapsed != null ? fmt(p1.elapsed) : (p1.pressed ? '✓' : '—')}</div>
-          <div class="plabel">${p1.pressed && p1.elapsed != null ? 'ثانية' : (p1.pressed ? 'تم' : 'لم يضغط')}</div>
+        <div class="player-card ${s1.cls}">
+          <div class="pname">${esc(p1?.name || '—')}</div>
+          <div class="pstatus">${s1.val}</div>
+          <div class="plabel">${s1.label}</div>
         </div>
-        <div class="player-card ${p2.pressed ? 'pressed' : ''}">
-          <div class="pname">${esc(p2.name)}</div>
-          <div class="pstatus">${p2.pressed && p2.elapsed != null ? fmt(p2.elapsed) : (p2.pressed ? '✓' : '—')}</div>
-          <div class="plabel">${p2.pressed && p2.elapsed != null ? 'ثانية' : (p2.pressed ? 'تم' : 'لم يضغط')}</div>
+        <div class="player-card ${s2.cls}">
+          <div class="pname">${esc(p2?.name || '—')}</div>
+          <div class="pstatus">${s2.val}</div>
+          <div class="plabel">${s2.label}</div>
         </div>
       </div>
     </div>
   `;
 
-  // نتائج الجولة
+  // النتائج
   let resultsCard = '';
-  if(ended && state.results){
-    const r = state.results;
-    const sorted = [...r.players].sort((a,b) => (a.diff ?? 999) - (b.diff ?? 999));
+  if(rs === 'revealed'){
+    const sorted = [...state.players].sort((a,b) => (a.diff ?? 999) - (b.diff ?? 999));
     const winner = sorted[0];
     resultsCard = `
       <div class="glass" style="border-color:rgba(34,197,94,.3)">
-        <h3>🏁 نتيجة الجولة ${r.round_number}</h3>
+        <h3>🏁 نتيجة الجولة ${state.roundNumber}</h3>
         <div class="result-hero">
           <div class="label">الوقت المطلوب</div>
-          <div class="target">${fmt(r.target_time)}<small style="font-size:1rem;color:var(--text-muted)"> ث</small></div>
+          <div class="target">${fmt(state.targetTime)}<small style="font-size:1rem;color:var(--text-muted)"> ث</small></div>
         </div>
         <div class="result-grid">
-          ${r.players.map(p => `
+          ${state.players.map(p => `
             <div class="result-item ${p.slot === winner.slot ? 'winner' : ''}">
               <div>
                 <div class="rname">${esc(p.name)}</div>
@@ -637,26 +476,6 @@ function renderHost(app){
     `;
   }
 
-  // سجل الجولات
-  let historyCard = '';
-  if(state.history.length > 0){
-    historyCard = `
-      <div class="glass">
-        <h3>سجل الجولات <span class="tag">${state.history.length}</span></h3>
-        <div class="history-list">
-          ${state.history.map(h => `
-            <div class="history-item">
-              <div class="hnum">${h.round_number}</div>
-              <div class="htarget">${fmt(h.target)} ث</div>
-              <div></div>
-              <div class="hwin">${esc(h.winner)}</div>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-  }
-
   app.innerHTML = `
     <div class="container">
       <div class="room-hero">
@@ -664,28 +483,17 @@ function renderHost(app){
         <b id="roomCodeText">${esc(state.code || '-----')}</b>
         <div class="copy-hint" id="copyBtn">📋 انسخ الكود وشاركه</div>
       </div>
-
-      <div class="timer-display ${timerClass}" id="timerEl">${timerValue}</div>
-
       ${body}
       ${playersCard}
       ${resultsCard}
-      ${historyCard}
-
       <button class="btn btn-danger" id="leaveBtn" style="margin-top:8px">مغادرة الغرفة</button>
     </div>
   `;
 
-  $('#startBtn') && ($('#startBtn').onclick = startRound);
+  $('#startBtn') && ($('#startBtn').onclick = () => startTimingRound());
   $('#targetInput') && ($('#targetInput').oninput = e => { state.targetTime = e.target.value; });
-  $('#newRoundBtn') && ($('#newRoundBtn').onclick = () => {
-    state.results = null;
-    state.roundStatus = 'waiting';
-    state.displayTime = '0.00';
-    // إعادة تعيين اللاعبين بصريًا
-    state.players = state.players.map(p => ({...p, pressed:false, elapsed:null}));
-    render();
-  });
+  $('#revealBtn') && ($('#revealBtn').onclick = () => revealTiming());
+  $('#newRoundBtn') && ($('#newRoundBtn').onclick = () => newTimingRound());
   $('#copyBtn') && ($('#copyBtn').onclick = () => {
     navigator.clipboard?.writeText(state.code);
     $('#copyBtn').textContent = '✓ تم النسخ';
@@ -694,16 +502,16 @@ function renderHost(app){
   $('#leaveBtn').onclick = leaveRoom;
 }
 
-// ─── واجهة اللاعب ───
-function renderPlayer(app){
-  const me = state.players.find(p => p.slot === state.slot);
-  const isActive = state.roundStatus === 'active';
-  const isEnded = state.roundStatus === 'ended';
+// ═══════════════════════════════════════════════════════════
+//  اللعبة 1: تحدي التوقيت — واجهة اللاعب
+// ═══════════════════════════════════════════════════════════
+function renderPlayerTiming(app){
+  const me = state.players.find(p => p.is_me);
+  const rs = state.roundStatus;
 
-  // نهاية الجولة — عرض النتيجة
-  if(isEnded && state.results){
-    const r = state.results;
-    const sorted = [...r.players].sort((a,b) => (a.diff ?? 999) - (b.diff ?? 999));
+  // revealed
+  if(rs === 'revealed'){
+    const sorted = [...state.players].sort((a,b) => (a.diff ?? 999) - (b.diff ?? 999));
     const winner = sorted[0];
     const iWon = me && winner.slot === me.slot;
     app.innerHTML = `
@@ -711,54 +519,600 @@ function renderPlayer(app){
         <div class="player-state ${iWon ? 'win' : ''}">
           ${iWon ? '🏆 فزت!' : 'انتهت الجولة'}
           ${me ? `
-            <span class="sub">وقتك: ${me.elapsed != null ? fmt(me.elapsed) : '—'} ث</span>
-            <span class="sub">الفرق: ${me.diff != null ? fmt(me.diff) : '—'} ث</span>
+            <span class="big">${me.elapsed != null ? fmt(me.elapsed) : '—'}<small style="font-size:1rem"> ث</small></span>
+            <span class="sub">الفرق عن الهدف: ${me.diff != null ? fmt(me.diff) : '—'} ث</span>
           ` : ''}
-          <span class="sub">الهدف كان ${fmt(r.target_time)} ث</span>
-          <span class="sub" style="color:var(--gold);margin-top:16px">الفائز: ${esc(winner.name)}</span>
-          <span class="sub" style="margin-top:20px">بانتظار الجولة التالية...</span>
+          <span class="sub">الهدف كان ${fmt(state.targetTime)} ث</span>
+          <span class="sub" style="color:var(--gold);margin-top:14px">الفائز: ${esc(winner.name)}</span>
+          <span class="sub" style="margin-top:16px">بانتظار جولة جديدة...</span>
         </div>
-      </div>
-    `;
+      </div>`;
     return;
   }
 
-  // الجولة نشطة — زر أو تأكيد
-  if(isActive){
-    if(me?.pressed){
+  // waiting
+  if(rs === 'waiting'){
+    app.innerHTML = `
+      <div class="player-view">
+        <div class="player-state pulse">
+          بانتظار المضيف
+          <span class="sub">سيظهر لك التحدي عند بدئه</span>
+        </div>
+      </div>`;
+    return;
+  }
+
+  // playing / awaiting_reveal
+  if(rs === 'playing' || rs === 'awaiting_reveal'){
+    // لم يبدأ بعد
+    if(!me?.started){
+      app.innerHTML = `
+        <div class="player-view">
+          <div style="text-align:center;margin-bottom:26px">
+            <div style="color:var(--text-secondary);font-size:.9rem;font-weight:600;margin-bottom:6px">المطلوب</div>
+            <div style="font-size:3rem;font-weight:900;color:#22d3ee;font-family:ui-monospace,monospace">
+              ${fmt(state.targetTime)}<small style="font-size:1.1rem;color:var(--text-muted)"> ث</small>
+            </div>
+          </div>
+          <button class="press-btn" id="pressBtn">اضغط</button>
+          <div style="color:var(--text-muted);font-size:.85rem;margin-top:24px;text-align:center">
+            اضغط لبدء احتساب وقتك
+          </div>
+        </div>`;
+      const btn = $('#pressBtn');
+      btn.addEventListener('pointerdown', e => { e.preventDefault(); pressStart(); }, { passive:false });
+      return;
+    }
+    // بدأ، لم ينتهِ
+    if(me.started && !me.finished){
+      app.innerHTML = `
+        <div class="player-view">
+          <button class="press-btn stop" id="stopBtn">إيقاف</button>
+          <div style="color:var(--text-muted);font-size:.85rem;margin-top:24px;text-align:center">
+            اضغط عند وصولك للوقت المطلوب
+          </div>
+        </div>`;
+      const btn = $('#stopBtn');
+      btn.addEventListener('pointerdown', e => { e.preventDefault(); pressStop(); }, { passive:false });
+      return;
+    }
+    // انتهى
+    if(me.finished){
       app.innerHTML = `
         <div class="player-view">
           <div class="player-state pressed">
-            ✓ تم الضغط
-            <span class="sub">بانتظار اللاعب الآخر...</span>
+            ✓ تم تسجيل محاولتك
+            <span class="sub">بانتظار باقي اللاعبين...</span>
+            <span class="sub" style="color:var(--text-muted);font-size:.8rem;margin-top:20px">
+              ستظهر النتائج عندما يعلن المضيف
+            </span>
           </div>
-        </div>
-      `;
+        </div>`;
       return;
     }
-    app.innerHTML = `
-      <div class="player-view">
-        <button class="press-btn" id="pressBtn">اضغط</button>
-      </div>
-    `;
-    const btn = $('#pressBtn');
-    btn.addEventListener('pointerdown', e => { e.preventDefault(); pressNow(); }, { passive:false });
-    return;
   }
-
-  // الانتظار
-  app.innerHTML = `
-    <div class="player-view">
-      <div class="player-state pulse">
-        بانتظار بدء الجولة
-        <span class="sub">ستُفعَّل التعليمات عند بدء المضيف</span>
-      </div>
-    </div>
-  `;
 }
 
 // ═══════════════════════════════════════════════════════════
-//  المنطق الرئيسي
+//  اللعبة 2: تخمين اللاعبين — واجهة المضيف
+// ═══════════════════════════════════════════════════════════
+function renderHostFootball(app){
+  const rs = state.roundStatus;
+  const both = state.players.length === 2;
+
+  let phaseLabel = '';
+  if(rs === 'picking') phaseLabel = 'الاختيار';
+  else if(rs === 'ready_guess') phaseLabel = 'جاهز للبدء';
+  else if(rs === 'guessing') phaseLabel = 'التخمين';
+  else if(rs === 'awaiting_reveal') phaseLabel = 'بانتظار الكشف';
+  else if(rs === 'revealed') phaseLabel = 'مكشوف';
+
+  let actionCard = '';
+  if(rs === 'picking'){
+    actionCard = `
+      <div class="glass">
+        <div class="alert alert-info">
+          اللاعبون يختارون لاعبيهم الآن. ستصلك إشارة عند اكتمال الاختيار.
+        </div>
+      </div>`;
+  } else if(rs === 'ready_guess'){
+    actionCard = `
+      <div class="glass" style="border-color:rgba(34,197,94,.3)">
+        <h3>✅ اكتمل الاختيار</h3>
+        <p style="color:var(--text-secondary);font-size:.9rem;margin-bottom:14px">
+          يمكنك الآن بدء مرحلة التخمين.
+        </p>
+        <button class="btn btn-success" id="startGuessBtn">▶ ابدأ التخمين</button>
+      </div>`;
+  } else if(rs === 'guessing'){
+    actionCard = `
+      <div class="glass">
+        <div class="alert alert-info">اللاعبون يحاولون تخمين اختيارات بعضهم.</div>
+      </div>`;
+  } else if(rs === 'awaiting_reveal'){
+    actionCard = `
+      <div class="glass" style="border-color:rgba(34,197,94,.3)">
+        <h3>🏁 أرسل الجميع تخميناتهم</h3>
+        <button class="btn btn-success" id="revealBtn">👁 إظهار الإجابات</button>
+      </div>`;
+  }
+
+  // لاعبين
+  const playerCard = (p) => {
+    if(!p) return `<div class="player-card"><div class="pname">—</div><div class="plabel">لم ينضم</div></div>`;
+    const status = p.has_guess ? { cls:'pressed', val:'✓', label:'خمّن' }
+                 : p.has_choice ? { cls:'active', val:'✔', label:'اختار' }
+                 : { cls:'', val:'—', label:'بانتظار الاختيار' };
+    return `
+      <div class="player-card ${status.cls}">
+        <div class="pname">${esc(p.name)}</div>
+        <div class="pstatus">${status.val}</div>
+        <div class="plabel">${status.label}</div>
+      </div>`;
+  };
+
+  const playersCard = `
+    <div class="glass">
+      <h3>حالة اللاعبين <span class="phase-badge">${esc(phaseLabel)}</span></h3>
+      <div class="player-grid">
+        ${playerCard(state.players[0])}
+        ${playerCard(state.players[1])}
+      </div>
+    </div>`;
+
+  // النتائج
+  let resultsCard = '';
+  if(rs === 'revealed'){
+    const correctGuess = (p) => {
+      if(!p.guess || !p.choice) return false;
+      const g = p.guess.trim().toLowerCase();
+      const n = (p.choice.name || '').trim().toLowerCase();
+      // مقارنة بسيطة: هل التخمين يساوي اسم اللاعب أو جزء منه
+      return g === n || n.includes(g) || g.includes(n);
+    };
+
+    // نحتاج معرفة تخمين كل لاعب مقابل اختيار الخصم
+    const p1 = state.players.find(p => p.slot === 1);
+    const p2 = state.players.find(p => p.slot === 2);
+    const p1Correct = p1 && p2 && p1.guess && p2.choice &&
+      (p1.guess.trim().toLowerCase() === (p2.choice.name||'').trim().toLowerCase() ||
+       (p2.choice.name||'').toLowerCase().includes(p1.guess.trim().toLowerCase()) ||
+       p1.guess.trim().toLowerCase().includes((p2.choice.name||'').toLowerCase()));
+    const p2Correct = p1 && p2 && p2.guess && p1.choice &&
+      (p2.guess.trim().toLowerCase() === (p1.choice.name||'').trim().toLowerCase() ||
+       (p1.choice.name||'').toLowerCase().includes(p2.guess.trim().toLowerCase()) ||
+       p2.guess.trim().toLowerCase().includes((p1.choice.name||'').toLowerCase()));
+
+    const resultBlock = (p, correct) => {
+      const c = p?.choice || {};
+      return `
+        <div class="result-item ${correct ? 'winner' : ''}">
+          <div style="display:flex;align-items:center;gap:10px;min-width:0">
+            ${c.photo ? `<img src="${esc(c.photo)}" style="width:42px;height:42px;border-radius:50%;object-fit:cover" onerror="this.style.display='none'">` : ''}
+            <div style="min-width:0">
+              <div class="rname">${esc(p?.name || '—')}</div>
+              <div class="rdiff">${correct ? '✓ تخمين صحيح' : '✗ تخمين خاطئ'}</div>
+              <div style="color:var(--text-muted);font-size:.78rem;margin-top:4px">
+                اختار: <b style="color:var(--text-primary)">${esc(c.name || '—')}</b>
+                ${p?.guess ? ` — خمّن: "${esc(p.guess)}"` : ''}
+              </div>
+            </div>
+          </div>
+        </div>`;
+    };
+
+    resultsCard = `
+      <div class="glass" style="border-color:rgba(34,197,94,.3)">
+        <h3>🏁 النتائج النهائية</h3>
+        <div class="result-grid">
+          ${resultBlock(p1, p1Correct)}
+          ${resultBlock(p2, p2Correct)}
+        </div>
+        ${p1Correct && p2Correct
+          ? `<div class="winner-badge">🤝 تعادل — كلاهما خمّن بشكل صحيح</div>`
+          : p1Correct
+            ? `<div class="winner-badge">🏆 ${esc(p1.name)} فاز</div>`
+            : p2Correct
+              ? `<div class="winner-badge">🏆 ${esc(p2.name)} فاز</div>`
+              : `<div class="winner-badge">😅 لم يخمّن أحد بشكل صحيح</div>`}
+        <button class="btn btn-primary" id="newRoundBtn" style="margin-top:8px">لعبة جديدة</button>
+      </div>`;
+  }
+
+  app.innerHTML = `
+    <div class="container">
+      <div class="room-hero">
+        <small>كود الغرفة</small>
+        <b>${esc(state.code || '-----')}</b>
+        <div class="copy-hint" id="copyBtn">📋 انسخ الكود وشاركه</div>
+      </div>
+      ${actionCard}
+      ${playersCard}
+      ${resultsCard}
+      <button class="btn btn-danger" id="leaveBtn" style="margin-top:8px">مغادرة الغرفة</button>
+    </div>
+  `;
+
+  $('#startGuessBtn') && ($('#startGuessBtn').onclick = () => fgStartGuessing());
+  $('#revealBtn') && ($('#revealBtn').onclick = () => fgReveal());
+  $('#newRoundBtn') && ($('#newRoundBtn').onclick = () => fgNewRound());
+  $('#copyBtn') && ($('#copyBtn').onclick = () => {
+    navigator.clipboard?.writeText(state.code);
+    $('#copyBtn').textContent = '✓ تم النسخ';
+    setTimeout(() => { const el = $('#copyBtn'); if(el) el.textContent = '📋 انسخ الكود وشاركه'; }, 1500);
+  });
+  $('#leaveBtn').onclick = leaveRoom;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  اللعبة 2: تخمين اللاعبين — واجهة اللاعب
+// ═══════════════════════════════════════════════════════════
+function renderPlayerFootball(app){
+  const me = state.players.find(p => p.is_me);
+  const opponent = state.players.find(p => !p.is_me);
+  const rs = state.roundStatus;
+
+  // revealed
+  if(rs === 'revealed'){
+    if(!me || !opponent){
+      app.innerHTML = `<div class="player-view"><div class="spinner"></div></div>`;
+      return;
+    }
+    const myGuessCorrect = (() => {
+      const g = (me.guess||'').trim().toLowerCase();
+      const target = (opponent.choice?.name || '').toLowerCase();
+      if(!g || !target) return false;
+      return g === target || target.includes(g) || g.includes(target);
+    })();
+    const iWon = myGuessCorrect;
+
+    app.innerHTML = `
+      <div class="player-view" style="justify-content:flex-start;padding-top:60px;overflow-y:auto">
+        <div class="player-state ${iWon ? 'win' : ''}" style="padding:0">
+          ${iWon ? '🏆 فزت!' : 'انتهت اللعبة'}
+        </div>
+
+        <div class="glass" style="width:100%;max-width:420px;margin-top:20px">
+          <h3>اختيارك</h3>
+          <div class="choice-card">
+            ${me.choice?.photo ? `<img src="${esc(me.choice.photo)}" onerror="this.style.display='none'">` : ''}
+            <div class="info">
+              <div class="nm">${esc(me.choice?.name || '—')}</div>
+              <div class="tm">${esc(me.choice?.team || '')}</div>
+            </div>
+          </div>
+          <div style="color:var(--text-secondary);font-size:.85rem">
+            تخمينك لاختيار ${esc(opponent.name)}: <b style="color:${myGuessCorrect ? '#22c55e' : '#f87171'}">"${esc(me.guess || '—')}"</b>
+          </div>
+        </div>
+
+        <div class="glass" style="width:100%;max-width:420px">
+          <h3>اختيار ${esc(opponent.name)}</h3>
+          <div class="choice-card">
+            ${opponent.choice?.photo ? `<img src="${esc(opponent.choice.photo)}" onerror="this.style.display='none'">` : ''}
+            <div class="info">
+              <div class="nm">${esc(opponent.choice?.name || '—')}</div>
+              <div class="tm">${esc(opponent.choice?.team || '')}</div>
+            </div>
+          </div>
+          <div style="color:var(--text-secondary);font-size:.85rem">
+            تخمين ${esc(opponent.name)} لاختيارك: <b style="color:var(--text-primary)">"${esc(opponent.guess || '—')}"</b>
+          </div>
+        </div>
+
+        <div style="color:var(--text-muted);font-size:.9rem;margin-top:16px">
+          بانتظار المضيف لبدء لعبة جديدة...
+        </div>
+      </div>`;
+    return;
+  }
+
+  // picking
+  if(rs === 'picking'){
+    if(me?.has_choice){
+      const c = me.choice || {};
+      app.innerHTML = `
+        <div class="player-view">
+          <div class="player-state">
+            ✓ تم اختيارك
+            <span class="sub" style="color:var(--text-secondary)">بانتظار اللاعب الآخر...</span>
+          </div>
+          <div class="choice-card" style="margin-top:20px;max-width:340px;width:100%">
+            ${c.photo ? `<img src="${esc(c.photo)}" onerror="this.style.display='none'">` : ''}
+            <div class="info">
+              <div class="nm">${esc(c.name || '—')}</div>
+              <div class="tm">${esc(c.team || '')}</div>
+            </div>
+          </div>
+        </div>`;
+      return;
+    }
+
+    app.innerHTML = `
+      <div class="player-view" style="justify-content:flex-start;padding-top:40px;overflow-y:auto">
+        <div style="text-align:center;margin-bottom:20px">
+          <div style="font-size:1.3rem;font-weight:800;margin-bottom:6px">اختر لاعب كرة قدم</div>
+          <div style="color:var(--text-muted);font-size:.85rem">اختيارك سيبقى مخفيًا عن خصمك</div>
+        </div>
+        <div style="width:100%;max-width:420px">
+          <div class="search-wrap">
+            <input id="searchInput" class="input" placeholder="ابحث عن لاعب... (مثل: رونالدو، ميسي)" value="${esc(state.searchQuery)}" autocomplete="off" style="margin-bottom:8px">
+          </div>
+          ${state.searching ? `<div class="spinner"></div>` : ''}
+          ${state.searchResults.length > 0 ? `
+            <div class="search-results">
+              ${state.searchResults.map((r,i) => `
+                <div class="search-item" data-idx="${i}">
+                  ${r.photo ? `<img src="${esc(r.photo)}" onerror="this.style.visibility='hidden'">` : `<div style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.05)"></div>`}
+                  <div class="info">
+                    <div class="nm">${esc(r.name)}</div>
+                    <div class="tm">${esc(r.team || '')}</div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          ` : (state.searchQuery && !state.searching ? `
+            <div class="alert alert-info" style="margin-top:8px">لا توجد نتائج</div>
+          ` : '')}
+        </div>
+        ${state.error ? `<div class="alert" style="max-width:420px;width:100%;margin-top:12px">${esc(state.error)}</div>` : ''}
+      </div>`;
+
+    let debounceTimer;
+    const inp = $('#searchInput');
+    inp && inp.focus();
+    inp && inp.addEventListener('input', e => {
+      state.searchQuery = e.target.value;
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(searchPlayers, 350);
+    });
+    document.querySelectorAll('.search-item').forEach(el => {
+      el.onclick = () => pickPlayerFromIndex(parseInt(el.dataset.idx, 10));
+    });
+    return;
+  }
+
+  // ready_guess
+  if(rs === 'ready_guess'){
+    app.innerHTML = `
+      <div class="player-view">
+        <div class="player-state pulse">
+          ✅ كلاكما جاهزان
+          <span class="sub">بانتظار المضيف لبدء التخمين</span>
+        </div>
+      </div>`;
+    return;
+  }
+
+  // guessing / awaiting_reveal
+  if(rs === 'guessing' || rs === 'awaiting_reveal'){
+    if(me?.has_guess){
+      app.innerHTML = `
+        <div class="player-view">
+          <div class="player-state pressed">
+            ✓ تم إرسال تخمينك
+            <span class="sub">بانتظار اللاعب الآخر...</span>
+          </div>
+        </div>`;
+      return;
+    }
+
+    const clues = opponent?.opponent_clues || {};
+    app.innerHTML = `
+      <div class="player-view" style="justify-content:flex-start;padding-top:40px;overflow-y:auto">
+        <div style="text-align:center;margin-bottom:20px">
+          <div style="font-size:1.3rem;font-weight:800;margin-bottom:6px">خمّن اللاعب</div>
+          <div style="color:var(--text-muted);font-size:.85rem">هذه معلومات عن اللاعب الذي اختاره خصمك</div>
+        </div>
+
+        <div class="glass" style="width:100%;max-width:420px">
+          <h3>🔍 المعلومات المتاحة</h3>
+          <div class="clues">
+            <div class="clue">
+              <div class="lbl">المركز</div>
+              <div class="val">${esc(clues.position || '—')}</div>
+            </div>
+            <div class="clue">
+              <div class="lbl">الجنسية</div>
+              <div class="val">${esc(clues.country || '—')}</div>
+            </div>
+            ${clues.market_value ? `
+              <div class="clue" style="grid-column:1 / -1">
+                <div class="lbl">القيمة السوقية</div>
+                <div class="val">${esc(clues.market_value)}</div>
+              </div>
+            ` : ''}
+          </div>
+
+          <input id="guessInput" class="input" placeholder="اكتب اسم اللاعب..." value="${esc(state.guessInput)}" autocomplete="off">
+          <button class="btn btn-primary" id="submitGuessBtn">إرسال التخمين</button>
+        </div>
+
+        ${state.error ? `<div class="alert" style="max-width:420px;width:100%;margin-top:12px">${esc(state.error)}</div>` : ''}
+      </div>`;
+
+    $('#guessInput') && ($('#guessInput').oninput = e => { state.guessInput = e.target.value; });
+    $('#guessInput') && $('#guessInput').focus();
+    $('#submitGuessBtn') && ($('#submitGuessBtn').onclick = () => submitGuess());
+    $('#guessInput') && ($('#guessInput').onkeydown = e => { if(e.key === 'Enter') submitGuess(); });
+    return;
+  }
+
+  // waiting (initial)
+  app.innerHTML = `
+    <div class="player-view">
+      <div class="player-state pulse">
+        بانتظار بدء اللعبة...
+      </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  FotMob API — بحث وجلب ديناميكي
+// ═══════════════════════════════════════════════════════════
+const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
+
+function proxied(url){ return CORS_PROXY + encodeURIComponent(url); }
+
+async function fetchJSON(url){
+  const r = await fetch(url, { headers: { 'Accept': 'application/json' } });
+  if(!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+}
+
+async function searchPlayers(){
+  const q = state.searchQuery.trim();
+  state.error = '';
+  if(!q || q.length < 2){
+    state.searchResults = [];
+    return render();
+  }
+  state.searching = true;
+  render();
+
+  try{
+    // endpoint اقتراحات FotMob
+    const url = `https://www.fotmob.com/api/search/suggest?term=${encodeURIComponent(q)}&lang=en`;
+    const data = await fetchJSON(proxied(url));
+
+    // نتعامل مع عدة صيغ محتملة
+    let items = [];
+    if(Array.isArray(data)) items = data;
+    else if(Array.isArray(data.suggestions)) items = data.suggestions;
+    else if(Array.isArray(data.hits)) items = data.hits;
+    else if(Array.isArray(data.data)) items = data.data;
+    else if(data && typeof data === 'object'){
+      for(const k of Object.keys(data)){
+        if(Array.isArray(data[k])){ items = data[k]; break; }
+      }
+    }
+
+    const players = items
+      .filter(it => {
+        const t = (it.type || it.entityType || '').toLowerCase();
+        return !t || t.includes('player') || t === 'players';
+      })
+      .map(it => ({
+        id: String(it.id ?? it.playerId ?? it.entityId ?? ''),
+        name: it.name || it.title || it.playerName || it.entityName || '',
+        team: it.teamName || it.team || it.currentTeam || '',
+        photo: it.imageUrl || it.image || it.photoUrl || it.imageURL || '',
+        position: it.position || '',
+        country: it.nationality || it.country || '',
+      }))
+      .filter(p => p.id && p.name)
+      .slice(0, 10);
+
+    state.searchResults = players;
+  }catch(err){
+    console.error('search failed', err);
+    state.error = 'تعذّر جلب النتائج، حاول مرة أخرى';
+    state.searchResults = [];
+  }finally{
+    state.searching = false;
+    render();
+    const inp = $('#searchInput');
+    if(inp){ inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
+  }
+}
+
+async function fetchPlayerDetails(playerId){
+  // 1) playerData من fotmob — يحتوي معلومات شاملة
+  let detail = {};
+  try{
+    const url = `https://www.fotmob.com/api/playerData?id=${encodeURIComponent(playerId)}`;
+    detail = await fetchJSON(proxied(url));
+  }catch(err){
+    console.warn('playerData failed', err);
+  }
+
+  // 2) market values (ملف ثابت على CDN)
+  let mv = null;
+  try{
+    const url = `https://data.fotmob.com/players/${encodeURIComponent(playerId)}/market_values.json`;
+    const mvData = await fetchJSON(url);
+    // البنية: { market_values: [{ value, currency, ... }] } أو مصفوفة مباشرة
+    const arr = Array.isArray(mvData) ? mvData : (mvData.market_values || mvData.values || []);
+    if(arr.length){
+      const latest = arr[arr.length - 1];
+      const v = latest.value ?? latest.marketValue ?? latest.amount;
+      const c = latest.currency || 'EUR';
+      if(v != null){
+        // تنسيق مبسّط: 15.0m / 500k
+        const n = Number(v);
+        if(n >= 1_000_000) mv = `${(n/1_000_000).toFixed(1)}M ${c}`;
+        else if(n >= 1_000) mv = `${(n/1_000).toFixed(0)}K ${c}`;
+        else mv = `${n} ${c}`;
+      }
+    }
+  }catch(err){
+    console.warn('market_values failed', err);
+  }
+
+  // استخراج الحقول بشكل دفاعي
+  const pd = detail || {};
+  const name = pd.name || pd.fullName || pd.playerName || '';
+  const team = pd.teamName || pd.team?.name || (pd.team && pd.team.name) || '';
+  const photo = pd.photoUrl || pd.imageUrl || pd.imageURL || '';
+  const country = pd.nationalTeam?.name || pd.country || pd.nationality || pd.birthCountry || '';
+  const position = pd.positionDescription?.primaryPosition?.label
+                || pd.positionDescription?.primaryPosition?.strPosShort
+                || pd.position?.label || pd.position || '';
+
+  return {
+    id: String(playerId),
+    name, team, photo, country, position,
+    market_value: mv || '',
+  };
+}
+
+async function pickPlayerFromIndex(idx){
+  const p = state.searchResults[idx];
+  if(!p) return;
+
+  // استخدم بيانات البحث فورًا (اسم + فريق + صورة)
+  // ثم حاول إثراؤها من playerData + market_values
+  state.error = '';
+  state.info = 'جاري تحميل بيانات اللاعب...';
+  render();
+
+  // عرض مؤقت لبطاقة الاختيار
+  let full = { ...p };
+  try{
+    const details = await fetchPlayerDetails(p.id);
+    full = {
+      id: p.id,
+      name: details.name || p.name,
+      team: details.team || p.team,
+      photo: details.photo || p.photo,
+      country: details.country || p.country,
+      position: details.position || p.position,
+      market_value: details.market_value || '',
+    };
+  }catch(err){
+    console.warn('details error', err);
+    // نستخدم ما لدينا من البحث
+  }
+
+  state.info = '';
+  const { error } = await sb.rpc('fg_pick_player', {
+    p_code: state.code,
+    p_player_token: state.token,
+    p_choice: full,
+  });
+  if(error){
+    state.error = error.message || 'فشل تسجيل الاختيار';
+    render();
+    return;
+  }
+  // Realtime سيحدّث الحالة
+  state.searchQuery = '';
+  state.searchResults = [];
+  await refreshState();
+}
+
+// ═══════════════════════════════════════════════════════════
+//  أفعال اللعبة (RPC wrappers)
 // ═══════════════════════════════════════════════════════════
 async function createRoom(){
   state.error = '';
@@ -779,7 +1133,7 @@ async function createRoom(){
 
   Object.assign(state, {
     role:'host', code:data.code, roomId:data.room_id, token:data.host_token,
-    name, screen:'host', roundStatus:'waiting', players:[], history:[],
+    name, screen:'host', roundStatus:'waiting', players:[], gameType:data.game_type,
   });
   saveSession();
   subscribeRealtime();
@@ -806,18 +1160,18 @@ async function joinRoom(){
   Object.assign(state, {
     role:'player', code:data.code, roomId:data.room_id, token:data.player_token,
     slot:data.slot, name, screen:'player', roundStatus:'waiting',
-    gameType: data.game_type || state.gameType, players:[],
+    gameType:data.game_type || state.gameType, players:[],
   });
   saveSession();
   subscribeRealtime();
   render();
 }
 
-async function startRound(){
+// ─── Timing Challenge actions ───
+async function startTimingRound(){
   const t = parseFloat(state.targetTime);
   if(isNaN(t) || t <= 0){ state.error = 'أدخل وقتًا صحيحًا'; return render(); }
-
-  const { data, error } = await sb.rpc('tc_start_round', {
+  const { error, data } = await sb.rpc('tc_start_round', {
     p_code: state.code, p_host_token: state.token, p_target: t,
   });
   if(error || data?.error){
@@ -826,18 +1180,66 @@ async function startRound(){
   }
 }
 
-async function pressNow(){
-  const me = state.players.find(p => p.slot === state.slot);
-  if(me?.pressed) return;
-  if(me) me.pressed = true;
-  render();
-  const { error } = await sb.rpc('tc_press', { p_code:state.code, p_player_token:state.token });
-  if(error) console.error('press:', error);
+async function pressStart(){
+  const { error } = await sb.rpc('tc_press_start', { p_code: state.code, p_player_token: state.token });
+  if(error) console.error(error);
+  await refreshState();
 }
 
+async function pressStop(){
+  const { error } = await sb.rpc('tc_press_stop', { p_code: state.code, p_player_token: state.token });
+  if(error) console.error(error);
+  await refreshState();
+}
+
+async function revealTiming(){
+  const { error, data } = await sb.rpc('tc_reveal', { p_code: state.code, p_host_token: state.token });
+  if(error || data?.error){ state.error = error?.message || data?.error; render(); }
+}
+
+async function newTimingRound(){
+  const { error, data } = await sb.rpc('tc_new_round', { p_code: state.code, p_host_token: state.token });
+  if(error || data?.error){ state.error = error?.message || data?.error; render(); }
+}
+
+// ─── Football Guess actions ───
+async function fgStartGuessing(){
+  const { error, data } = await sb.rpc('fg_start_guessing', {
+    p_code: state.code, p_host_token: state.token,
+  });
+  if(error || data?.error){ state.error = error?.message || data?.error; render(); }
+}
+
+async function submitGuess(){
+  const g = (state.guessInput || '').trim();
+  if(!g){ state.error = 'اكتب تخمينك'; return render(); }
+  const { error, data } = await sb.rpc('fg_submit_guess', {
+    p_code: state.code, p_player_token: state.token, p_guess: g,
+  });
+  if(error || data?.error){
+    state.error = error?.message || data?.error;
+    return render();
+  }
+  state.guessInput = '';
+  await refreshState();
+}
+
+async function fgReveal(){
+  const { error, data } = await sb.rpc('fg_reveal', { p_code: state.code, p_host_token: state.token });
+  if(error || data?.error){ state.error = error?.message || data?.error; render(); }
+}
+
+async function fgNewRound(){
+  const { error, data } = await sb.rpc('fg_new_round', { p_code: state.code, p_host_token: state.token });
+  if(error || data?.error){ state.error = error?.message || data?.error; render(); }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  الحالة من الخادم
+// ═══════════════════════════════════════════════════════════
 async function refreshState(){
   if(!state.code || !state.token) return;
-  const { data, error } = await sb.rpc('tc_get_results', {
+  const { data, error } = await sb.rpc('mn_get_state', {
     p_code: state.code, p_token: state.token,
   });
   if(error){ console.error(error); return; }
@@ -847,59 +1249,34 @@ async function refreshState(){
 function applyServerState(d){
   if(!d || d.error) return;
 
+  const prevRS = state.roundStatus;
   state.roundStatus = d.round_status;
   state.roundNumber = d.round_number;
+  state.isHost = !!d.is_host;
+  state.gameType = d.game_type || state.gameType;
 
-  state.players = (d.players || []).map(p => ({
-    name:p.name, slot:p.slot, pressed:p.pressed,
-    elapsed:p.elapsed ?? null, diff:p.diff ?? null,
-  }));
-
-  if(d.round_status === 'ended' && d.target_time != null){
-    state.results = {
-      round_number: d.round_number,
-      target_time: Number(d.target_time),
-      players: d.players,
-    };
-    if(state.role === 'host'){
-      const winner = [...d.players].sort((a,b)=>(a.diff??999)-(b.diff??999))[0];
-      const last = state.history[state.history.length-1];
-      if(!last || last.round_number !== d.round_number){
-        state.history.push({
-          round_number: d.round_number,
-          target: Number(d.target_time),
-          winner: winner.name,
-        });
-      }
+  if(d.game_type === 'timing-challenge'){
+    state.targetTime = d.target_time != null ? String(d.target_time) : state.targetTime;
+    state.players = (d.players || []).map(p => ({
+      name:p.name, slot:p.slot, is_me:p.is_me,
+      started:!!p.started, finished:!!p.finished,
+      elapsed:p.elapsed ?? null, diff:p.diff ?? null,
+    }));
+    // مضيف: عداد عند اللعب
+    if(state.role === 'host' && d.round_status === 'playing'){
+      // مضيف لا يحتاج مؤقّت حقيقي في هذه اللعبة (كل لاعب يحسب وقته)
     }
-  } else if(d.round_status === 'active' && d.started_at){
-    startHostTimer(d.started_at);
-    state.results = null;
-  } else if(d.round_status === 'waiting'){
-    stopHostTimer();
-    state.displayTime = '0.00';
-    state.results = null;
+  } else if(d.game_type === 'football-guess'){
+    state.players = (d.players || []).map(p => ({
+      name:p.name, slot:p.slot, is_me:p.is_me,
+      has_choice:!!p.has_choice, has_guess:!!p.has_guess,
+      choice:p.choice || null,
+      guess:p.guess || null,
+      opponent_clues:p.opponent_clues || null,
+    }));
   }
 
   render();
-}
-
-// ═══════════════════════════════════════════════════════════
-//  المؤقت (للمضيف فقط)
-// ═══════════════════════════════════════════════════════════
-function startHostTimer(startedAtISO){
-  stopHostTimer();
-  if(state.role !== 'host') return;
-  const startedAt = new Date(startedAtISO).getTime();
-  state.timerHandle = setInterval(() => {
-    if(state.roundStatus !== 'active') return;
-    const elapsed = (Date.now() + state.clockOffset - startedAt) / 1000;
-    const el = $('#timerEl');
-    if(el) el.textContent = Math.max(0, elapsed).toFixed(2);
-  }, 33); // ~30fps كافٍ جدًا للعين
-}
-function stopHostTimer(){
-  if(state.timerHandle){ clearInterval(state.timerHandle); state.timerHandle = null; }
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -908,7 +1285,7 @@ function stopHostTimer(){
 function subscribeRealtime(){
   if(state.channel){ try{ sb.removeChannel(state.channel); }catch(e){} state.channel = null; }
 
-  const ch = sb.channel(`room-${state.roomId}`, { config:{ broadcast:{ self:false } } });
+  const ch = sb.channel(`room-${state.roomId}`);
 
   ch.on('postgres_changes', {
     event:'INSERT', schema:'public', table:'mn_events',
@@ -916,12 +1293,10 @@ function subscribeRealtime(){
   }, payload => {
     const ev = payload.new;
     if(ev?.created_at){
-      const serverNow = new Date(ev.created_at).getTime();
-      state.clockOffset = serverNow - Date.now();
+      state.clockOffset = new Date(ev.created_at).getTime() - Date.now();
     }
-    if(['player_joined','player_pressed','round_started','round_ended'].includes(ev.event_type)){
-      refreshState();
-    }
+    // كل حدث مهم يستدعي تحديث الحالة
+    refreshState();
   });
 
   ch.subscribe(status => {
@@ -929,28 +1304,23 @@ function subscribeRealtime(){
   });
 
   state.channel = ch;
-  // جلب أولي احتياطي
   setTimeout(refreshState, 250);
 }
 
 // ═══════════════════════════════════════════════════════════
-//  مغادرة
+//  مغادرة وإقلاع
 // ═══════════════════════════════════════════════════════════
 function leaveRoom(){
   if(state.channel){ try{ sb.removeChannel(state.channel); }catch(e){} state.channel = null; }
-  stopHostTimer();
   clearSession();
   Object.assign(state, {
     screen:'home', role:null, code:null, roomId:null, token:null, slot:null,
     roundStatus:'waiting', roundNumber:0, players:[], displayTime:'0.00',
-    results:null, history:[], error:'',
+    error:'', info:'', searchQuery:'', searchResults:[], searching:false, guessInput:'',
   });
   render();
 }
 
-// ═══════════════════════════════════════════════════════════
-//  الإقلاع
-// ═══════════════════════════════════════════════════════════
 function boot(){
   const s = loadSession();
   if(s && s.code && s.token && s.role){
